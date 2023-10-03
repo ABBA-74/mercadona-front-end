@@ -28,7 +28,12 @@ const Navigation = () => {
 
   return (
     <>
-      <Navbar collapseOnSelect expand='lg' className='bg-body-tertiary'>
+      <Navbar
+        collapseOnSelect
+        expand='lg'
+        fixed='top'
+        className='bg-body-tertiary'
+      >
         <Container fluid className='mx-3 mx-md-5'>
           <Navbar.Brand href='/'>
             <img src={mercadonaLogo} alt='' className='menu-icon search-icon' />
