@@ -1,3 +1,15 @@
+/** fonts **/
+@font-face {
+  font-family: Quicksand;
+  src: url(./assets/fonts/Quicksand-VariableFont_wght.ttf);
+}
+@font-face {
+  font-family: Poppins;
+  src: url(./assets/fonts/Poppins-Black.ttf);
+  font-weight: black;
+}
+
+/** reset css **/
 *,
 *::after,
 *::before {
@@ -13,4 +25,7 @@
 
 body {
   min-height: 100vh;
+  overflow-x: hidden;
+  font-family: Quicksand, Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
 }
