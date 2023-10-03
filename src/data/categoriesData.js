@@ -1,6 +1,6 @@
 export const categoriesList = [
   {
-    id: 13,
+    id: 1,
     label: 'Aperitif',
     image: {
       label: 'Aperitif',
@@ -8,7 +8,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 14,
+    id: 2,
     label: 'Boucherie',
     image: {
       label: 'Boucherie',
@@ -16,7 +16,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 15,
+    id: 3,
     label: 'Dessert',
     image: {
       label: 'Dessert',
@@ -24,7 +24,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 16,
+    id: 4,
     label: 'Fromages',
     image: {
       label: 'Fromages',
@@ -32,7 +32,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 17,
+    id: 5,
     label: 'Fruits et legumes bio',
     image: {
       label: 'Fruits et legumes bio',
@@ -40,7 +40,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 18,
+    id: 6,
     label: 'Fruits',
     image: {
       label: 'Fruits',
@@ -48,7 +48,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 19,
+    id: 7,
     label: 'Glaces',
     image: {
       label: 'Glaces',
@@ -56,7 +56,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 20,
+    id: 8,
     label: 'Jus de fruits frais',
     image: {
       label: 'Jus de fruits frais',
@@ -64,7 +64,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 21,
+    id: 9,
     label: 'Legumes',
     image: {
       label: 'Legumes',
@@ -72,7 +72,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 22,
+    id: 10,
     label: 'Pates et riz',
     image: {
       label: 'Pates et riz',
@@ -80,7 +80,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 23,
+    id: 11,
     label: 'Poissons et crustaces',
     image: {
       label: 'Poissons et crustaces',
@@ -88,7 +88,7 @@ export const categoriesList = [
     },
   },
   {
-    id: 24,
+    id: 12,
     label: 'Volaille et lapin',
     image: {
       label: 'Volaille et lapin',
