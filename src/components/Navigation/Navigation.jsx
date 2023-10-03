@@ -12,7 +12,7 @@ import loginIcon from '../../assets/icons/login-menu.png';
 import searchIcon from '../../assets/icons/search-menu.png';
 import mercadonaLogo from '../../assets/images/mercadona-logo.svg';
 import './Navigation.scss';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const navDropdownTitle = (
@@ -28,7 +28,7 @@ const Navigation = () => {
 
   return (
     <>
-      <Navbar expand='lg' className='bg-body-tertiary'>
+      <Navbar collapseOnSelect expand='lg' className='bg-body-tertiary'>
         <Container fluid className='mx-3 mx-md-5'>
           <Navbar.Brand href='/'>
             <img src={mercadonaLogo} alt='' className='menu-icon search-icon' />
@@ -83,33 +83,53 @@ const Navigation = () => {
                   </Row>
                 </Container>
               </NavDropdown>
-              <NavLink className='nav-link mx-lg-2' to='/promotions'>
+              <Nav.Link
+                as={Link}
+                eventKey='1'
+                className='nav-link mx-lg-2'
+                to='/promotions'
+              >
                 <img
                   src={promotionsIcon}
                   alt=''
                   className='menu-icon promotions-icon'
                 />
                 <span className='label-menu'>Promotions</span>
-              </NavLink>
-              <NavLink className='nav-link mx-lg-2' to='/catalogue'>
+              </Nav.Link>
+              <Nav.Link
+                eventKey='2'
+                as={Link}
+                className='nav-link mx-lg-2'
+                to='/catalogue'
+              >
                 <img
                   src={catalogIcon}
                   alt=''
                   className='menu-icon catalog-icon catalog-icon'
                 />
                 <span className='label-menu'>Catalogue</span>
-              </NavLink>
-              <NavLink className='nav-link mx-lg-2' to='/liste-favoris'>
+              </Nav.Link>
+              <Nav.Link
+                eventKey='3'
+                as={Link}
+                className='nav-link mx-lg-2'
+                to='/liste-favoris'
+              >
                 <img
                   src={shoppingWishListIcon}
                   alt=''
                   className='menu-icon shopping-wish-list-icon'
                 />
                 <span className='label-menu'>Mes produits</span>
-              </NavLink>
-              <NavLink className='nav-link ms-lg-2' to='/login'>
+              </Nav.Link>
+              <Nav.Link
+                eventKey='4'
+                as={Link}
+                className='nav-link ms-lg-2'
+                to='/login'
+              >
                 <img src={loginIcon} alt='' className='menu-icon login-icon' />
-              </NavLink>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
