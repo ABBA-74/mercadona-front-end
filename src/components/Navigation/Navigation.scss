@@ -19,6 +19,8 @@ nav {
 .dropdown-menu.show {
   width: 90vw;
   margin-bottom: 2rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .navbar-nav {
   input.form-control,
@@ -49,6 +51,9 @@ nav {
     &:hover {
       color: #095262;
     }
+  }
+  .nav-link.active {
+    color: #033540;
   }
   .label-menu {
     display: inline;

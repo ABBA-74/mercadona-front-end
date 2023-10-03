@@ -12,6 +12,7 @@ import loginIcon from '../../assets/icons/login-menu.png';
 import searchIcon from '../../assets/icons/search-menu.png';
 import mercadonaLogo from '../../assets/images/mercadona-logo.svg';
 import './Navigation.scss';
+import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
   const navDropdownTitle = (
@@ -82,33 +83,33 @@ const Navigation = () => {
                   </Row>
                 </Container>
               </NavDropdown>
-              <Nav.Link className='mx-lg-2' href='/promotions'>
+              <NavLink className='nav-link mx-lg-2' to='/promotions'>
                 <img
                   src={promotionsIcon}
                   alt=''
                   className='menu-icon promotions-icon'
                 />
                 <span className='label-menu'>Promotions</span>
-              </Nav.Link>
-              <Nav.Link className='mx-lg-2' href='/catalog'>
+              </NavLink>
+              <NavLink className='nav-link mx-lg-2' to='/catalogue'>
                 <img
                   src={catalogIcon}
                   alt=''
                   className='menu-icon catalog-icon catalog-icon'
                 />
                 <span className='label-menu'>Catalogue</span>
-              </Nav.Link>
-              <Nav.Link className='mx-lg-2' href='/shopping-list'>
+              </NavLink>
+              <NavLink className='nav-link mx-lg-2' to='/liste-favoris'>
                 <img
                   src={shoppingWishListIcon}
                   alt=''
                   className='menu-icon shopping-wish-list-icon'
                 />
                 <span className='label-menu'>Mes produits</span>
-              </Nav.Link>
-              <Nav.Link className='ms-lg-2' href='/login'>
+              </NavLink>
+              <NavLink className='nav-link ms-lg-2' to='/login'>
                 <img src={loginIcon} alt='' className='menu-icon login-icon' />
-              </Nav.Link>
+              </NavLink>
             </Nav>
           </Navbar.Collapse>
         </Container>
