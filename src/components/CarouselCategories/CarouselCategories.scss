@@ -40,11 +40,12 @@
       height: 100%;
       width: 100%;
       background-color: #48b5ceda;
-      background-image: linear-gradient(
-        to bottom right,
-        rgb(255, 255, 255) 25%,
-        #48b5ceda
-      );
+      //   background-image: linear-gradient(
+      //     to bottom right,
+      //     rgb(255, 255, 255) 25%,
+      //     #48b5ceda
+      //   );
+      background-color: #48b6ce;
     }
     &--content {
       width: 100%;
