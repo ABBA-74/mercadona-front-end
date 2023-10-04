@@ -1,6 +1,10 @@
 main.main-homepage {
+  position: relative;
   background-color: #f2f5f8;
+  width: 100%;
   .container {
+    position: relative;
+    width: 100%;
     background-color: #fff;
     padding-block: 5rem;
     h1 {
@@ -13,6 +17,205 @@ main.main-homepage {
       text-transform: uppercase;
       max-width: 25ch;
       margin-bottom: 2rem;
+    }
+  }
+}
+
+// section pizza manosque
+main.main-homepage .container .section-pizza-discount {
+  margin-top: 8rem;
+  padding-block: 2rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-inline: 0;
+  border-radius: 6px;
+  background-color: #48b6ce;
+  @media screen and (min-width: 1400px) {
+    background-color: transparent;
+  }
+  .row {
+    position: relative;
+    width: 100%;
+    .section-pizza-discount__left,
+    .section-pizza-discount__right {
+      padding-inline: 0;
+    }
+
+    .section-pizza-discount__left {
+      position: relative;
+      display: flex;
+      justify-content: start;
+      left: 0;
+      //   padding-inline: 1rem;
+      .arrow-left-wrapper {
+        display: none;
+        @media screen and (min-width: 1400px) {
+          display: block;
+        }
+      }
+      .content-wrapper {
+        position: relative;
+        text-align: center;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        width: 100%;
+        @media screen and (min-width: 768px) {
+          text-align: center;
+        }
+        @media screen and (min-width: 992px) {
+          text-align: left;
+          padding-top: 4rem;
+          padding-left: 8rem;
+        }
+        @media screen and (min-width: 1200px) {
+          text-align: left;
+        }
+        @media screen and (min-width: 1400px) {
+          position: absolute;
+          left: 3rem;
+          top: 50%;
+          transform: translateY(-50%);
+          padding-top: 2rem;
+          padding-left: 3rem;
+        }
+        p,
+        button.btn-outline {
+          color: #fff;
+          line-height: 93%;
+          text-transform: uppercase;
+        }
+        p.title,
+        p.subtitle {
+          font-weight: 900;
+          font-family: Poppins;
+          font-size: clamp(1.8rem, 2vw, 2.1rem);
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        p.title {
+          font-size: clamp(1.8rem, 4vw, 3rem);
+        }
+        p.subtitle {
+          font-size: clamp(1.8rem, 2vw, 2.1rem);
+        }
+        button.btn-outline {
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0);
+          margin-top: 0.5rem;
+          padding: 10px 18px;
+          font-family: Quicksand;
+          font-weight: 500;
+          font-size: 1.125rem;
+          border: 2px solid white;
+          background-color: transparent;
+          filter: drop-shadow(0 2px 3px #084552b4);
+          transition: filter 0.25s ease;
+          &:hover {
+            filter: drop-shadow(0 2px 3px #08455200);
+          }
+        }
+      }
+    }
+
+    .section-pizza-discount__right {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .pizza-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        @media screen and (min-width: 992px) {
+          justify-content: center;
+        }
+
+        img.pizza-img {
+          position: relative;
+          height: 280px;
+          width: auto;
+        }
+        @media screen and (min-width: 1400px) {
+          height: 280px;
+          width: auto;
+          padding-left: 4rem;
+        }
+      }
+      img.arrow-right-img {
+        display: none;
+        @media screen and (min-width: 1400px) {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// Section cards sell arguments
+main.main-homepage .container .section-sell-arguments {
+  margin-top: 8rem;
+  .col-md-6:nth-child(3) {
+    margin-left: 0;
+    @media screen and (min-width: 768px) {
+      margin-left: 25%;
+    }
+    @media screen and (min-width: 1200px) {
+      margin-left: 0;
+    }
+  }
+  .card {
+    width: 100%;
+    display: flex;
+    margin-bottom: 2rem;
+    border: none;
+    border-radius: 6px;
+    overflow: hidden;
+    .card-header {
+      border: none;
+      background-color: #48b5ce;
+      height: autorem;
+      img {
+        padding-top: 0.5rem;
+        border-radius: 6px;
+        width: 100%;
+        object-fit: contain;
+        box-shadow: rgba(0, 0, 0, 0.25) -4px 9px 9px -6px;
+        height: auto;
+      }
+    }
+    .card-bottom {
+      background-color: #48b5ce;
+      padding-block: 1rem;
+      height: 7.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-inline: 0.5rem;
+      @media screen and (min-width: 768px) {
+        padding-block: 1.5rem;
+        height: 9rem;
+      }
+      @media screen and (min-width: 992px) {
+        height: 10rem;
+      }
+      p {
+        text-align: center;
+        color: #fff;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        font-family: Poppins;
+        line-height: 100%;
+        font-weight: 900;
+        text-transform: uppercase;
+        @media screen and (min-width: 768px) {
+          line-height: 111%;
+        }
+      }
+      p:nth-child(1) {
+        font-size: clamp(1.8rem, 4vw, 1.8rem);
+        margin-bottom: 0.8rem;
+      }
+      p:nth-child(2) {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+      }
     }
   }
 }
