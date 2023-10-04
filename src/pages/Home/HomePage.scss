@@ -1,0 +1,18 @@
+main.main-homepage {
+  background-color: #f2f5f8;
+  .container {
+    background-color: #fff;
+    padding-block: 5rem;
+    h1 {
+      color: #095262;
+      margin-inline: auto;
+      text-align: center;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 700;
+      line-height: 115%;
+      text-transform: uppercase;
+      max-width: 25ch;
+      margin-bottom: 2rem;
+    }
+  }
+}
