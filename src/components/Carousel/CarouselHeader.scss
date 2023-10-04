@@ -1,14 +1,21 @@
 .carousel {
   position: relative;
-  height: 568px;
-  background: rgba(72, 182, 206, 0.69) 82%;
-  background: radial-gradient(
+  height: 30.5rem;
+  background-color: rgba(72, 182, 206, 0.69) 82%;
+  background-image: radial-gradient(
     circle,
     rgba(72, 182, 206, 0.21) 0%,
     rgba(72, 182, 206, 0.71) 62%,
     rgba(72, 182, 206, 0.69) 82%,
     rgba(0, 213, 255, 0.449) 100%
   );
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+    @media screen and (min-width: 600px) {
+      display: flex;
+    }
+  }
   .carousel-inner {
     height: 100%;
     .carousel-item {
