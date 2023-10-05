@@ -5,6 +5,12 @@ import CarouselCategories from '../../components/CarouselCategories/CarouselCate
 import pizzaManosque from '../../assets/images/manosque-pizza-discount.png';
 import { sellArgsList } from '../../data/sellArgsData';
 import ButtonOutline from '../../components/ButtonOutline/ButtonOutline';
+import facebookLogo from './../../assets/icons/facebook-logo.svg';
+import tweeterLogo from './../../assets/icons/tweeter-logo.svg';
+import instagramLogo from './../../assets/icons/instagram-logo.svg';
+import youtubeLogo from './../../assets/icons/youtube-logo.svg';
+import arrowUp from './../../assets/icons/arrow-up.svg';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (
@@ -43,7 +49,6 @@ const HomePage = () => {
                 <div className='arrow-right-wrapper'>
                   <div className='arrow-right-part-1'></div>
                   <div className='arrow-right-part-2'></div>
-                  <div className='arrow-right-part-3'></div>
                 </div>
               </Col>
             </Row>
@@ -98,6 +103,59 @@ const HomePage = () => {
             </Row>
           </section>
         </Container>
+        <footer>
+          <Row className='footer-top'>
+            <p>Nous suivre</p>
+            <div className='social-links-wrapper'>
+              <Link
+                to='https://www.facebook.com/'
+                target='_blank'
+                className='social-link-item'
+              >
+                <img src={facebookLogo} alt='facebook logo' />
+              </Link>
+              <Link
+                to='https://twitter.com/'
+                target='_blank'
+                className='social-link-item'
+              >
+                <img src={tweeterLogo} alt='tweeter logo' />
+              </Link>
+              <Link
+                to='https://www.instagram.com/'
+                target='_blank'
+                className='social-link-item'
+              >
+                <img src={instagramLogo} alt='instagram logo' />
+              </Link>
+              <Link
+                to='https://www.youtube.com/'
+                target='_blank'
+                className='social-link-item'
+              >
+                <img src={youtubeLogo} alt='youtube logo' />
+              </Link>
+            </div>
+          </Row>
+          <Row className='footer-bottom'>
+            <p>
+              Copyright © 2023 - ABBA-DEV - Mercadona. Tous droits réservés.
+            </p>
+          </Row>
+          <Link
+            className='top-page-link'
+            to='/'
+            onClick={() => {
+              window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <img src={arrowUp} alt='retour haut de page' />
+          </Link>
+        </footer>
       </main>
     </>
   );
