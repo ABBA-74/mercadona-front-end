@@ -1,0 +1,19 @@
+button.btn.btn-outline {
+  font-family: Quicksand;
+  color: #fff;
+  line-height: 93%;
+  text-transform: uppercase;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0);
+  //   margin-top: 0.5rem;
+  height: 46px;
+  padding: 12px 19px;
+  font-weight: 500;
+  font-size: 1.125rem;
+  border: 2px solid white;
+  background-color: transparent;
+  filter: drop-shadow(0 2px 3px #084552b4);
+  transition: filter 0.25s ease;
+  &:hover {
+    filter: drop-shadow(0 2px 3px #08455200);
+  }
+}

@@ -5,10 +5,11 @@ nav {
     display: flex;
     align-items: center;
     .brand-name {
-      background: linear-gradient(275deg, #48b6ce 1.7%, #f2d210 121.2%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      // background: linear-gradient(275deg, #48b6ce 1.7%, #f2d210 121.2%);
+      // background-clip: text;
+      // -webkit-background-clip: text;
+      // -webkit-text-fill-color: transparent;
+      color: #00708a;
       font-size: 2rem;
       display: none;
     }

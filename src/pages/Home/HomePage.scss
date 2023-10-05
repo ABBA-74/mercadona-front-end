@@ -12,7 +12,7 @@ main.main-homepage {
       margin-inline: auto;
       text-align: center;
       font-size: clamp(1.5rem, 3vw, 2.4rem);
-      font-weight: 700;
+      font-weight: 500;
       line-height: 115%;
       text-transform: uppercase;
       max-width: 25ch;
@@ -21,129 +21,184 @@ main.main-homepage {
   }
 }
 
-// section pizza manosque
-main.main-homepage .container .section-pizza-discount {
+// Section pizza promotions
+.section-pizza-discount {
   margin-top: 8rem;
-  padding-block: 2rem;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding-inline: 0;
-  border-radius: 6px;
-  background-color: #48b6ce;
-  @media screen and (min-width: 1400px) {
-    background-color: transparent;
-  }
   .row {
-    position: relative;
-    width: 100%;
-    .section-pizza-discount__left,
-    .section-pizza-discount__right {
-      padding-inline: 0;
+    margin-inline: 0;
+    background-color: #00708a;
+    border-radius: 6px;
+    @media screen and (min-width: 1400px) {
+      background-color: transparent;
     }
-
     .section-pizza-discount__left {
+      height: auto;
       position: relative;
       display: flex;
-      justify-content: start;
-      left: 0;
-      //   padding-inline: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding-inline: 0;
+      @media screen and (min-width: 992px) {
+        height: 363px;
+      }
       .arrow-left-wrapper {
+        position: relative;
         display: none;
         @media screen and (min-width: 1400px) {
           display: block;
-        }
-      }
-      .content-wrapper {
-        position: relative;
-        text-align: center;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        width: 100%;
-        @media screen and (min-width: 768px) {
-          text-align: center;
-        }
-        @media screen and (min-width: 992px) {
-          text-align: left;
-          padding-top: 4rem;
-          padding-left: 8rem;
-        }
-        @media screen and (min-width: 1200px) {
-          text-align: left;
-        }
-        @media screen and (min-width: 1400px) {
-          position: absolute;
-          left: 3rem;
-          top: 50%;
-          transform: translateY(-50%);
-          padding-top: 2rem;
-          padding-left: 3rem;
-        }
-        p,
-        button.btn-outline {
-          color: #fff;
-          line-height: 93%;
-          text-transform: uppercase;
-        }
-        p.title,
-        p.subtitle {
-          font-weight: 900;
-          font-family: Poppins;
-          font-size: clamp(1.8rem, 2vw, 2.1rem);
-          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-        p.title {
-          font-size: clamp(1.8rem, 4vw, 3rem);
-        }
-        p.subtitle {
-          font-size: clamp(1.8rem, 2vw, 2.1rem);
-        }
-        button.btn-outline {
-          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0);
-          margin-top: 0.5rem;
-          padding: 10px 18px;
-          font-family: Quicksand;
-          font-weight: 500;
-          font-size: 1.125rem;
-          border: 2px solid white;
+          bottom: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
           background-color: transparent;
-          filter: drop-shadow(0 2px 3px #084552b4);
-          transition: filter 0.25s ease;
-          &:hover {
-            filter: drop-shadow(0 2px 3px #08455200);
+          overflow: hidden;
+          border-radius: 6px;
+          z-index: 10;
+          .arrow-left-part-1,
+          .arrow-left-part-2,
+          .arrow-left-part-3 {
+            position: absolute;
+            top: 0px;
+            right: 0;
+            height: 363px;
+            width: 363px;
+            transform-origin: center;
+            background-color: #00708a;
+            border-radius: 6px;
+          }
+          .arrow-left-part-2,
+          .arrow-left-part-3 {
+            box-shadow: rgba(0, 0, 0, 0.85) 0px 25px 50px -12px;
+          }
+          .arrow-left-part-1 {
+            transform: translate(-30%, 0%) rotate(45deg);
+          }
+          .arrow-left-part-2 {
+            transform: translate(-50%, 0%) rotate(45deg);
+          }
+          .arrow-left-part-3 {
+            transform: translate(-110%, 0%) rotate(45deg) scale(1.5);
           }
         }
       }
     }
-
-    .section-pizza-discount__right {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .pizza-wrapper {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        @media screen and (min-width: 992px) {
-          justify-content: center;
-        }
-
-        img.pizza-img {
-          position: relative;
-          height: 280px;
-          width: auto;
-        }
-        @media screen and (min-width: 1400px) {
-          height: 280px;
-          width: auto;
-          padding-left: 4rem;
+    .content-wrapper {
+      position: relative;
+      left: 0;
+      z-index: 10;
+      text-align: center;
+      padding-top: 2rem;
+      padding-bottom: 0;
+      width: 100%;
+      @media screen and (min-width: 992px) {
+        text-align: left;
+        padding-top: 4rem;
+        padding-left: 8rem;
+        padding-bottom: 2rem;
+      }
+      @media screen and (min-width: 1400px) {
+        position: absolute;
+        left: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        padding-top: 2rem;
+        padding-left: 2rem;
+        max-width: 30ch;
+      }
+      p,
+      button.btn-outline {
+        color: #fff;
+        line-height: 93%;
+        text-transform: uppercase;
+      }
+      p.title,
+      p.subtitle {
+        font-family: Poppins;
+        font-weight: 900;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
+      p.title {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        &.strong {
+          color: #feb95f;
         }
       }
-      img.arrow-right-img {
+      p.subtitle {
+        font-size: clamp(1.8rem, 2vw, 2.1rem);
+        margin-bottom: 0.75em;
+      }
+      button.btn-outline {
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0);
+        padding: 10px 18px;
+        font-family: Quicksand;
+        font-weight: 500;
+        font-size: 1.125rem;
+        border: 2px solid white;
+        background-color: transparent;
+        filter: drop-shadow(0 2px 3px #084552b4);
+        transition: filter 0.25s ease;
+        &:hover {
+          filter: drop-shadow(0 2px 3px #08455200);
+        }
+      }
+    }
+    .section-pizza-discount__right {
+      position: relative;
+      padding-inline: 0;
+      .arrow-right-wrapper {
         display: none;
         @media screen and (min-width: 1400px) {
           display: block;
+          position: relative;
+          bottom: 100%;
+          right: -50%;
+          height: 100%;
+          width: 50%;
+          background-color: #00708a;
+          overflow: hidden;
+          z-index: 10;
+          padding-inline: 0;
+          border-radius: 6px;
+          .arrow-right-part-1,
+          .arrow-right-part-2 {
+            position: absolute;
+            top: 50%;
+            height: 363px;
+            width: 363px;
+            background-color: #00708a;
+            border-radius: 6px;
+          }
+          .arrow-right-part-1 {
+            left: 50%;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 25px 50px -12px;
+            transform: translate(-82%, -50%) rotate(-45deg);
+          }
+          .arrow-right-part-2 {
+            right: 0;
+            background-color: white;
+            transform: translate(-50%, -50%) rotate(-45deg);
+          }
+        }
+      }
+    }
+    .pizza-wrapper {
+      height: 363px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      @media screen and (min-width: 1400px) {
+        justify-content: start;
+      }
+      img {
+        position: relative;
+        height: 71%;
+        width: auto;
+        padding-left: 0;
+        z-index: 50;
+        @media screen and (min-width: 1400px) {
+          padding-left: 5%;
         }
       }
     }
@@ -171,7 +226,7 @@ main.main-homepage .container .section-sell-arguments {
     overflow: hidden;
     .card-header {
       border: none;
-      background-color: #48b5ce;
+      background-color: #00708a;
       height: autorem;
       img {
         padding-top: 0.5rem;
@@ -183,7 +238,7 @@ main.main-homepage .container .section-sell-arguments {
       }
     }
     .card-bottom {
-      background-color: #48b5ce;
+      background-color: #00708a;
       padding-block: 1rem;
       height: 7.9rem;
       display: flex;
@@ -205,6 +260,9 @@ main.main-homepage .container .section-sell-arguments {
         line-height: 100%;
         font-weight: 900;
         text-transform: uppercase;
+        &.strong {
+          color: #feb95f;
+        }
         @media screen and (min-width: 768px) {
           line-height: 111%;
         }
@@ -216,6 +274,68 @@ main.main-homepage .container .section-sell-arguments {
       p:nth-child(2) {
         font-size: clamp(1.8rem, 4vw, 3rem);
       }
+    }
+  }
+}
+
+// Section newsletter
+main.main-homepage .container .section-newsletter {
+  margin-top: 8rem;
+  background-color: #00708a;
+  border-radius: 6px;
+  .newsletter-wrapper {
+    min-height: 15rem;
+    padding-block: 2rem;
+    &--part-left,
+    &--part-right {
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      flex-direction: column;
+      padding-inline: 2rem;
+      @media screen and (min-width: 512px) {
+        padding-inline: 3rem;
+      }
+      @media screen and (min-width: 1200px) {
+        padding-inline: 4rem;
+      }
+    }
+    &--part-right {
+      align-items: flex-start;
+    }
+    &--part-left p,
+    &--part-right p {
+      color: #fff;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      font-family: Poppins;
+      font-size: 34px;
+      font-size: clamp(1.8rem, 2vw, 2.1rem);
+      font-style: normal;
+      font-weight: 900;
+      line-height: 111%; /* 37.74px */
+      text-transform: uppercase;
+
+      margin-bottom: 0;
+      @media screen and (min-width: 992px) {
+        max-width: 18ch;
+      }
+    }
+    &--part-right p {
+      margin-bottom: 1.5rem;
+    }
+    &--part-right input {
+      font-family: inherit;
+      font-size: 1rem;
+      width: clamp(250px, 50vw, 314px);
+      height: 48px;
+      flex-shrink: 0;
+      // margin-top: 1.2rem;
+      border-radius: 6px;
+      padding-left: 1rem;
+      margin-right: 1rem;
+      border: 2px solid rgb(255, 255, 255);
+      margin-bottom: 0;
+      outline: none;
     }
   }
 }

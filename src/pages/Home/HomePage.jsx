@@ -2,10 +2,9 @@ import { Col, Container, Row } from 'react-bootstrap';
 import './HomePage.scss';
 import CarouselHeader from '../../components/Carousel/CarouselHeader';
 import CarouselCategories from '../../components/CarouselCategories/CarouselCategories';
-import arrowShapeLeft from '../../assets/images/arrow-shape-p1.svg';
-import arrowShapeRight from '../../assets/images/arrow-shape-p2.svg';
 import pizzaManosque from '../../assets/images/manosque-pizza-discount.png';
 import { sellArgsList } from '../../data/sellArgsData';
+import ButtonOutline from '../../components/ButtonOutline/ButtonOutline';
 
 const HomePage = () => {
   return (
@@ -23,10 +22,12 @@ const HomePage = () => {
             <Row>
               <Col lg={6} className='section-pizza-discount__left'>
                 <div className='arrow-left-wrapper'>
-                  <img src={arrowShapeLeft} alt='forme fleche svg' />
+                  <div className='arrow-left-part-1'></div>
+                  <div className='arrow-left-part-2'></div>
+                  <div className='arrow-left-part-3'></div>
                 </div>
                 <div className='content-wrapper'>
-                  <p className='title'>30% DE REMISE</p>
+                  <p className='title strong'>30% DE REMISE</p>
                   <p className='subtitle'>SUR NOS PIZZA</p>
                   <button className='btn btn-outline'>EN SAVOIR PLUS</button>
                 </div>
@@ -40,11 +41,9 @@ const HomePage = () => {
                   />
                 </div>
                 <div className='arrow-right-wrapper'>
-                  <img
-                    src={arrowShapeRight}
-                    className='arrow-right-img'
-                    alt='forme fleche svg'
-                  />
+                  <div className='arrow-right-part-1'></div>
+                  <div className='arrow-right-part-2'></div>
+                  <div className='arrow-right-part-3'></div>
                 </div>
               </Col>
             </Row>
@@ -64,13 +63,38 @@ const HomePage = () => {
                       </div>
                       <div className='card-bottom'>
                         <p>{sellArg.txt.part1}</p>
-                        <p>{sellArg.txt.part2}</p>
+                        <p className='strong'>{sellArg.txt.part2}</p>
                         <p></p>
                       </div>
                     </div>
                   </Col>
                 );
               })}
+            </Row>
+          </section>
+
+          <section className='section-newsletter'>
+            <Row className='newsletter-wrapper'>
+              <Col lg={6} className='newsletter-wrapper--part-left'>
+                <p className='mb-3 mb-lg-0'>
+                  Bien informé, c&apos;est{' '}
+                  <span className='strong'>
+                    bien consommé en toute confiance
+                  </span>
+                  &nbsp; chaque jour.
+                </p>
+              </Col>
+              <Col lg={6} className='newsletter-wrapper--part-right'>
+                <p>Abonnez-vous à notre newsletter !</p>
+                <form>
+                  <input
+                    type='text'
+                    placeholder='Votre email'
+                    className='mb-4 mb-sm-4 mb-md-0 mb-lg-4 mb-xxl-0'
+                  />
+                  <ButtonOutline label='Rejoignez-nous' />
+                </form>
+              </Col>
             </Row>
           </section>
         </Container>
