@@ -1,18 +1,11 @@
 .carousel {
   position: relative;
-  height: 30.5rem;
-  background-color: rgba(72, 182, 206, 0.69) 82%;
-  background-image: radial-gradient(
-    circle,
-    rgba(72, 182, 206, 0.21) 0%,
-    rgba(72, 182, 206, 0.71) 62%,
-    rgba(72, 182, 206, 0.69) 82%,
-    rgba(0, 213, 255, 0.449) 100%
-  );
+  height: 28.5rem;
+  background-color: #00708a;
   .carousel-control-prev,
   .carousel-control-next {
     display: none;
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 992px) {
       display: flex;
     }
   }
@@ -25,25 +18,42 @@
       justify-content: center;
       .wrapper-img {
         position: relative;
-        height: 280px;
-        width: 350px;
+        height: 240px;
+        width: 240px;
         border-radius: 6px;
+        border-radius: 50%;
         background-color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
+        &::after,
+        &::before {
+          content: '';
+          position: absolute;
+          background-color: #00708a;
+          border-radius: 50%;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+            rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+          z-index: -2;
+        }
+        &::after {
+          inset: -8rem;
+        }
+        &::before {
+          inset: -16rem;
+        }
         img {
-          height: 80%;
+          height: 70%;
           width: auto;
           object-fit: contain;
         }
         .discount-label {
           position: absolute;
-          bottom: 0.5rem;
-          right: 0.5rem;
-          width: 9.3rem;
-          height: 4.7rem;
-          background: #bf211ec0;
+          bottom: -0.5rem;
+          right: -2.2rem;
+          width: 7.3rem;
+          height: 3.7rem;
+          background-color: #bf211ec0;
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
           box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
@@ -54,13 +64,16 @@
           align-items: center;
           color: #fff;
           font-family: Poppins;
-          font-size: 2.4rem;
+          font-size: 2rem;
           font-weight: 900;
           text-transform: uppercase;
           text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           @media screen and (min-width: 992px) {
             bottom: -2.5rem;
             right: -5rem;
+            font-size: 2.2rem;
+            width: 9.3rem;
+            height: 4.5rem;
           }
         }
       }
@@ -74,6 +87,15 @@
         bottom: 0;
         left: 0;
         right: 0;
+        @media screen and (min-width: 992px) {
+          left: -6rem;
+        }
+        @media screen and (min-width: 1200px) {
+          left: -4rem;
+        }
+        @media screen and (min-width: 1400px) {
+          left: -6rem;
+        }
         p {
           color: #fff;
           text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -84,7 +106,7 @@
           line-height: 111%;
           text-transform: uppercase;
           @media screen and (min-width: 1200px) {
-            width: 20ch;
+            width: 24ch;
           }
         }
       }
