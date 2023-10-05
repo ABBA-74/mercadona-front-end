@@ -39,13 +39,8 @@
       position: relative;
       height: 100%;
       width: 100%;
-      background-color: #48b5ceda;
-      //   background-image: linear-gradient(
-      //     to bottom right,
-      //     rgb(255, 255, 255) 25%,
-      //     #48b5ceda
-      //   );
-      background-color: #48b6ce;
+      background-color: #00708a;
+      box-shadow: inset 0 0 10px #013d4a;
     }
     &--content {
       width: 100%;
@@ -76,6 +71,7 @@
           line-height: 111%;
           text-align: center;
           text-shadow: 0 0 5px #115a6aa9;
+          text-shadow: 0 0 5px #012730dd;
         }
       }
     }
