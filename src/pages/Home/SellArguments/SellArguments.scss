@@ -1,0 +1,72 @@
+// Section cards sell arguments
+section.section-sell-arguments {
+  margin-top: 8rem;
+  .col-md-6:nth-child(3) {
+    margin-left: 0;
+    @media screen and (min-width: 768px) {
+      margin-left: 25%;
+    }
+    @media screen and (min-width: 1200px) {
+      margin-left: 0;
+    }
+  }
+  .card {
+    width: 100%;
+    display: flex;
+    margin-bottom: 2rem;
+    border: none;
+    border-radius: 6px;
+    overflow: hidden;
+    .card-header {
+      border: none;
+      background-color: #00708a;
+      height: autorem;
+      img {
+        padding-top: 0.5rem;
+        border-radius: 6px;
+        width: 100%;
+        object-fit: contain;
+        box-shadow: rgba(0, 0, 0, 0.25) -4px 9px 9px -6px;
+        height: auto;
+      }
+    }
+    .card-bottom {
+      background-color: #00708a;
+      padding-block: 1rem;
+      height: 7.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-inline: 0.5rem;
+      @media screen and (min-width: 768px) {
+        padding-block: 1.5rem;
+        height: 9rem;
+      }
+      @media screen and (min-width: 992px) {
+        height: 10rem;
+      }
+      p {
+        text-align: center;
+        color: white;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        font-family: Poppins, sans-serif;
+        line-height: 100%;
+        font-weight: 900;
+        text-transform: uppercase;
+        &.strong {
+          color: #feb95f;
+        }
+        @media screen and (min-width: 768px) {
+          line-height: 111%;
+        }
+      }
+      p:nth-child(1) {
+        font-size: clamp(1.8rem, 4vw, 1.8rem);
+        margin-bottom: 0.8rem;
+      }
+      p:nth-child(2) {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+      }
+    }
+  }
+}

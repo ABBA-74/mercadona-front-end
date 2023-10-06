@@ -6,7 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 const CarouselHeader = () => {
   return (
     <Carousel
-      data-bs-theme='dark'
+      data-bs-theme='light'
       fade
       interval={7500}
       indicators={false}
@@ -28,7 +28,8 @@ const CarouselHeader = () => {
               >
                 <Carousel.Caption>
                   <p className='text-center text-lg-start mb-0'>
-                    Les Meilleures Affaires, C&apos;est chez Mercadona
+                    Les Meilleures Affaires, C&apos;est chez&nbsp;
+                    <span className='strong'>Mercadona</span>
                   </p>
                 </Carousel.Caption>
               </Col>
