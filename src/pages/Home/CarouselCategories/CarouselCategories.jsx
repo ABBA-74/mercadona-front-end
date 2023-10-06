@@ -1,4 +1,5 @@
-import { categoriesList } from '../../data/categoriesData';
+import './CarouselCategories.scss';
+import { categoriesList } from '../../../data/categoriesData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -11,7 +12,6 @@ import {
   Navigation,
   Autoplay,
 } from 'swiper/modules';
-import './CarouselCategories.scss';
 
 const CarouselCategories = () => {
   return (
@@ -49,7 +49,7 @@ const CarouselCategories = () => {
                     <img
                       src={
                         new URL(
-                          `../../assets/images/${category.image.imgFile}`,
+                          `../../../assets/images/${category.image.imgFile}`,
                           import.meta.url
                         ).href
                       }
@@ -65,7 +65,7 @@ const CarouselCategories = () => {
                 <img
                   src={
                     new URL(
-                      '../../assets/images/back-card.png',
+                      '../../../assets/images/back-card.png',
                       import.meta.url
                     ).href
                   }

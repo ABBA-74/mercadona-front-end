@@ -73,9 +73,11 @@ const Navigation = () => {
             <Nav className=''>
               <InputGroup className='input-search mt-3 mt-lg-0 mb-3 mb-lg-0'>
                 <Form.Control
+                  id='search-products'
                   placeholder='Rechercher des produits...'
-                  aria-label="Recipient's username"
-                  aria-describedby='basic-addon2'
+                  aria-label='Rechercher des produits'
+                  aria-describedby='search-products'
+                  autoComplete='off'
                 />
                 <InputGroup.Text id='basic-addon2'>
                   <img
