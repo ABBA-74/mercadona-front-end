@@ -81,14 +81,12 @@ section.section-pizza-discount {
         padding-left: 2rem;
         max-width: 15rem;
       }
-      p {
-        color: white;
-        line-height: 93%;
-        text-transform: uppercase;
-      }
       p.title,
       p.subtitle {
+        text-transform: uppercase;
+        color: white;
         font-family: Poppins, sans-serif;
+        line-height: 93%;
         font-weight: 900;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       }
@@ -99,6 +97,7 @@ section.section-pizza-discount {
         }
       }
       p.subtitle {
+        line-height: 34px;
         font-size: clamp(1.8rem, 2vw, 2.1rem);
         margin-bottom: 0.75em;
       }
