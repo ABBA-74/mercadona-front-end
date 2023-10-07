@@ -1,39 +1,60 @@
-import { Col, Container, Form, Row } from 'react-bootstrap';
 import './CatalogPage.scss';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 import CarouselHeader from '../../components/Carousel/CarouselHeader';
 import Footer from '../../components/Footer/Footer';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import Loader from '../../components/Loader/Loader';
 
 const CatalogPage = () => {
   const [categories, setCategories] = useState(null);
   const [products, setProducts] = useState(null);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // URL de l'API à appeler
     const apiUrlCategories = 'https://mercadona-api.abb-dev.fr/api/categories';
     const apiUrlProducts = 'https://mercadona-api.abb-dev.fr/api/products';
-
-    // Exécuter les appels API en parallèle avec Promise.all()
+    setIsLoading(true);
+    // Execute API calls in parallel with Promise.all()
     Promise.all([axios.get(apiUrlCategories), axios.get(apiUrlProducts)])
+
       .then((responses) => {
-        // Les réponses sont dans un tableau correspondant à l'ordre des Promesses dans Promise.all()
+        // response in array according to the order of call api Promise.all()
         setCategories(responses[0].data);
         setProducts(responses[1].data);
+        setIsLoading(false);
       })
       .catch((err) => {
         setError(err);
       });
   }, []);
-  // Gérer les états de chargement et d'erreur
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-  if (!categories || !products) {
-    return <p>Loading...</p>;
-  }
+
+  const renderErrorMessage = () => {
+    return (
+      <div className='alert-msg d-flex justify-content-center'>
+        <p className='alert alert-warning w-75'>
+          Nous avons rencontré un problème de chargement des données. Nous
+          travaillons à résoudre ce problème rapidement.
+          <br />
+          Nous nous excusons pour tout désagrément que cela pourrait causer.
+          <br />
+          La qualité de votre expérience utilisateur est notre priorité, et nous
+          faisons tout notre possible pour résoudre ce problème rapidement. Nous
+          vous remercions de votre compréhension et de votre patience.
+        </p>
+      </div>
+    );
+  };
+
+  const renderNoDataMessage = () => {
+    return (
+      <div className='no-data-msg d-flex justify-content-center'>
+        <p className='alert alert-warning w-50'>Aucune donnée disponible</p>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -41,8 +62,12 @@ const CatalogPage = () => {
       <main className='main-catalog'>
         <Container>
           <h1 className='mb-5'>Explorez notre Catalogue</h1>
+          {error && <p>{error.message}</p>}
+          {!error && isLoading && (!categories || !products) && (
+            <p>Chargement en cours...</p>
+          )}
           <Row>
-            <Col sm={6} md={4} lg={3}>
+            <Col sm={6} md={5} lg={4} xl={3}>
               <div className='filters-wrapper'>
                 <Form.Select size='md'>
                   {categories?.map((category, index) => {
@@ -59,7 +84,8 @@ const CatalogPage = () => {
             </Col>
           </Row>
           <Row className='products-wrapper my-5'>
-            {products ? (
+            {products &&
+              !isLoading &&
               products.map((product) => {
                 return (
                   <Col md={6} lg={4} xl={3} key={product.id} className='mb-5'>
@@ -75,10 +101,10 @@ const CatalogPage = () => {
                     />
                   </Col>
                 );
-              })
-            ) : (
-              <p>No data</p>
-            )}
+              })}
+            {!products && !isLoading && renderNoDataMessage()}
+            {!error && isLoading && <Loader />}
+            {error && renderErrorMessage()}
           </Row>
         </Container>
       </main>

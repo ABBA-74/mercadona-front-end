@@ -18,10 +18,10 @@ const ProductCard = ({
 }) => {
   const filledStars = Math.floor(Math.random() * 3) + 3;
   const rndReviews = Math.floor(Math.random() * 50) + 9;
-  let imageUrl = `https://mercadona-api.abb-dev.fr/images/${imgFile}`;
+  const imageUrl = `https://mercadona-api.abb-dev.fr/images/${imgFile}`;
   const discountedPriceFormatted = String(discountedPrice).replace('.', '€');
   const originalPriceFormatted = String(originalPrice).replace('.', '€');
-  console.log(imageUrl);
+
   return (
     <>
       <div className='product-card'>
