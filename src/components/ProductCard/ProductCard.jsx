@@ -1,10 +1,11 @@
-import './ProductCard.scss';
+import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import { Badge } from 'react-bootstrap';
 import { BsStarFill, BsStar } from 'react-icons/bs';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 // import { MdOutlineFavorite } from 'react-icons/md';
 import redPennant from '../../assets/images/red-pennant.svg';
-import { Badge } from 'react-bootstrap';
+import './ProductCard.scss';
 
 const ProductCard = ({
   label,
@@ -19,8 +20,14 @@ const ProductCard = ({
   const filledStars = Math.floor(Math.random() * 3) + 3;
   const rndReviews = Math.floor(Math.random() * 50) + 9;
   const imageUrl = `https://mercadona-api.abb-dev.fr/images/${imgFile}`;
-  const discountedPriceFormatted = String(discountedPrice).replace('.', '€');
-  const originalPriceFormatted = String(originalPrice).replace('.', '€');
+  const discountedPriceFormatted = String(discountedPrice?.toFixed(2)).replace(
+    '.',
+    '€'
+  );
+  const originalPriceFormatted = String(originalPrice.toFixed(2)).replace(
+    '.',
+    '€'
+  );
 
   return (
     <>
@@ -55,7 +62,7 @@ const ProductCard = ({
           <div className='product-card__reviews'>
             <ul className='star-list'>
               {[...Array(5)].map((_, i) => (
-                <li key={i}>
+                <li key={uuidv4()}>
                   {i < filledStars ? (
                     <BsStarFill color='orange' />
                   ) : (
@@ -85,8 +92,7 @@ ProductCard.propTypes = {
   discountedPrice: PropTypes.number,
   description: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
-  imgFile: PropTypes.string.isRequired,
-  imgAlt: PropTypes.string.isRequired,
+  imgFile: PropTypes.string,
+  imgAlt: PropTypes.string,
 };
-
 export default ProductCard;

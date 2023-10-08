@@ -20,8 +20,11 @@ main.main-catalog {
     }
   }
   .filters-wrapper {
+    .form-select {
+      border: 1px solid rgb(231, 231, 231);
+    }
     .form-select:focus {
-      border-color: none;
+      border: 1px solid rgb(191, 191, 191);
       outline: 0;
       box-shadow: none;
     }
