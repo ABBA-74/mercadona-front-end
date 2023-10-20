@@ -1,8 +1,9 @@
 .spinner-wrapper {
   width: 100%;
-  height: 15vh;
-  //   background-color: red;
-  margin-top: 3rem;
+  min-height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 3rem;
   .spinner {
     position: relative;
