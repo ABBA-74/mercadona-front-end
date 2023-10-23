@@ -1,25 +1,32 @@
+import { Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { useEffect, useRef, useState } from 'react';
+
+import catalogIcon from '../../assets/icons/catalog-menu.png';
 import { categoriesList } from '../../data/categoriesData';
 import categoryListIcon from '../../assets/icons/category-list-menu.png';
-import promotionsIcon from '../../assets/icons/promotions-menu.png';
-import catalogIcon from '../../assets/icons/catalog-menu.png';
-import shoppingWishListIcon from '../../assets/icons/shopping-wish-list-menu.png';
 import loginIcon from '../../assets/icons/login-menu.png';
-import searchIcon from '../../assets/icons/search-menu.png';
 import mercadonaLogo from '../../assets/images/mercadona-logo.svg';
+import promotionsIcon from '../../assets/icons/promotions-menu.png';
+import searchIcon from '../../assets/icons/search-menu.png';
+import shoppingWishListIcon from '../../assets/icons/shopping-wish-list-menu.png';
+
 import './Navigation.scss';
-import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { scrollTo } from '../../utils/scrollTo';
 
 const Navigation = () => {
   const refPromotionsNavItem = useRef(null);
   const refCatalogNavItem = useRef(null);
   const refWishListNavItem = useRef(null);
   const refLoginNavItem = useRef(null);
+  const inputSearchRef = useRef();
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
+  const location = useLocation();
 
   const navDropdownTitle = (
     <>
@@ -42,6 +49,50 @@ const Navigation = () => {
       el.current.classList.remove('active');
     });
   };
+
+  // handle change search value
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  // handle submit search value
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    /* record to localStorage searchQuery */
+    localStorage.setItem('searchQuery', searchValue);
+
+    refCatalogNavItem.current.classList.add('active');
+
+    inputSearchRef.current.blur();
+    if (!searchValue.trim()) {
+      navigate(`/catalogue`);
+      return;
+    }
+    navigate(`/catalogue?label=${searchValue}`);
+    // scroll to the top of products listing
+    scrollTo(0, 504);
+  };
+
+  useEffect(() => {
+    if (location.pathname != '/catalogue') {
+      setSearchValue('');
+      localStorage.removeItem('searchQuery');
+    } else {
+      const savedQuery = localStorage.getItem('searchQuery');
+      if (savedQuery) {
+        setSearchValue(savedQuery);
+      }
+    }
+  }, [location]);
+
+  // On mounted component phase load searchQuery from localStorage
+  useEffect(() => {
+    const savedQuery = localStorage.getItem('searchQuery');
+    if (savedQuery) {
+      setSearchValue(savedQuery);
+    }
+  }, []);
 
   return (
     <>
@@ -72,20 +123,25 @@ const Navigation = () => {
           <Navbar.Collapse id='basic-navbar-nav' className='w-100'>
             <Nav className=''>
               <InputGroup className='input-search mt-3 mt-lg-0 mb-3 mb-lg-0'>
-                <Form.Control
-                  id='search-products'
-                  placeholder='Rechercher des produits...'
-                  aria-label='Rechercher des produits'
-                  aria-describedby='search-products'
-                  autoComplete='off'
-                />
-                <InputGroup.Text id='basic-addon2'>
-                  <img
-                    src={searchIcon}
-                    alt='icone loupe'
-                    className='search-icon'
+                <Form onSubmit={handleSubmit}>
+                  <Form.Control
+                    ref={inputSearchRef}
+                    id='search-products'
+                    placeholder='Rechercher des produits...'
+                    aria-label='Rechercher des produits'
+                    aria-describedby='search-products'
+                    autoComplete='off'
+                    onChange={handleChange}
+                    value={searchValue}
                   />
-                </InputGroup.Text>
+                  <InputGroup.Text id='basic-addon2'>
+                    <img
+                      src={searchIcon}
+                      alt='icone loupe'
+                      className='search-icon'
+                    />
+                  </InputGroup.Text>
+                </Form>
               </InputGroup>
               <NavDropdown
                 className='me-auto'

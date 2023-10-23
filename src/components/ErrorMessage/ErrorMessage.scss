@@ -1,0 +1,21 @@
+.error-msg {
+  position: relative;
+  padding-top: 5rem;
+  h2 {
+    position: relative;
+    text-align: center;
+    color: #095262;
+    opacity: 0;
+    transform: translateY(2rem);
+    animation: slideDown 0.3s forwards ease-out;
+    @keyframes slideDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+  .alert.alert-warning {
+    width: clamp(20rem, 85%, 38.75rem);
+  }
+}

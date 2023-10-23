@@ -1,0 +1,24 @@
+.filters-wrapper {
+  > * {
+    display: flex;
+    align-items: center;
+  }
+  .form-select {
+    border: 1px solid rgb(231, 231, 231);
+  }
+  .form-select:focus {
+    border: 1px solid rgb(191, 191, 191);
+    outline: 0;
+    box-shadow: none;
+  }
+  .form-check-input.is-valid ~ .form-check-label {
+    color: #212529;
+  }
+  .form-check-input.is-valid:checked {
+    background-color: #00708a;
+  }
+
+  .form-check-input.is-valid {
+    border-color: #095262;
+  }
+}

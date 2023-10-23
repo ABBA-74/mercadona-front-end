@@ -18,7 +18,6 @@ const PizzaDiscountBanner = () => {
               <p className='title strong'>30% DE REMISE</p>
               <p className='subtitle'>SUR NOS PIZZA</p>
               <ButtonOutline label='EN SAVOIR PLUS' />
-              {/* <button className='btn btn-outline'></button> */}
             </div>
           </Col>
           <Col lg={6} className='section-pizza-discount__right'>

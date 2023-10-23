@@ -1,0 +1,17 @@
+.pagination {
+  user-select: none;
+  .page-link {
+    color: #095262;
+  }
+  .active > .page-link,
+  .page-link.active {
+    z-index: 3;
+    color: white;
+    background-color: #00708a;
+    border-color: #095262;
+  }
+  .page-link:focus {
+    box-shadow: none;
+    color: #095262;
+  }
+}

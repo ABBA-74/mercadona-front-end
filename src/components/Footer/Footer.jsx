@@ -47,10 +47,11 @@ const Footer = () => {
         <Row className='footer-bottom'>
           <p>Copyright © 2023 - ABBA-DEV - Mercadona. Tous droits réservés.</p>
         </Row>
-        <Link
+        <a
           className='top-page-link'
-          to='/'
-          onClick={() => {
+          href='#!'
+          onClick={(e) => {
+            e.preventDefault();
             window.scroll({
               top: 0,
               left: 0,
@@ -59,7 +60,7 @@ const Footer = () => {
           }}
         >
           <img src={arrowUp} alt='retour haut de page' />
-        </Link>
+        </a>
       </footer>
     </>
   );

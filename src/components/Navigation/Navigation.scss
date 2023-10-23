@@ -76,9 +76,19 @@ nav {
   .dropdown-item:hover {
     background-color: transparent;
   }
-  .input-group.input-search {
-    outline: none;
+  form {
+    display: flex;
+    width: 100%;
+    .input-group.input-search {
+      outline: none;
+    }
+    input.form-control {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
     .input-group-text {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
       background-color: #09526253;
       transition: background-color 0.35s ease;
     }
@@ -168,7 +178,7 @@ nav {
   }
   .navbar-nav .category-item-wrapper {
     background-color: rgb(255, 255, 255);
-    background-image: linear-gradient(
+    background: linear-gradient(
       to right,
       rgb(255, 255, 255) 60%,
       rgba(255, 255, 255, 0.255)
@@ -176,7 +186,7 @@ nav {
     padding: 0.96rem;
     width: 17.2rem;
     border-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    box-shadow: rgba(0, 0, 0, 0.25) -4px 9px 25px -6px;
     border: 1px solid transparent;
     transition: box-shadow 0.3s ease-out, border-color 0.3s ease,
       color 0.3s ease-in-out;
