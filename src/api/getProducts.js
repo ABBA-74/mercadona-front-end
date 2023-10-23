@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios from './axios';
+import { ACTIVE_PRODUCTS_ENDPOINT } from './apiConfig';
 
-export const fetchProducts = async (currentPage, filters) => {
-  const baseUrl = 'https://mercadona-api.abb-dev.fr/api/products';
+export const getProducts = async (currentPage, filters) => {
+  // const baseUrl = `${API_URL}${ACTIVE_PRODUCTS_ENDPOINT}`;
+  const baseUrl = `${ACTIVE_PRODUCTS_ENDPOINT}`;
   let apiUrlProducts = currentPage ? `${baseUrl}?page=${currentPage}` : baseUrl;
-
   // Add filters to the query if they are provided
   if (filters && Object.keys(filters).length > 0) {
     const queryString = Object.keys(filters)
@@ -12,14 +13,8 @@ export const fetchProducts = async (currentPage, filters) => {
     apiUrlProducts += `&${queryString}`;
   }
 
-  const config = {
-    headers: {
-      Accept: 'application/ld+json',
-    },
-  };
-
   try {
-    const responses = await axios.get(apiUrlProducts, config);
+    const responses = await axios.get(apiUrlProducts);
     const products = responses.data['hydra:member'];
     const totalItems = responses.data['hydra:totalItems'];
 

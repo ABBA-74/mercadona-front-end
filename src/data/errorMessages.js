@@ -30,3 +30,8 @@ export const noProductsBySearchMessage = [
       "On a jeté notre ligne dans l'océan des produits, mais rien ne mord pour '[query]'. Changez l'appât et essayez de nouveau!",
   },
 ];
+export const fetchErrorMessage = {
+  title: 'Oops, Notre Superordinateur est en Pause ☕️',
+  message:
+    'Nous travaillons activement à résoudre ce problème et à ramener nos données en ligne. Veuillez nous excuser pour les désagréments que cela pourrait causer. Nous vous remercions de votre patience et de votre compréhension pendant que nous remettons notre superordinateur en marche !',
+};

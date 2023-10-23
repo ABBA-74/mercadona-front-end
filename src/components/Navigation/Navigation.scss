@@ -76,9 +76,19 @@ nav {
   .dropdown-item:hover {
     background-color: transparent;
   }
-  .input-group.input-search {
-    outline: none;
+  form {
+    display: flex;
+    width: 100%;
+    .input-group.input-search {
+      outline: none;
+    }
+    input.form-control {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
     .input-group-text {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
       background-color: #09526253;
       transition: background-color 0.35s ease;
     }

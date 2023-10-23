@@ -75,12 +75,12 @@
       line-height: normal;
       .total-price {
         color: #bf211e;
-        font-size: 24px;
+        font-size: 1.5rem;
         font-weight: 700;
       }
       .previous-price {
         color: #095262;
-        font-size: 12px;
+        font-size: 1rem;
         font-weight: 400;
         text-decoration: line-through;
       }
@@ -105,30 +105,28 @@
         }
       }
     }
-    .product-card__label {
+    .product-card__label,
+    .product-card__description {
       color: #095262;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 1rem;
       line-height: normal;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
+      -webkit-box-orient: vertical;
+    }
+    .product-card__label {
+      font-weight: 700;
       -webkit-line-clamp: 1;
       line-clamp: 1;
       -webkit-box-orient: vertical;
     }
     .product-card__description {
-      color: #095262;
-      font-size: 16px;
       font-weight: 400;
-      line-height: normal;
       margin-bottom: 1.2rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
       -webkit-line-clamp: 3;
       line-clamp: 3;
-      -webkit-box-orient: vertical;
+      min-height: 3.75rem;
     }
     button.btn {
       display: flex;

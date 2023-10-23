@@ -1,58 +1,50 @@
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import CarouselHeader from '../../components/Carousel/CarouselHeader';
 import Footer from '../../components/Footer/Footer';
-import Loader from '../../components/Loader/Loader';
-import ProductCard from '../../components/ProductCard/ProductCard';
-import { fetchCategoriesAndProducts } from '../../api/fetchCategoriesAndProducts';
-import { fetchProducts } from '../../api/fetchProducts';
-
-import CustomPagination from './CustomPagination/CustomPagination';
-import ErrorMessage from './ErrorMessage/ErrorMessage';
-import NoDataMessage from './NoDataMessage/NoDataMessage';
+import { getCategoriesAndProducts } from '../../api/getCategoriesAndProducts';
+import { getProducts } from '../../api/getProducts';
+import { getCategories } from '../../api/getCategories';
+import { scrollTo } from './../../utils/scrollTo.js';
+import { CATEGORIES_ENDPOINT } from './../../api/apiConfig';
 
 import './CatalogPage.scss';
+import Filters from './Filters/Filters';
+import ProductsSection from './ProductsSection/ProductsSection';
 
 const CatalogPage = () => {
   const [categories, setCategories] = useState(null);
   const [products, setProducts] = useState(null);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState({});
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      const { categories, products, totalItems } =
-        await fetchCategoriesAndProducts();
-      setCategories(categories);
-      setProducts(products);
-      setTotalPages(calculateTotalPages(totalItems));
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const label = searchParams.get('label');
 
   const calculateTotalPages = (totalItems) => {
     return Math.ceil(totalItems / 8);
   };
+  const orderFilterMap = {
+    1: { 'order[createdAt]': 'desc' },
+    2: { 'order[currentPromotionPercentage]': 'desc' },
+    3: { 'order[label]': 'asc' },
+    4: { 'order[label]': 'desc' },
+  };
 
+  /*  Handle Pagination */
   const handlePageChange = async (newPage) => {
     // scroll to the top of products listing
-    window.scroll({
-      top: 504,
-      left: 0,
-      behavior: 'smooth',
-    });
+    scrollTo(0, 504);
     if (newPage != currentPage) {
       try {
-        const { products, totalItems } = await fetchProducts(newPage);
+        const { products, totalItems } = await getProducts(newPage, filters);
         setProducts(products);
-
         setCurrentPage(newPage);
         setTotalPages(calculateTotalPages(totalItems));
       } catch (err) {
@@ -61,17 +53,106 @@ const CatalogPage = () => {
     }
   };
 
-  const handleChangeCategory = async (idCategory) => {
-    const filter =
-      idCategory != 0 ? { category: `/api/categories/${idCategory}` } : '';
-    const { products, totalItems } = await fetchProducts(1, filter);
-    setProducts(products);
-    setCurrentPage(1);
-    setTotalPages(calculateTotalPages(totalItems));
+  /* Handle Category Select Input Filter */
+  const handleChangeCategory = (idCategory) => {
+    /* Filter by removing previous category filter only */
+    const filteredFilters = Object.keys(filters).reduce((acc, key) => {
+      if (!key.startsWith('category')) {
+        acc[key] = filters[key];
+      }
+      return acc;
+    }, {});
+
+    const newCategoryFilter =
+      idCategory != 0
+        ? { category: `${CATEGORIES_ENDPOINT}/${idCategory}` }
+        : '';
+    setFilters({ ...filteredFilters, ...newCategoryFilter });
   };
 
+  /* Handle Promo Checkbox Input >>> promo is displayed only */
+  const handleChangePromoDisplay = (isPromoDisplayed) => {
+    /* Filter by removing previous promo filter only */
+    if (isPromoDisplayed) {
+      setFilters({ ...filters, 'exists[discountedPrice]': isPromoDisplayed });
+    } else {
+      setFilters((current) => {
+        const { ['exists[discountedPrice]']: _, ...rest } = current;
+        return rest;
+      });
+    }
+  };
+
+  /* Handle Input Order Filter */
+  const handleChangeOrder = (idOrder) => {
+    /* Filter by removing previous order filter only */
+    const filteredFilters = Object.keys(filters).reduce((acc, key) => {
+      if (!key.startsWith('order')) {
+        acc[key] = filters[key];
+      }
+      return acc;
+    }, {});
+
+    const newOrderFilter = orderFilterMap[idOrder] || {};
+    setFilters({ ...filteredFilters, ...newOrderFilter });
+  };
+
+  /* Fetch Data after each new filter changement*/
   useEffect(() => {
-    fetchData();
+    scrollTo(0, 504);
+    const fetchAndSetProducts = async () => {
+      setProducts(null);
+      setIsLoading(true);
+      try {
+        const appliedFilters = label ? { ...filters, label } : filters;
+        const { products, totalItems } = await getProducts(1, appliedFilters);
+        setProducts(products);
+        setCurrentPage(1);
+        setTotalPages(calculateTotalPages(totalItems));
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAndSetProducts();
+  }, [filters, label]);
+  /* Fetch Data (category / products) on mounted phase of the component */
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const { categories, products, totalItems } =
+          await getCategoriesAndProducts();
+        setCategories(categories);
+        setProducts(products);
+        setTotalPages(calculateTotalPages(totalItems));
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    const fetchAndSetCategories = async () => {
+      try {
+        const { categories } = await getCategories();
+        setCategories(categories);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError(err);
+      }
+    };
+    if (!label) {
+      fetchData();
+    } else {
+      fetchAndSetCategories();
+    }
   }, []);
 
   return (
@@ -80,58 +161,24 @@ const CatalogPage = () => {
       <main className='main-catalog'>
         <Container>
           <h1 className='mb-5'>Explorez notre Catalogue</h1>
-          {error && <p className='alert alert-info w-25'>{error.message}</p>}
-          <Row>
+          <Row className='filters-wrapper g-3'>
             {categories && (
-              <Col sm={6} md={5} lg={4} xl={3}>
-                <div className='filters-wrapper'>
-                  <Form.Select
-                    size='md'
-                    onChange={(e) => handleChangeCategory(e.target.value)}
-                  >
-                    <option value={0}>Selectionner une catégorie</option>
-                    {categories?.map((category) => {
-                      return (
-                        <option key={category.id} value={category.id}>
-                          {category.label}
-                        </option>
-                      );
-                    })}
-                  </Form.Select>
-                </div>
-              </Col>
-            )}
-          </Row>
-          <Row className='products-wrapper my-5'>
-            {products?.length > 0 &&
-              !isLoading &&
-              products.map((product) => {
-                return (
-                  <Col md={6} lg={4} xl={3} key={product.id} className='mb-5'>
-                    <ProductCard
-                      label={product.label}
-                      discountPercentage={product.currentPromotionPercentage}
-                      originalPrice={product.originalPrice}
-                      discountedPrice={product.discountedPrice}
-                      description={product.description}
-                      category={product.category.label}
-                      imgFile={product.image?.imgFile}
-                      imgAlt={product.image?.label}
-                    />
-                  </Col>
-                );
-              })}
-            {products?.length == 0 && !isLoading && <NoDataMessage />}
-            {!error && isLoading && <Loader />}
-            {error && <ErrorMessage />}
-            {products?.length > 0 && !isLoading && (
-              <CustomPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
+              <Filters
+                categories={categories}
+                handleChangeCategory={handleChangeCategory}
+                handleChangeOrder={handleChangeOrder}
+                handleChangePromoDisplay={handleChangePromoDisplay}
               />
             )}
           </Row>
+          <ProductsSection
+            error={error}
+            isLoading={isLoading}
+            products={products}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+          />
         </Container>
       </main>
       <Footer />
