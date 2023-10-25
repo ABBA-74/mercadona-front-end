@@ -11,15 +11,16 @@ import { categoriesList } from '../../data/categoriesData';
 import categoryListIcon from '../../assets/icons/category-list-menu.png';
 import loginIcon from '../../assets/icons/login-menu.png';
 import mercadonaLogo from '../../assets/images/mercadona-logo.svg';
-import promotionsIcon from '../../assets/icons/promotions-menu.png';
+import dashboardIcon from '../../assets/icons/dashboard-menu.png';
 import searchIcon from '../../assets/icons/search-menu.png';
 import shoppingWishListIcon from '../../assets/icons/shopping-wish-list-menu.png';
 
-import './Navigation.scss';
 import { scrollTo } from '../../utils/scrollTo';
 
+import './Navigation.scss';
+
 const Navigation = () => {
-  const refPromotionsNavItem = useRef(null);
+  const refDashboardNavItem = useRef(null);
   const refCatalogNavItem = useRef(null);
   const refWishListNavItem = useRef(null);
   const refLoginNavItem = useRef(null);
@@ -41,7 +42,7 @@ const Navigation = () => {
 
   const handleClickNavbarBrand = () => {
     [
-      refPromotionsNavItem,
+      refDashboardNavItem,
       refCatalogNavItem,
       refWishListNavItem,
       refLoginNavItem,
@@ -180,20 +181,6 @@ const Navigation = () => {
                 </Container>
               </NavDropdown>
               <Nav.Link
-                as={Link}
-                eventKey='2'
-                className='mx-lg-2'
-                to='/promotions'
-                ref={refPromotionsNavItem}
-              >
-                <img
-                  src={promotionsIcon}
-                  alt='icone promotions'
-                  className='menu-icon promotions-icon'
-                />
-                <span className='label-menu'>Promotions</span>
-              </Nav.Link>
-              <Nav.Link
                 eventKey='3'
                 as={Link}
                 className='mx-lg-2'
@@ -220,6 +207,20 @@ const Navigation = () => {
                   className='menu-icon shopping-wish-list-icon'
                 />
                 <span className='label-menu'>Mes produits</span>
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                eventKey='2'
+                className='mx-lg-2'
+                to='/dashboard'
+                ref={refDashboardNavItem}
+              >
+                <img
+                  src={dashboardIcon}
+                  alt='icone dashboard'
+                  className='menu-icon dahsboard-icon'
+                />
+                <span className='label-menu'>Dashboard</span>
               </Nav.Link>
               <Nav.Link
                 eventKey='5'
