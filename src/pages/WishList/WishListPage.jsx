@@ -4,9 +4,11 @@ import './WishListPage.scss';
 const WishListPage = () => {
   return (
     <>
-      <Container>
-        <h1>WishList Page</h1>
-      </Container>
+      <section className='section-wish-list'>
+        <Container>
+          <h1>WishList Page</h1>
+        </Container>
+      </section>
     </>
   );
 };
