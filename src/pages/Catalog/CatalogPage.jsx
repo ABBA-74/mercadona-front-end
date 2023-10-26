@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import CarouselHeader from '../../components/Carousel/CarouselHeader';
-import Footer from '../../components/Footer/Footer';
 import { getCategoriesAndProducts } from '../../api/getCategoriesAndProducts';
 import { getProducts } from '../../api/getProducts';
 import { getCategories } from '../../api/getCategories';

@@ -11,7 +11,7 @@ import LoginForm from './loginForm/loginForm';
 import './LoginPage.scss';
 
 const LoginPage = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();

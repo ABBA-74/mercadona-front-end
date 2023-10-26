@@ -6,7 +6,6 @@ import CarouselCategories from './CarouselCategories/CarouselCategories';
 import PizzaDiscountBanner from './PizzaDiscountBanner/PizzaDiscountBanner';
 import SellArguments from './SellArguments/SellArguments';
 import Newsletter from '../../components/Newsletter/Newsletter';
-import Footer from '../../components/Footer/Footer';
 
 const HomePage = () => {
   return (
