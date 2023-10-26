@@ -1,0 +1,48 @@
+.section-login {
+  -webkit-user-select: none; /* Safari */
+  user-select: none;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: 586px;
+  .row > div:nth-child(1) {
+    height: 100%;
+    img {
+      height: clamp(650px, 95vh, 100vh - 235px);
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .row > div:nth-child(2) {
+    position: relative;
+    background-color: #48b5ce5f;
+    height: auto;
+    img {
+      display: none;
+      height: clamp(650px, 95vh, 100vh - 235px);
+      width: 100%;
+      object-fit: cover;
+      @media screen and (min-width: 991px) {
+        display: block;
+      }
+    }
+    .alert {
+      position: absolute;
+      line-height: 1.2;
+      font-weight: 500;
+      top: -15rem;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+        rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+      animation: slideDown 0.6s ease forwards;
+      @keyframes slideDown {
+        to {
+          transform: translateY(14.8rem);
+        }
+      }
+      p {
+        padding-top: 0.3rem;
+      }
+    }
+  }
+}
