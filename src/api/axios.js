@@ -4,6 +4,7 @@ import { API_URL } from './apiConfig';
 const config = {
   headers: {
     Accept: 'application/ld+json',
+    'Content-Type': 'application/json',
   },
 };
 
