@@ -221,7 +221,7 @@ const Navigation = () => {
                 />
                 <span className='label-menu'>Mes produits</span>
               </Nav.Link>
-              {auth.isAuthenticated ? (
+              {auth?.isAuthenticated ? (
                 <Nav.Link
                   as={Link}
                   eventKey='5'
@@ -237,7 +237,7 @@ const Navigation = () => {
                   <span className='label-menu'>Dashboard</span>
                 </Nav.Link>
               ) : null}
-              {auth.isAuthenticated ? (
+              {auth?.isAuthenticated ? (
                 <Nav.Link
                   eventKey='6'
                   as={Link}
