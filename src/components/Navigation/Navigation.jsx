@@ -4,29 +4,34 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import catalogIcon from '../../assets/icons/catalog-menu.png';
 import { categoriesList } from '../../data/categoriesData';
 import categoryListIcon from '../../assets/icons/category-list-menu.png';
 import loginIcon from '../../assets/icons/login-menu.png';
+import logoutIcon from '../../assets/icons/logout-menu.png';
 import mercadonaLogo from '../../assets/images/mercadona-logo.svg';
-import promotionsIcon from '../../assets/icons/promotions-menu.png';
+import dashboardIcon from '../../assets/icons/dashboard-menu.png';
 import searchIcon from '../../assets/icons/search-menu.png';
 import shoppingWishListIcon from '../../assets/icons/shopping-wish-list-menu.png';
 
-import './Navigation.scss';
 import { scrollTo } from '../../utils/scrollTo';
 
+import './Navigation.scss';
+import AuthContext from '../../context/AuthProvider';
+
 const Navigation = () => {
-  const refPromotionsNavItem = useRef(null);
+  const refDashboardNavItem = useRef(null);
   const refCatalogNavItem = useRef(null);
   const refWishListNavItem = useRef(null);
   const refLoginNavItem = useRef(null);
+  const refLogoutNavItem = useRef(null);
   const inputSearchRef = useRef();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
   const location = useLocation();
+  const { auth, setAuth } = useContext(AuthContext);
 
   const navDropdownTitle = (
     <>
@@ -41,7 +46,7 @@ const Navigation = () => {
 
   const handleClickNavbarBrand = () => {
     [
-      refPromotionsNavItem,
+      refDashboardNavItem,
       refCatalogNavItem,
       refWishListNavItem,
       refLoginNavItem,
@@ -74,10 +79,19 @@ const Navigation = () => {
     scrollTo(0, 504);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('auth');
+    setAuth({});
+  };
+
   useEffect(() => {
     if (location.pathname != '/catalogue') {
       setSearchValue('');
       localStorage.removeItem('searchQuery');
+      // activate dashboard menu link when user redirect after login
+      if (location.pathname == '/dashboard') {
+        refDashboardNavItem.current.classList.add('active');
+      }
     } else {
       const savedQuery = localStorage.getItem('searchQuery');
       if (savedQuery) {
@@ -180,20 +194,6 @@ const Navigation = () => {
                 </Container>
               </NavDropdown>
               <Nav.Link
-                as={Link}
-                eventKey='2'
-                className='mx-lg-2'
-                to='/promotions'
-                ref={refPromotionsNavItem}
-              >
-                <img
-                  src={promotionsIcon}
-                  alt='icone promotions'
-                  className='menu-icon promotions-icon'
-                />
-                <span className='label-menu'>Promotions</span>
-              </Nav.Link>
-              <Nav.Link
                 eventKey='3'
                 as={Link}
                 className='mx-lg-2'
@@ -221,19 +221,54 @@ const Navigation = () => {
                 />
                 <span className='label-menu'>Mes produits</span>
               </Nav.Link>
-              <Nav.Link
-                eventKey='5'
-                as={Link}
-                className='ms-lg-2'
-                to='/login'
-                ref={refLoginNavItem}
-              >
-                <img
-                  src={loginIcon}
-                  alt='icone login'
-                  className='menu-icon login-icon'
-                />
-              </Nav.Link>
+              {auth?.isAuthenticated ? (
+                <Nav.Link
+                  as={Link}
+                  eventKey='5'
+                  className='mx-lg-2'
+                  to='/dashboard'
+                  ref={refDashboardNavItem}
+                >
+                  <img
+                    src={dashboardIcon}
+                    alt='icone dashboard'
+                    className='menu-icon dahsboard-icon'
+                  />
+                  <span className='label-menu'>Dashboard</span>
+                </Nav.Link>
+              ) : null}
+              {auth?.isAuthenticated ? (
+                <Nav.Link
+                  eventKey='6'
+                  as={Link}
+                  className='ms-lg-2'
+                  to='/'
+                  ref={refLogoutNavItem}
+                  onClick={handleLogout}
+                >
+                  <img
+                    src={logoutIcon}
+                    alt='icone logout'
+                    className='menu-icon logout-icon'
+                    title='logout'
+                  />
+                </Nav.Link>
+              ) : (
+                <Nav.Link
+                  eventKey='7'
+                  as={Link}
+                  className='ms-lg-2'
+                  to='/login'
+                  ref={refLoginNavItem}
+                >
+                  <img
+                    src={loginIcon}
+                    alt='icone login'
+                    className='menu-icon login-icon'
+                    title='login'
+                  />
+                </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

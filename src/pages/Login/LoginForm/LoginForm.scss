@@ -1,0 +1,94 @@
+.section-login {
+  form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    color: #212121;
+    color: #0b0b0b;
+    font-weight: 500;
+    background-color: #d8f0f6b5;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 18px 50px -10px;
+    border: 2px solid rgba(255, 255, 255, 0.39);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2.7rem;
+    padding-bottom: 3.7rem;
+    padding-inline: clamp(2.4rem, 5vw, 4.7rem);
+    opacity: 0;
+    animation: fadeUp 0.45s ease-out forwards;
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+    @media screen and (min-width: 991px) {
+      background-color: #bbe3ed53;
+    }
+    .form-brand-name-wrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.7rem;
+      .brand-name {
+        color: #00708a;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+    }
+    h1 {
+      color: #00708a;
+      font-weight: 600;
+    }
+    .input-group,
+    input.form-control {
+      color: #0b0b0b;
+      font-weight: inherit;
+    }
+    .input-group,
+    input.form-control,
+    .invalid-feedback {
+      width: clamp(240px, 16vw, 400px);
+    }
+    .form-control:focus {
+      border-color: #00708a64;
+    }
+    .form-control:focus,
+    &.was-validated .form-control:invalid:focus,
+    &.was-validated .form-control:valid:focus {
+      box-shadow: none;
+    }
+    &.is-invalid ~ .invalid-feedback,
+    &.is-invalid ~ .invalid-tooltip,
+    &.was-validated :invalid ~ .invalid-feedback,
+    &.was-validated :invalid ~ .invalid-tooltip {
+      line-height: 0.95;
+    }
+    button.btn {
+      width: 100%;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background-color: #00708a;
+      border: none;
+      margin-top: 0.8rem;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+        rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+      &:hover,
+      &:active,
+      &:focus-visible {
+        background-color: #095262;
+        border: none;
+        box-shadow: none;
+      }
+      &:hover {
+        box-shadow: rgba(50, 50, 93, 0) 0px 13px 27px -5px,
+          rgba(0, 0, 0, 0) 0px 8px 16px -8px;
+      }
+    }
+  }
+}
