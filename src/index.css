@@ -24,12 +24,9 @@
 }
 
 body {
-  min-height: 100vh;
   overflow-x: hidden;
   font-family: Quicksand, Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1rem;
-  /* margin top based on min-height of navbar(position: fixed-top) */
-  margin-top: 4.6rem;
 }
 
 a,
@@ -45,4 +42,12 @@ a:visited {
 
 .container:not(nav .container) {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* padding top based on min-height of navbar(position: fixed-top) */
+  padding-top: 4.6rem;
 }

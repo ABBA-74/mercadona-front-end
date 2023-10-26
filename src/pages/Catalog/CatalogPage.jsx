@@ -181,7 +181,6 @@ const CatalogPage = () => {
           />
         </Container>
       </main>
-      <Footer />
     </>
   );
 };

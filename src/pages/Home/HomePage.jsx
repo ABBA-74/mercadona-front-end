@@ -23,7 +23,6 @@ const HomePage = () => {
           <Newsletter />
         </Container>
       </main>
-      <Footer />
     </>
   );
 };
