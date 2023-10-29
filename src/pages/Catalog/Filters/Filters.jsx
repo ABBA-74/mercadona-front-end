@@ -14,6 +14,7 @@ const Filters = ({
         <Form.Select
           size='md'
           onChange={(e) => handleChangeCategory(e.target.value)}
+          name='category'
         >
           <option value={0}>Selectionner une catégorie</option>
           {categories?.map((category) => {
@@ -37,6 +38,7 @@ const Filters = ({
             type='checkbox'
             isValid
             onClick={(e) => handleChangePromoDisplay(e.target.checked)}
+            name='promotions'
           />
           <Form.Check.Label>Toutes les promotions</Form.Check.Label>
         </Form.Check>
@@ -44,6 +46,7 @@ const Filters = ({
       <Col sm={6} md={5} lg={4} xl={{ span: 3, offset: 3 }}>
         <Form.Select
           size='md'
+          name='filters'
           onChange={(e) => handleChangeOrder(e.target.value)}
         >
           <option value={0}>Trier par pertinence</option>
