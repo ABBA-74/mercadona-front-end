@@ -7,7 +7,7 @@ import AuthContext from '../../context/AuthProvider';
 import fruitsVegatablesBg from './../../assets/images/fruits-vegetables-bg.webp';
 import shoppingCartsBg from './../../assets/images/shopping-carts-bg.webp';
 
-import LoginForm from './loginForm/loginForm';
+import LoginForm from './LoginForm/LoginForm';
 import './LoginPage.scss';
 
 const LoginPage = () => {
