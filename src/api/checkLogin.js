@@ -2,46 +2,42 @@ import axios from './axios';
 import { CHECK_LOGIN_ENDPOINT } from './apiConfig';
 
 export const checkLogin = async (dataUser) => {
-  let res = {};
   try {
-    await axios
-      .post(CHECK_LOGIN_ENDPOINT, {
-        username: dataUser.email,
-        password: dataUser.password,
-      })
-      .then((response) => {
-        res = response?.data;
-        res = {
-          code: response?.status,
-          data: response?.data,
-        };
-      })
-      .catch((err) => {
-        if (!err?.message) {
-          res = {
-            code: err.response?.status,
-            msg: 'Problème serveur. Veuillez réessayer.',
-          };
-        } else if (err.response?.status === 400) {
-          res = {
-            code: err.response?.status,
-            msg: 'Email ou mot de passe manquant',
-          };
-        } else if (err.response?.status === 401) {
-          res = {
-            code: err.response?.status,
-            msg: err.response?.data.message,
-          };
-        } else {
-          res = {
-            code: err.response?.status,
-            msg: 'Tentative de connexion échoué. Veuillez réessayer.',
-          };
-        }
-      });
+    const response = await axios.post(CHECK_LOGIN_ENDPOINT, {
+      username: dataUser.email,
+      password: dataUser.password,
+    });
+
+    return {
+      code: response.status,
+      data: response.data,
+    };
   } catch (err) {
     console.error(err);
-    throw err;
+
+    if (!err.response) {
+      return {
+        code: 500,
+        msg: 'Problème serveur. Veuillez réessayer.',
+      };
+    }
+
+    switch (err.response.status) {
+      case 400:
+        return {
+          code: 400,
+          msg: 'Email ou mot de passe manquant',
+        };
+      case 401:
+        return {
+          code: 401,
+          msg: err.response.data.message,
+        };
+      default:
+        return {
+          code: err.response.status,
+          msg: 'Tentative de connexion échoué. Veuillez réessayer.',
+        };
+    }
   }
-  return res;
 };

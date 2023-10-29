@@ -53,7 +53,7 @@ const CarouselCategories = () => {
                           import.meta.url
                         ).href
                       }
-                      alt=''
+                      alt={category.label}
                     />
                   </div>
                   <div className='card__face--content-bottom'>
@@ -69,6 +69,7 @@ const CarouselCategories = () => {
                       import.meta.url
                     ).href
                   }
+                  alt='illustration fruits légumes'
                 />
               </div>
             </div>
