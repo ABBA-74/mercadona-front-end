@@ -44,8 +44,11 @@ const LoginPage = () => {
         email: email,
         password: password,
       });
-      if (code === 401) setLoginError(msg);
-      if (code === 200) handleSuccessLogin(data);
+      if (code === 200) {
+        handleSuccessLogin(data);
+      } else {
+        setLoginError(msg);
+      }
     }
     setValidated(true);
   };
