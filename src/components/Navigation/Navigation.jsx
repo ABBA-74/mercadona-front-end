@@ -85,18 +85,20 @@ const Navigation = () => {
   };
 
   useEffect(() => {
+    // remove search query if navigate outside of catalog page
     if (location.pathname != '/catalogue') {
       setSearchValue('');
       localStorage.removeItem('searchQuery');
-      // activate dashboard menu link when user redirect after login
-      if (location.pathname == '/dashboard') {
-        refDashboardNavItem.current.classList.add('active');
-      }
+    }
+    // activate dashboard menu link when user redirect after login
+    if (location.pathname == '/dashboard') {
+      refDashboardNavItem.current.classList.add('active');
     } else {
-      const savedQuery = localStorage.getItem('searchQuery');
-      if (savedQuery) {
-        setSearchValue(savedQuery);
-      }
+      refDashboardNavItem?.current?.classList.remove('active');
+    }
+    const savedQuery = localStorage.getItem('searchQuery');
+    if (savedQuery) {
+      setSearchValue(savedQuery);
     }
   }, [location]);
 
