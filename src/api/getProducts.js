@@ -1,10 +1,17 @@
 import axios from './axios';
-import { ACTIVE_PRODUCTS_ENDPOINT } from './apiConfig';
+import { ACTIVE_PRODUCTS_ENDPOINT, PRODUCTS_ENDPOINT } from './apiConfig';
 
-export const getProducts = async (currentPage, filters) => {
-  let apiUrlProducts = currentPage
-    ? `${ACTIVE_PRODUCTS_ENDPOINT}?page=${currentPage}`
-    : ACTIVE_PRODUCTS_ENDPOINT;
+export const getProducts = async (currentPage, filters, isActive = false) => {
+  let apiUrlProducts = '';
+  if (!isActive) {
+    apiUrlProducts = currentPage
+      ? `${ACTIVE_PRODUCTS_ENDPOINT}?page=${currentPage}`
+      : ACTIVE_PRODUCTS_ENDPOINT;
+  } else {
+    apiUrlProducts = currentPage
+      ? `${PRODUCTS_ENDPOINT}?page=${currentPage}`
+      : PRODUCTS_ENDPOINT;
+  }
 
   // Add filters to the query if they are provided
   if (filters && Object.keys(filters).length > 0) {
