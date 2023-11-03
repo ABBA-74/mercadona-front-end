@@ -1,0 +1,23 @@
+section.section-home-dashboard {
+  .home-dashboard-top {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
+    @media screen and (min-width: 1100px) {
+      justify-content: space-between;
+    }
+  }
+  .home-dashboard-middle {
+    display: none;
+    @media screen and (min-width: 450px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: calc(100% - 1rem);
+      height: 30rem;
+      margin-bottom: 5rem;
+    }
+  }
+}
