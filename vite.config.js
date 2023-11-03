@@ -7,9 +7,10 @@ export default defineConfig(({ command }) => {
     return {
       // dev specific config
       plugins: [react(), basicSsl()],
+      https: true,
+      port: 5173,
     };
   } else {
-    // command === 'build'
     return {
       // build specific config
       plugins: [react()],
