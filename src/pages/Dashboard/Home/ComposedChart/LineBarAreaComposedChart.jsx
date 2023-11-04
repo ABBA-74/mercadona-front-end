@@ -1,4 +1,4 @@
-import CustomTooltip from './CustomToolTip/CustomTooltip';
+import CustomTooltip from './CustomTooltip/CustomTooltip';
 import './LineBarAreaComposedChart.scss';
 import {
   ComposedChart,
