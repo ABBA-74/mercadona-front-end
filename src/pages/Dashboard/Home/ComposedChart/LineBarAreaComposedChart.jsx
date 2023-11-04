@@ -1,4 +1,4 @@
-import CustomTooltip from './CustomToolTip/CustomToolTip';
+import CustomTooltip from './CustomToolTip/CustomTooltip';
 import './LineBarAreaComposedChart.scss';
 import {
   ComposedChart,
@@ -32,9 +32,9 @@ const data = [
 const LineBarAreaComposedChart = () => {
   return (
     <>
-      <h4 className='h5 title-chart text-center mb-4'>
+      <h3 className='h5 title-chart text-center mb-4'>
         Performance Mensuelle: Membres et Ventes
-      </h4>
+      </h3>
       <ResponsiveContainer height='100%' width='100%'>
         <ComposedChart
           width={500}
