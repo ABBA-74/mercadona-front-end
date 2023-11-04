@@ -1,2 +1,73 @@
 section.section-products {
+  //   overflow-x: auto;
+  width: 100%;
+  height: 704px;
+  padding-inline: 3.6rem;
+  //   overflow-x: auto;
+  .section-list-products-top-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+  .section-list-products-table-container {
+    height: 600px;
+  }
+  .section-list-products-table {
+    position: relative;
+    height: auto;
+    .MuiDataGrid-cell:focus,
+    .MuiDataGrid-cell:focus-within,
+    .MuiDataGrid-columnHeader:focus-within,
+    .css-15whxfj-MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+      outline: none;
+    }
+  }
+  .css-yrdy0g-MuiDataGrid-columnHeaderRow,
+  .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor.css-wop1k0-MuiDataGrid-footerContainer {
+    background-color: #aac3c921;
+    background-color: #edeff3;
+  }
+  .MuiTablePagination-displayedRows.css-levciy-MuiTablePagination-displayedRows {
+    margin-bottom: 0;
+  }
+  button.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    //   width: 100%;
+    &.btn-primary {
+      background-color: #00708a;
+    }
+
+    &.btn-primary:hover,
+    &.btn-primary:focus,
+    &.btn-primary:active {
+      background-color: #044f5f;
+    }
+    &.btn-danger {
+      margin-left: 1.5rem;
+      background-color: #c30808;
+    }
+
+    &.btn-danger:hover,
+    &.btn-danger:focus,
+    &.btn-danger:active {
+      background-color: #a71207;
+    }
+  }
+
+  .btn-edit,
+  .btn-delete {
+    height: 38px;
+    .icon-btn-actions,
+    .icon-btn-create-item {
+      height: 20px;
+      width: 20px;
+    }
+  }
 }

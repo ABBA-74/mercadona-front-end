@@ -33,5 +33,5 @@ export const noProductsBySearchMessage = [
 export const fetchErrorMessage = {
   title: 'Oops, Notre Superordinateur est en Pause ☕️',
   message:
-    'Nous travaillons activement à résoudre ce problème et à ramener nos données en ligne. Veuillez nous excuser pour les désagréments que cela pourrait causer. Nous vous remercions de votre patience et de votre compréhension pendant que nous remettons notre superordinateur en marche !',
+    'Nous travaillons activement à résoudre ce problème et à ramener nos données en ligne. Veuillez nous excuser pour les désagréments que cela pourrait causer. Nous vous remercions de votre patience et de votre compréhension pendant que nous remettons notre superordinateur en marche!',
 };

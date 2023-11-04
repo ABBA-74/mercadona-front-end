@@ -16,7 +16,7 @@ const FeaturedInfo = (props) => {
   return (
     <div className='featured'>
       <div className='featured-item'>
-        <h4 className='featured-title h5'>{title}</h4>
+        <h3 className='featured-title h5'>{title}</h3>
         <div className='featured-value-container'>
           <div className='featured-item-left'>
             <div className='featured-value-icon-wrapper'>{signe}</div>
@@ -32,7 +32,6 @@ const FeaturedInfo = (props) => {
               color={color}
               titleValuePercentage={titleValuePercentage}
             />
-            {/* <span title={titleValuePercentage}></span> */}
           </div>
         </div>
       </div>
