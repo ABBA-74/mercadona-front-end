@@ -68,7 +68,6 @@ const ProductList = () => {
             title={fetchErrorMessage.title}
             message={fetchErrorMessage.message}
           />
-          ;
         </section>
       )}
       {data?.length > 0 && isWidthAdaptForTable && (

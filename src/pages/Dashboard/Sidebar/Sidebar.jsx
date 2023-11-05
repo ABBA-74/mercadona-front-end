@@ -5,7 +5,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import ReportIcon from '@mui/icons-material/Report';
-import ImageIcon from '@mui/icons-material/Image';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import DiscountIcon from '@mui/icons-material/Discount';
 import CategoryIcon from '@mui/icons-material/Category';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -79,16 +79,6 @@ const Sidebar = () => {
                 <span className='sidebar-label'>Promotions</span>
               </ListGroup.Item>
             </Link>
-            <Link to='/dashboard/images'>
-              <ListGroup.Item
-                className={`sidebar-list-item ${
-                  isActive('/dashboard/images') ? 'active' : ''
-                }`}
-              >
-                <ImageIcon className='sidebar-icon' />
-                <span className='sidebar-label'>Images</span>
-              </ListGroup.Item>
-            </Link>
             <Link to='/dashboard/categories'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
@@ -112,6 +102,16 @@ const Sidebar = () => {
               >
                 <ReportIcon className='sidebar-icon' />
                 <span className='sidebar-label'>Notifications</span>
+              </ListGroup.Item>
+            </Link>
+            <Link to='/dashboard/formations'>
+              <ListGroup.Item
+                className={`sidebar-list-item ${
+                  isActive('/dashboard/formations') ? 'active' : ''
+                }`}
+              >
+                <LocalLibraryIcon className='sidebar-icon' />
+                <span className='sidebar-label'>Formations</span>
               </ListGroup.Item>
             </Link>
             <Link to='/dashboard/utilisateurs'>

@@ -30,7 +30,6 @@ function App() {
         >
           <Route index element={<HomeDashboard />} />
           <Route path='categories' element={<CategoryList />} />
-          <Route path='images' element={<ImageList />} />
           <Route path='produits' element={<ProductList />} />
           <Route path='promotions' element={<PromotionList />} />
           <Route path='utilisateurs' element={<UserList />} />
