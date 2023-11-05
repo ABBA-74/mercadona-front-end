@@ -13,6 +13,7 @@ const columns = [
     minWidth: 50,
     editable: false,
     flex: 1,
+    sortable: false,
     renderCell: (params) => {
       const imageUrl = `${API_URL_IMG}/${params.row.image?.imgFile}`;
       return (
@@ -22,7 +23,7 @@ const columns = [
       );
     },
   },
-  { field: 'label', headerName: 'Label', editable: false, flex: 3 },
+  { field: 'label', headerName: 'Label', editable: false, flex: 2 },
   {
     field: 'originalPrice',
     headerName: 'Prix',
