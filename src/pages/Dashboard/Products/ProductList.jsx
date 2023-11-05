@@ -10,7 +10,7 @@ import theme from '../theme/dataGridTheme';
 import { getProducts } from '../../../api/getProducts';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import './ProductList.scss';
-import columns from './config/productGridColumns';
+import columns from './productGridColumns';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -18,7 +18,6 @@ const ProductList = () => {
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [pageSize, setPageSize] = useState(8);
   const [rowCount, setRowCount] = useState(8);
   const [rowCountState, setRowCountState] = useState(null);
   const [paginationModel, setPaginationModel] = useState({
@@ -38,7 +37,6 @@ const ProductList = () => {
       console.error('Erreur lors de la récupération des données', error);
       setError(err);
       if (err.response && err.response.data.code === 401) {
-        // Utilisez navigate pour rediriger impérativement
         navigate('/login', { replace: true });
       }
     } finally {
@@ -60,7 +58,7 @@ const ProductList = () => {
   /* Fetch Data (products) on mounted phase of the component */
   useEffect(() => {
     fetchProducts();
-  }, [page, pageSize]);
+  }, [page]);
 
   return (
     <section className='section-products'>
@@ -97,7 +95,7 @@ const ProductList = () => {
                   disableRowSelectionOnClick
                   paginationMode='server'
                   rowCount={rowCountState}
-                  pageSize={pageSize}
+                  pageSize={8}
                   pageSizeOptions={[8]}
                   page={paginationModel.page}
                   paginationModel={paginationModel}
