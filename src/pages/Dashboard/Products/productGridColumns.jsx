@@ -1,8 +1,9 @@
 import ArticleIcon from '@mui/icons-material/Article';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { Avatar } from '@mui/material';
-import { API_URL_IMG } from '../../../../api/apiConfig';
+import { API_URL_IMG } from '../../../api/apiConfig';
+import ProductActions from './ProductActions';
+import Avatar from '@mui/material/Avatar';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 50, hideable: false, flex: 0.6 },
@@ -33,20 +34,6 @@ const columns = [
     },
   },
   {
-    field: 'discountedPrice',
-    headerName: 'Prix soldé',
-    description: 'Prix après remise',
-    flex: 1,
-    editable: false,
-    renderCell: (params) => {
-      return (
-        <>
-          {params.row.discountedPrice ? `${params.row.discountedPrice} %` : `-`}
-        </>
-      );
-    },
-  },
-  {
     field: 'currentPromotionPercentage',
     headerName: 'Remise',
     description: 'Pourcentage de remise actuel',
@@ -63,12 +50,39 @@ const columns = [
     },
   },
   {
+    field: 'discountedPrice',
+    headerName: 'Prix soldé',
+    description: 'Prix après remise',
+    flex: 1,
+    editable: false,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.discountedPrice ? `${params.row.discountedPrice} €` : `-`}
+        </>
+      );
+    },
+  },
+  {
     field: 'isActive',
     headerName: 'Actif',
     description: 'Produit visible dans le catalogue',
     flex: 1,
     type: 'boolean',
     editable: false,
+    headerAlign: 'left',
+    align: 'left',
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.isActive ? (
+            <CheckRoundedIcon style={{ color: 'green', fontSize: '20px' }} />
+          ) : (
+            <CloseRoundedIcon style={{ color: '#C30808', fontSize: '20px' }} />
+          )}
+        </>
+      );
+    },
   },
   {
     field: 'action',
@@ -79,16 +93,7 @@ const columns = [
     hideable: false,
     disableColumnMenu: true,
     renderCell: (params) => {
-      return (
-        <>
-          <button className='btn btn-primary btn-edit'>
-            <EditIcon className='icon-btn-actions' />
-          </button>
-          <button className='btn btn-danger btn-delete'>
-            <DeleteIcon className='icon-btn-actions' />
-          </button>
-        </>
-      );
+      return <ProductActions params={params} />;
     },
   },
 ];
