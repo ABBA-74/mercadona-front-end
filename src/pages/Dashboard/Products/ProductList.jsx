@@ -9,7 +9,6 @@ import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getProducts } from '../../../api/getProducts';
 import { fetchErrorMessage } from '../../../data/errorMessages';
-import './ProductList.scss';
 import columns from './productGridColumns';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 

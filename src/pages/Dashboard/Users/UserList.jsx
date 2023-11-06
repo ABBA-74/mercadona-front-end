@@ -9,7 +9,6 @@ import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getUsers } from '../../../api/getUsers';
 import { fetchErrorMessage } from '../../../data/errorMessages';
-import './UserList.scss';
 import columns from './userGridColumns';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 

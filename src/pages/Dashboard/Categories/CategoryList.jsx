@@ -9,7 +9,6 @@ import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getCategories } from '../../../api/getCategories';
 import { fetchErrorMessage } from '../../../data/errorMessages';
-import './CategoryList.scss';
 import columns from './categoryGridColumns';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 

@@ -9,7 +9,6 @@ import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getPromotions } from '../../../api/getPromotions';
 import { fetchErrorMessage } from '../../../data/errorMessages';
-import './PromotionList.scss';
 import columns from './promotionGridColumns';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 

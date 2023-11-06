@@ -52,3 +52,34 @@ a:visited {
   /* padding top based on min-height of navbar(position: fixed-top) */
   padding-top: 4.6rem;
 }
+
+button.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  height: 38px;
+  box-shadow: rgba(45, 45, 45, 0.32) 0px 5px 15px;
+  transition: all 0.25s ease-out;
+}
+.btn:hover,
+.btn:focus,
+.btn:active {
+  box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px;
+}
+.btn-primary {
+  background-color: #00708a;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #044f5f;
+}
+.btn-danger {
+  background-color: #c30808;
+}
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-color: #a71207;
+}
