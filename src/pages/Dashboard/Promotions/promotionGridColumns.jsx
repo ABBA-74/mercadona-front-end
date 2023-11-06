@@ -1,8 +1,5 @@
 import moment from 'moment/moment';
-import { API_URL_IMG } from '../../../api/apiConfig';
-import Avatar from '@mui/material/Avatar';
-import CategoryActions from './CategoryActions';
-import CategoryIcon from '@mui/icons-material/Category';
+import PromotionActions from './PromotionActions';
 
 const columns = [
   {
@@ -13,22 +10,69 @@ const columns = [
     flex: 0.6,
   },
   {
-    field: 'image.imgFile',
-    headerName: 'Image',
-    minWidth: 50,
-    editable: false,
+    field: 'startDate',
+    headerName: 'Date de début',
     flex: 1,
-    sortable: false,
+    editable: false,
     renderCell: (params) => {
-      const imageUrl = `${API_URL_IMG}/${params.row.image?.imgFile}`;
       return (
-        <Avatar src={imageUrl} variant='rounded'>
-          <CategoryIcon />
-        </Avatar>
+        <>
+          {params.row.startDate
+            ? `${moment(params.row.startDate).format('DD/MM/YYYY')}`
+            : `-`}
+        </>
       );
     },
   },
-  { field: 'label', headerName: 'Label', editable: false, flex: 2 },
+  {
+    field: 'endDate',
+    headerName: 'Date de fin',
+    flex: 1,
+    editable: false,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.endDate
+            ? `${moment(params.row.endDate).format('DD/MM/YYYY')}`
+            : `-`}
+        </>
+      );
+    },
+  },
+  {
+    field: 'discountPercentage',
+    headerName: 'Remise',
+    description: 'Pourcentage de remise actuel',
+    flex: 0.75,
+    editable: false,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.discountPercentage
+            ? `${params.row.discountPercentage} %`
+            : `-`}
+        </>
+      );
+    },
+  },
+  {
+    field: 'products[0].label',
+    headerName: 'Produit concerné',
+    editable: false,
+    flex: 2,
+    filterable: false,
+    sortable: false,
+    type: 'text',
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.products.length > 0
+            ? `${params.row.products[0].label}`
+            : '-'}
+        </>
+      );
+    },
+  },
   {
     field: 'user.fullName',
     headerName: 'Création / Mise à jour',
@@ -81,7 +125,7 @@ const columns = [
     hideable: false,
     disableColumnMenu: true,
     renderCell: (params) => {
-      return <CategoryActions params={params} />;
+      return <PromotionActions params={params} />;
     },
   },
 ];
