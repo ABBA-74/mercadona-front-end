@@ -11,6 +11,7 @@ import { getPromotions } from '../../../api/getPromotions';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import './PromotionList.scss';
 import columns from './promotionGridColumns';
+import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 
 const PromotionsList = () => {
   const navigate = useNavigate();
@@ -107,13 +108,7 @@ const PromotionsList = () => {
         </>
       )}
       {!isLoading && data?.length > 0 && !isWidthAdaptForTable && (
-        <>
-          <h3 className='h5 mb-4'>Ajustement d&apos;écran recommandé</h3>
-          <p>
-            Pour une expérience optimale, veuillez utiliser un écran plus grand.
-            Nous vous remercions pour votre compréhension.
-          </p>
-        </>
+        <ScreenAdjustmentNotification />
       )}
     </section>
   );

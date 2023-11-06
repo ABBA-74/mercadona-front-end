@@ -11,6 +11,7 @@ import { getUsers } from '../../../api/getUsers';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import './UserList.scss';
 import columns from './userGridColumns';
+import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 
 const UsersList = () => {
   const navigate = useNavigate();
@@ -107,13 +108,7 @@ const UsersList = () => {
         </>
       )}
       {!isLoading && data?.length > 0 && !isWidthAdaptForTable && (
-        <>
-          <h3 className='h5 mb-4'>Ajustement d&apos;écran recommandé</h3>
-          <p>
-            Pour une expérience optimale, veuillez utiliser un écran plus grand.
-            Nous vous remercions pour votre compréhension.
-          </p>
-        </>
+        <ScreenAdjustmentNotification />
       )}
     </section>
   );

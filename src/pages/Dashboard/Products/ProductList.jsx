@@ -11,6 +11,7 @@ import { getProducts } from '../../../api/getProducts';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import './ProductList.scss';
 import columns from './productGridColumns';
+import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -108,13 +109,7 @@ const ProductList = () => {
         </>
       )}
       {!isLoading && data?.length > 0 && !isWidthAdaptForTable && (
-        <>
-          <h3 className='h5 mb-4'>Ajustement d&apos;écran recommandé</h3>
-          <p>
-            Pour une expérience optimale, veuillez utiliser un écran plus grand.
-            Nous vous remercions pour votre compréhension.
-          </p>
-        </>
+        <ScreenAdjustmentNotification />
       )}
     </section>
   );
