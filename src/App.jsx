@@ -9,7 +9,6 @@ import LoginPage from './pages/Login/LoginPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
 import HomeDashboard from './pages/Dashboard/Home/HomeDashboard';
 import CategoryList from './pages/Dashboard/Categories/CategoryList';
-import ImageList from './pages/Dashboard/Images/ImageList';
 import ProductList from './pages/Dashboard/Products/ProductList';
 import PromotionList from './pages/Dashboard/Promotions/PromotionList';
 import UserList from './pages/Dashboard/Users/UserList';
