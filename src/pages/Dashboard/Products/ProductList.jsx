@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { DataGrid, frFR } from '@mui/x-data-grid';
@@ -25,6 +25,8 @@ const ProductList = () => {
     page: 0,
   });
   const isWidthAdaptForTable = useWidthCheck(1024);
+
+  const columnsMemo = useMemo(() => columns, []);
 
   const fetchProducts = async () => {
     try {
@@ -61,7 +63,7 @@ const ProductList = () => {
   }, [page]);
 
   return (
-    <section className='section-products'>
+    <section className='section-product-list'>
       {error && (
         <section className='section-error-fetch-msg'>
           <ErrorMessage
@@ -72,21 +74,21 @@ const ProductList = () => {
       )}
       {data?.length > 0 && isWidthAdaptForTable && (
         <>
-          <div className='section-list-products-top-container mb-4'>
+          <div className='section-product-list-header mb-4'>
             <h3 className='h5'>Liste des produits</h3>
             <Button>
               <AddCircleIcon className='icon-btn-create-item me-2' />
               Créer un produit
             </Button>
           </div>
-          <div className='section-list-products-table-container'>
+          <div className='section-product-list-table-container'>
             <ThemeProvider theme={theme}>
               <Box sx={{ height: 547, minWidth: '0', overflowX: 'none' }}>
                 <DataGrid
-                  className='section-list-products-table'
+                  className='section-product-list-table'
                   horizontalScrollBarVisibility='Auto'
                   rows={data}
-                  columns={columns}
+                  columns={columnsMemo}
                   loading={isLoading}
                   localeText={
                     frFR.components.MuiDataGrid.defaultProps.localeText

@@ -1,8 +1,8 @@
-section.section-categories {
+section.section-category-list {
   width: 100%;
   height: 44rem;
   padding-inline: 3.6rem;
-  .section-list-categories-top-container {
+  .section-category-list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,30 +11,36 @@ section.section-categories {
       margin-bottom: 0;
     }
   }
-  .section-list-categories-table-container {
-    height: 37.5rem;
-  }
-  .section-list-categories-table {
-    position: relative;
-    height: auto;
-    .MuiDataGrid-cell,
-    .MuiDataGrid-columnHeader {
-      padding-left: 1rem;
+  .section-category-list-table-container {
+    .section-category-list-table {
+      position: relative;
+      height: 32.9rem;
+      .MuiDataGrid-cell,
+      .MuiDataGrid-columnHeader {
+        padding-left: 1rem;
+      }
+      .MuiDataGrid-cell:focus,
+      .MuiDataGrid-cell:focus-within,
+      .MuiDataGrid-columnHeader:focus-within,
+      .MuiDataGrid-cell:focus-within {
+        outline: none;
+      }
     }
-    .MuiDataGrid-cell:focus,
-    .MuiDataGrid-cell:focus-within,
-    .MuiDataGrid-columnHeader:focus-within,
-    .MuiDataGrid-cell:focus-within {
-      outline: none;
+    .MuiDataGrid-root {
+      overflow: hidden !important;
     }
-  }
-  .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor,
-  .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
-    background-color: #edeff3;
-  }
-  .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor
-    .MuiTablePagination-displayedRows {
-    margin-bottom: 0;
+    .MuiDataGrid-virtualScroller {
+      height: 37.5rem;
+      overflow: hidden !important;
+    }
+    .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor,
+    .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
+      background-color: #edeff3;
+    }
+    .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor
+      .MuiTablePagination-displayedRows {
+      margin-bottom: 0;
+    }
   }
   button.btn {
     display: flex;
@@ -44,7 +50,6 @@ section.section-categories {
     &.btn-primary {
       background-color: #00708a;
     }
-
     &.btn-primary:hover,
     &.btn-primary:focus,
     &.btn-primary:active {
@@ -54,14 +59,12 @@ section.section-categories {
       margin-left: 1.5rem;
       background-color: #c30808;
     }
-
     &.btn-danger:hover,
     &.btn-danger:focus,
     &.btn-danger:active {
       background-color: #a71207;
     }
   }
-
   .btn-edit,
   .btn-delete {
     height: 38px;
