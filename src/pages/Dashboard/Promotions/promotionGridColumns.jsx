@@ -12,13 +12,13 @@ const columns = [
   {
     field: 'startDate',
     headerName: 'Date de début',
-    flex: 1,
+    flex: 1.5,
     editable: false,
     renderCell: (params) => {
       return (
         <>
           {params.row.startDate
-            ? `${moment(params.row.startDate).format('DD/MM/YYYY')}`
+            ? `${moment(params.row.startDate).format('DD/MM/YYYY HH:MM:SS')}`
             : `-`}
         </>
       );
@@ -27,13 +27,13 @@ const columns = [
   {
     field: 'endDate',
     headerName: 'Date de fin',
-    flex: 1,
+    flex: 1.5,
     editable: false,
     renderCell: (params) => {
       return (
         <>
           {params.row.endDate
-            ? `${moment(params.row.endDate).format('DD/MM/YYYY')}`
+            ? `${moment(params.row.endDate).format('DD/MM/YYYY HH:MM:SS')}`
             : `-`}
         </>
       );
@@ -55,24 +55,24 @@ const columns = [
       );
     },
   },
-  {
-    field: 'products[0].label',
-    headerName: 'Produit concerné',
-    editable: false,
-    flex: 2,
-    filterable: false,
-    sortable: false,
-    type: 'text',
-    renderCell: (params) => {
-      return (
-        <>
-          {params.row.products.length > 0
-            ? `${params.row.products[0].label}`
-            : '-'}
-        </>
-      );
-    },
-  },
+  // {
+  //   field: 'products[0].label',
+  //   headerName: 'Produit concerné',
+  //   editable: false,
+  //   flex: 1.5,
+  //   filterable: false,
+  //   sortable: false,
+  //   type: 'text',
+  //   renderCell: (params) => {
+  //     return (
+  //       <>
+  //         {params.row.products.length > 0
+  //           ? `${params.row.products[0].label}`
+  //           : '-'}
+  //       </>
+  //     );
+  //   },
+  // },
   {
     field: 'user.fullName',
     headerName: 'Création / Mise à jour',
@@ -89,13 +89,13 @@ const columns = [
   {
     field: 'createdAt',
     headerName: 'Date de création',
-    flex: 1,
+    flex: 1.25,
     editable: false,
     renderCell: (params) => {
       return (
         <>
           {params.row.createdAt
-            ? `${moment(params.row.createdAt).format('DD/MM/YYYY')}`
+            ? `${moment(params.row.createdAt).format('DD/MM/YYYY HH:MM:SS')}`
             : `-`}
         </>
       );
@@ -104,13 +104,13 @@ const columns = [
   {
     field: 'updatedAt',
     headerName: 'Date de mise à jour',
-    flex: 1,
+    flex: 1.25,
     editable: false,
     renderCell: (params) => {
       return (
         <>
           {params.row.updatedAt
-            ? `${moment(params.row.updatedAt).format('DD/MM/YYYY')}`
+            ? `${moment(params.row.updatedAt).format('DD/MM/YYYY HH:MM:SS')}`
             : `-`}
         </>
       );
@@ -119,6 +119,7 @@ const columns = [
   {
     field: 'action',
     headerName: 'Actions',
+    type: 'actions',
     flex: 2,
     editable: false,
     sortable: false,

@@ -1,8 +1,5 @@
 import moment from 'moment/moment';
-import { API_URL_IMG } from '../../../api/apiConfig';
-import Avatar from '@mui/material/Avatar';
-import CategoryActions from './CategoryActions';
-import CategoryIcon from '@mui/icons-material/Category';
+import UserActions from './UserActions';
 
 const columns = [
   {
@@ -13,40 +10,39 @@ const columns = [
     flex: 0.6,
   },
   {
-    field: 'image.imgFile',
-    headerName: 'Image',
-    minWidth: 50,
+    field: 'fullName',
+    headerName: 'Nom complet',
+    flex: 1,
     editable: false,
-    flex: 0.75,
-    sortable: false,
-    renderCell: (params) => {
-      const imageUrl = `${API_URL_IMG}/${params.row.image?.imgFile}`;
-      return (
-        <Avatar src={imageUrl} variant='rounded'>
-          <CategoryIcon />
-        </Avatar>
-      );
-    },
   },
-  { field: 'label', headerName: 'Label', editable: false, flex: 2 },
   {
-    field: 'user.fullName',
-    headerName: 'Création / Mise à jour',
-    description: 'Responsable de la création ou de la mise à jour',
-    flex: 2,
-    filterable: false,
-    sortable: false,
-    type: 'text',
+    field: 'email',
+    headerName: 'Email',
+    flex: 1.75,
     editable: false,
+  },
+  {
+    field: 'roles',
+    headerName: 'Role',
+    flex: 1,
+    editable: false,
+    type: 'singleSelect',
     renderCell: (params) => {
-      return <>{params.row.user.fullName}</>;
+      let userRole = '';
+      let roles = params.row.roles.join(' ', ',');
+      if (roles.includes('ROLE_SUPER_ADMIN')) userRole = 'Manager';
+      else if (roles.includes('ROLE_ADMIN')) userRole = 'Commercial';
+      else if (roles.includes('ROLE_USER')) userRole = 'Client';
+      else userRole = '-';
+
+      return <>{userRole}</>;
     },
   },
   {
     field: 'createdAt',
     headerName: 'Date de création',
-    flex: 1.5,
-    editable: false,
+    flex: 1,
+    editable: true,
     renderCell: (params) => {
       return (
         <>
@@ -60,7 +56,7 @@ const columns = [
   {
     field: 'updatedAt',
     headerName: 'Date de mise à jour',
-    flex: 1.5,
+    flex: 1,
     editable: false,
     renderCell: (params) => {
       return (
@@ -82,7 +78,7 @@ const columns = [
     hideable: false,
     disableColumnMenu: true,
     renderCell: (params) => {
-      return <CategoryActions params={params} />;
+      return <UserActions params={params} />;
     },
   },
 ];

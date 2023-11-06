@@ -4,6 +4,7 @@ import ProductActions from './ProductActions';
 import Avatar from '@mui/material/Avatar';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import moment from 'moment';
 
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 50, hideable: false, flex: 0.6 },
@@ -12,7 +13,7 @@ const columns = [
     headerName: 'Image',
     minWidth: 50,
     editable: false,
-    flex: 1,
+    flex: 0.75,
     sortable: false,
     renderCell: (params) => {
       const imageUrl = `${API_URL_IMG}/${params.row.image?.imgFile}`;
@@ -23,13 +24,13 @@ const columns = [
       );
     },
   },
-  { field: 'label', headerName: 'Label', editable: false, flex: 2 },
+  { field: 'label', headerName: 'Label', editable: false, flex: 1.5 },
   {
     field: 'originalPrice',
     headerName: 'Prix',
     minWidth: 50,
     editable: false,
-    flex: 1,
+    flex: 0.75,
     renderCell: (params) => {
       return <>{params.row.originalPrice} €</>;
     },
@@ -38,7 +39,7 @@ const columns = [
     field: 'currentPromotionPercentage',
     headerName: 'Remise',
     description: 'Pourcentage de remise actuel',
-    flex: 1,
+    flex: 0.75,
     editable: false,
     renderCell: (params) => {
       return (
@@ -54,7 +55,7 @@ const columns = [
     field: 'discountedPrice',
     headerName: 'Prix soldé',
     description: 'Prix après remise',
-    flex: 1,
+    flex: 0.75,
     editable: false,
     renderCell: (params) => {
       return (
@@ -68,7 +69,7 @@ const columns = [
     field: 'isActive',
     headerName: 'Actif',
     description: 'Produit visible dans le catalogue',
-    flex: 1,
+    flex: 0.5,
     type: 'boolean',
     editable: false,
     headerAlign: 'left',
@@ -77,7 +78,7 @@ const columns = [
       return (
         <>
           {params.row.isActive ? (
-            <CheckRoundedIcon style={{ color: 'green', fontSize: '20px' }} />
+            <CheckRoundedIcon style={{ color: '#00708A', fontSize: '20px' }} />
           ) : (
             <CloseRoundedIcon style={{ color: '#C30808', fontSize: '20px' }} />
           )}
@@ -86,8 +87,52 @@ const columns = [
     },
   },
   {
+    field: 'user.fullName',
+    headerName: 'Création / Mise à jour',
+    description: 'Responsable de la création ou de la mise à jour',
+    flex: 1.5,
+    filterable: false,
+    sortable: false,
+    type: 'text',
+    editable: false,
+    renderCell: (params) => {
+      return <>{params.row.user.fullName}</>;
+    },
+  },
+  {
+    field: 'createdAt',
+    headerName: 'Date de création',
+    flex: 1,
+    editable: false,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.createdAt
+            ? `${moment(params.row.createdAt).format('DD/MM/YYYY')}`
+            : `-`}
+        </>
+      );
+    },
+  },
+  {
+    field: 'updatedAt',
+    headerName: 'Date de mise à jour',
+    flex: 1,
+    editable: false,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.updatedAt
+            ? `${moment(params.row.updatedAt).format('DD/MM/YYYY')}`
+            : `-`}
+        </>
+      );
+    },
+  },
+  {
     field: 'action',
     headerName: 'Actions',
+    type: 'actions',
     flex: 2,
     editable: false,
     sortable: false,

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { DataGrid, frFR } from '@mui/x-data-grid';
@@ -25,6 +25,8 @@ const PromotionsList = () => {
     page: 0,
   });
   const isWidthAdaptForTable = useWidthCheck(1024);
+
+  const columnsMemo = useMemo(() => columns, []);
 
   const fetchpromotions = async () => {
     try {
@@ -60,7 +62,7 @@ const PromotionsList = () => {
   }, [page]);
 
   return (
-    <section className='section-promotions'>
+    <section className='section-promotion-list'>
       {error && (
         <section className='section-error-fetch-msg'>
           <ErrorMessage
@@ -71,21 +73,21 @@ const PromotionsList = () => {
       )}
       {data?.length > 0 && isWidthAdaptForTable && (
         <>
-          <div className='section-list-promotions-top-container mb-4'>
+          <div className='section-promotion-list-header mb-4'>
             <h3 className='h5'>Liste des promotions</h3>
             <Button>
               <AddCircleIcon className='icon-btn-create-item me-2' />
               Créer une promotion
             </Button>
           </div>
-          <div className='section-list-promotions-table-container'>
+          <div className='section-promotion-list-table-container'>
             <ThemeProvider theme={theme}>
               <Box sx={{ height: 547, minWidth: '0', overflowX: 'none' }}>
                 <DataGrid
-                  className='section-list-promotions-table'
+                  className='section-promotion-list-table'
                   horizontalScrollBarVisibility='Auto'
                   rows={data}
-                  columns={columns}
+                  columns={columnsMemo}
                   loading={isLoading}
                   localeText={
                     frFR.components.MuiDataGrid.defaultProps.localeText
