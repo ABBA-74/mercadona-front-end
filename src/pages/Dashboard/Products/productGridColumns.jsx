@@ -1,10 +1,10 @@
-import ArticleIcon from '@mui/icons-material/Article';
+import moment from 'moment';
 import { API_URL_IMG } from '../../../api/apiConfig';
-import ProductActions from './ProductActions';
+import ArticleIcon from '@mui/icons-material/Article';
 import Avatar from '@mui/material/Avatar';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import moment from 'moment';
+import BtnsActionsCrud from '../BtnsActionsCrud/BtnsActionsCrud';
 
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 50, hideable: false, flex: 0.6 },
@@ -139,7 +139,7 @@ const columns = [
     hideable: false,
     disableColumnMenu: true,
     renderCell: (params) => {
-      return <ProductActions params={params} />;
+      return <BtnsActionsCrud key={params.row['@id']} params={params} />;
     },
   },
 ];

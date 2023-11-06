@@ -1,8 +1,8 @@
 import moment from 'moment/moment';
 import { API_URL_IMG } from '../../../api/apiConfig';
 import Avatar from '@mui/material/Avatar';
-import CategoryActions from './CategoryActions';
 import CategoryIcon from '@mui/icons-material/Category';
+import BtnsActionsCrud from '../BtnsActionsCrud/BtnsActionsCrud';
 
 const columns = [
   {
@@ -82,7 +82,7 @@ const columns = [
     hideable: false,
     disableColumnMenu: true,
     renderCell: (params) => {
-      return <CategoryActions params={params} />;
+      return <BtnsActionsCrud key={params.row['@id']} params={params} />;
     },
   },
 ];

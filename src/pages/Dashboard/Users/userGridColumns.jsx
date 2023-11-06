@@ -1,5 +1,5 @@
 import moment from 'moment/moment';
-import UserActions from './UserActions';
+import BtnsActionsCrud from '../BtnsActionsCrud/BtnsActionsCrud';
 
 const columns = [
   {
@@ -78,7 +78,7 @@ const columns = [
     hideable: false,
     disableColumnMenu: true,
     renderCell: (params) => {
-      return <UserActions params={params} />;
+      return <BtnsActionsCrud key={params.row['@id']} params={params} />;
     },
   },
 ];
