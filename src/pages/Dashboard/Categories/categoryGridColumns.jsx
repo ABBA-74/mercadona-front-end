@@ -34,6 +34,7 @@ const columns = [
     headerName: 'Création / Mise à jour',
     description: 'Responsable de la création ou de la mise à jour',
     flex: 1.5,
+    filterable: false,
     sortable: false,
     type: 'text',
     editable: false,
