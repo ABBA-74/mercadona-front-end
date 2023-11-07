@@ -9,8 +9,8 @@ import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getPromotions } from '../../../api/getPromotions';
 import { fetchErrorMessage } from '../../../data/errorMessages';
-import columns from './promotionGridColumns';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
+import PromotionColumnsGenerator from './PromotionColumnsGenerator';
 
 const PromotionsList = () => {
   const navigate = useNavigate();
@@ -20,13 +20,18 @@ const PromotionsList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [rowCount, setRowCount] = useState(8);
   const [rowCountState, setRowCountState] = useState(null);
+  const [rowId, setRowId] = useState(null);
+  const [refreshDataGrid, setRefreshDataGrid] = useState(false);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 8,
     page: 0,
   });
   const isWidthAdaptForTable = useWidthCheck(1024);
 
-  const columnsMemo = useMemo(() => columns, []);
+  const columnsMemo = useMemo(
+    () => PromotionColumnsGenerator(rowId, setRefreshDataGrid, setPage),
+    [rowId]
+  );
 
   const fetchpromotions = async () => {
     try {
@@ -58,6 +63,13 @@ const PromotionsList = () => {
   }, [rowCount, setRowCountState]);
 
   useEffect(() => {
+    if (refreshDataGrid) {
+      handlePageChange({
+        pageSize: 8,
+        page: 0,
+      });
+      setRefreshDataGrid(false);
+    }
     fetchpromotions();
   }, [page]);
 
@@ -71,7 +83,7 @@ const PromotionsList = () => {
           />
         </section>
       )}
-      {data?.length > 0 && isWidthAdaptForTable && (
+      {!error && data?.length > 0 && isWidthAdaptForTable && (
         <>
           <div className='section-promotion-list-header mb-4'>
             <h3 className='h5'>Liste des promotions</h3>
@@ -100,6 +112,7 @@ const PromotionsList = () => {
                   page={paginationModel.page}
                   paginationModel={paginationModel}
                   onPaginationModelChange={handlePageChange}
+                  onCellClick={(params) => setRowId(params.id)}
                 />
               </Box>
             </ThemeProvider>

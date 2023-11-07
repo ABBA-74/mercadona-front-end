@@ -9,8 +9,8 @@ import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getUsers } from '../../../api/getUsers';
 import { fetchErrorMessage } from '../../../data/errorMessages';
-import columns from './userGridColumns';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
+import UserColumnsGenerator from './UserColumnsGenerator';
 
 const UsersList = () => {
   const navigate = useNavigate();
@@ -20,13 +20,18 @@ const UsersList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [rowCount, setRowCount] = useState(8);
   const [rowCountState, setRowCountState] = useState(null);
+  const [rowId, setRowId] = useState(null);
+  const [refreshDataGrid, setRefreshDataGrid] = useState(false);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 8,
     page: 0,
   });
   const isWidthAdaptForTable = useWidthCheck(1024);
 
-  const columnsMemo = useMemo(() => columns, []);
+  const columnsMemo = useMemo(
+    () => UserColumnsGenerator(rowId, setRefreshDataGrid, setPage),
+    [rowId]
+  );
 
   const fetchusers = async () => {
     try {
@@ -58,6 +63,13 @@ const UsersList = () => {
   }, [rowCount, setRowCountState]);
 
   useEffect(() => {
+    if (refreshDataGrid) {
+      handlePageChange({
+        pageSize: 8,
+        page: 0,
+      });
+      setRefreshDataGrid(false);
+    }
     fetchusers();
   }, [page]);
 
@@ -71,7 +83,7 @@ const UsersList = () => {
           />
         </section>
       )}
-      {data?.length > 0 && isWidthAdaptForTable && (
+      {!error && data?.length > 0 && isWidthAdaptForTable && (
         <>
           <div className='section-user-list-header mb-4'>
             <h3 className='h5'>Liste des users</h3>
@@ -100,6 +112,7 @@ const UsersList = () => {
                   page={paginationModel.page}
                   paginationModel={paginationModel}
                   onPaginationModelChange={handlePageChange}
+                  onCellClick={(params) => setRowId(params.id)}
                 />
               </Box>
             </ThemeProvider>
