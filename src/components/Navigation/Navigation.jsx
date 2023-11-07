@@ -17,7 +17,7 @@ import searchIcon from '../../assets/icons/search-menu.png';
 import shoppingWishListIcon from '../../assets/icons/shopping-wish-list-menu.png';
 
 import { scrollTo } from '../../utils/scrollTo';
-import AuthContext from '../../context/AuthProvider';
+import AuthContext from '../../contexts/AuthProvider';
 import './Navigation.scss';
 
 const Navigation = () => {

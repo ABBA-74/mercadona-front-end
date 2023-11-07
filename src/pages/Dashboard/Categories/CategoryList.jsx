@@ -9,8 +9,8 @@ import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getCategories } from '../../../api/getCategories';
 import { fetchErrorMessage } from '../../../data/errorMessages';
-import './CategoryList.scss';
-import columns from './categoryGridColumns';
+import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
+import CategoryColumnsGenerator from './CategoryColumnsGenerator';
 
 const CategoryList = () => {
   const navigate = useNavigate();
@@ -20,13 +20,18 @@ const CategoryList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [rowCount, setRowCount] = useState(8);
   const [rowCountState, setRowCountState] = useState(null);
+  const [rowId, setRowId] = useState(null);
+  const [refreshDataGrid, setRefreshDataGrid] = useState(false);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 8,
     page: 0,
   });
   const isWidthAdaptForTable = useWidthCheck(1024);
 
-  const columnsMemo = useMemo(() => columns, []);
+  const columnsMemo = useMemo(
+    () => CategoryColumnsGenerator(rowId, setRefreshDataGrid, setPage),
+    [rowId]
+  );
 
   const fetchCategories = async () => {
     try {
@@ -58,6 +63,13 @@ const CategoryList = () => {
   }, [rowCount, setRowCountState]);
 
   useEffect(() => {
+    if (refreshDataGrid) {
+      handlePageChange({
+        pageSize: 8,
+        page: 0,
+      });
+      setRefreshDataGrid(false);
+    }
     fetchCategories();
   }, [page]);
 
@@ -71,7 +83,7 @@ const CategoryList = () => {
           />
         </section>
       )}
-      {data?.length > 0 && isWidthAdaptForTable && (
+      {!error && data?.length > 0 && isWidthAdaptForTable && (
         <>
           <div className='section-category-list-header mb-4'>
             <h3 className='h5'>Liste des categories</h3>
@@ -100,6 +112,7 @@ const CategoryList = () => {
                   page={paginationModel.page}
                   paginationModel={paginationModel}
                   onPaginationModelChange={handlePageChange}
+                  onCellClick={(params) => setRowId(params.id)}
                 />
               </Box>
             </ThemeProvider>
@@ -107,13 +120,7 @@ const CategoryList = () => {
         </>
       )}
       {!isLoading && data?.length > 0 && !isWidthAdaptForTable && (
-        <>
-          <h3 className='h5 mb-4'>Ajustement d&apos;écran recommandé</h3>
-          <p>
-            Pour une expérience optimale, veuillez utiliser un écran plus grand.
-            Nous vous remercions pour votre compréhension.
-          </p>
-        </>
+        <ScreenAdjustmentNotification />
       )}
     </section>
   );

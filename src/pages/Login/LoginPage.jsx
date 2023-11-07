@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Alert, Col, Container, Row } from 'react-bootstrap';
 
 import { checkLogin } from '../../api/checkLogin';
-import AuthContext from '../../context/AuthProvider';
+import AuthContext from '../../contexts/AuthProvider';
 import fruitsVegatablesBg from './../../assets/images/fruits-vegetables-bg.webp';
 import shoppingCartsBg from './../../assets/images/shopping-carts-bg.webp';
 

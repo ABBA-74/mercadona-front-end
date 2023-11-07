@@ -6,14 +6,24 @@ import TopBar from './TopBar/TopBar';
 
 import { scrollTo } from '../../utils/scrollTo';
 import './DashboardPage.scss';
+import CrudNotification from './CrudNotification/CrudNotification';
+import useCrudNotification from '../../hooks/useCrudNotification';
 
 const DashboardPage = () => {
+  const { notification } = useCrudNotification();
   useEffect(() => {
     scrollTo(0, 0);
   }, []);
 
   return (
     <main className='dashboard'>
+      {notification && (
+        <CrudNotification
+          key={Date.now()}
+          type={notification.type}
+          message={notification.message}
+        />
+      )}
       <TopBar />
       <div className='container-dashboard'>
         <div className='dashboard-sidebar'>
