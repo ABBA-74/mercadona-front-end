@@ -67,14 +67,27 @@ button.btn {
   justify-content: center;
   font-weight: 500;
   height: 38px;
-  box-shadow: rgba(39, 39, 39, 0.42) 0px 3px 9px;
   transition: all 0.25s ease-out;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.326);
+  box-shadow: rgba(39, 39, 39, 0.36) 0px 3px 9px;
+  -webkit-filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.327));
+  filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.227));
 }
-button.btn.btn:hover {
+button.btn > * {
+  -webkit-filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.327));
+  filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.327));
+}
+button.btn:hover {
   box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px;
+}
+button.btn,
+button.btn:hover,
+button.btn:focus-visible {
+  border-color: transparent;
 }
 button.btn.btn-primary {
   background-color: #00708a;
+  border-color: #044f5f;
 }
 button.btn.btn-primary:hover,
 button.btn.btn-danger:active,
@@ -83,10 +96,10 @@ button.btn.btn-primary:focus-visible {
 }
 button.btn.btn-primary:focus-visible {
   box-shadow: 0 0 0 0.25rem #00708a80;
-  border-color: transparent;
 }
 button.btn.btn-danger {
   background-color: #c30808;
+  border-color: #a71207;
 }
 button.btn.btn-danger:hover,
 button.btn.btn-danger:active,
@@ -95,5 +108,4 @@ button.btn.btn-danger:focus-visible {
 }
 button.btn.btn-danger:focus-visible {
   box-shadow: 0 0 0 0.25rem #c3080880;
-  border-color: transparent;
 }
