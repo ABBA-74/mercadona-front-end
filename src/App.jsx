@@ -13,6 +13,15 @@ import ProductList from './pages/Dashboard/Products/ProductList';
 import PromotionList from './pages/Dashboard/Promotions/PromotionList';
 import UserList from './pages/Dashboard/Users/UserList';
 import Footer from './components/Footer/Footer';
+import { CrudNotificationProvider } from './contexts/CrudNotificationProvider';
+
+function DashboardRoutes() {
+  const authComponent = useAuthRedirect(DashboardPage, [
+    'ROLE_SUPER_ADMIN',
+    'ROLE_ADMIN',
+  ]);
+  return <CrudNotificationProvider>{authComponent}</CrudNotificationProvider>;
+}
 
 function App() {
   return (
@@ -20,13 +29,7 @@ function App() {
       <Navigation />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route
-          path='/dashboard/*'
-          element={useAuthRedirect(DashboardPage, [
-            'ROLE_SUPER_ADMIN',
-            'ROLE_ADMIN',
-          ])}
-        >
+        <Route path='/dashboard/*' element={<DashboardRoutes />}>
           <Route index element={<HomeDashboard />} />
           <Route path='categories' element={<CategoryList />} />
           <Route path='produits' element={<ProductList />} />
