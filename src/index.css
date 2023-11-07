@@ -53,33 +53,47 @@ a:visited {
   padding-top: 4.6rem;
 }
 
+.btn-check:checked + .btn:focus-visible,
+.btn.active:focus-visible,
+.btn.show:focus-visible,
+.btn:first-child:active:focus-visible,
+:not(.btn-check) + .btn:active:focus-visible {
+  box-shadow: none;
+}
+
 button.btn {
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
   height: 38px;
-  box-shadow: rgba(45, 45, 45, 0.32) 0px 5px 15px;
+  box-shadow: rgba(39, 39, 39, 0.42) 0px 3px 9px;
   transition: all 0.25s ease-out;
 }
-.btn:hover,
-.btn:focus,
-.btn:active {
+button.btn.btn:hover {
   box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px;
 }
-.btn-primary {
+button.btn.btn-primary {
   background-color: #00708a;
 }
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
+button.btn.btn-primary:hover,
+button.btn.btn-danger:active,
+button.btn.btn-primary:focus-visible {
   background-color: #044f5f;
 }
-.btn-danger {
+button.btn.btn-primary:focus-visible {
+  box-shadow: 0 0 0 0.25rem #00708a80;
+  border-color: transparent;
+}
+button.btn.btn-danger {
   background-color: #c30808;
 }
-.btn-danger:hover,
-.btn-danger:focus,
-.btn-danger:active {
+button.btn.btn-danger:hover,
+button.btn.btn-danger:active,
+button.btn.btn-danger:focus-visible {
   background-color: #a71207;
+}
+button.btn.btn-danger:focus-visible {
+  box-shadow: 0 0 0 0.25rem #c3080880;
+  border-color: transparent;
 }
