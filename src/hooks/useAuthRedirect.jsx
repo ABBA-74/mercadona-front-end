@@ -1,7 +1,6 @@
-// useAuthRedirect.js
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../contexts/AuthProvider';
 
 function useAuthRedirect(Component, roles) {
   const { auth } = useContext(AuthContext);
