@@ -11,6 +11,7 @@ import HomeDashboard from './pages/Dashboard/Home/HomeDashboard';
 import CategoryList from './pages/Dashboard/Categories/CategoryList';
 import ProductList from './pages/Dashboard/Products/ProductList';
 import PromotionList from './pages/Dashboard/Promotions/PromotionList';
+import UserEdit from './pages/Dashboard/Users/UserEdit';
 import UserList from './pages/Dashboard/Users/UserList';
 import Footer from './components/Footer/Footer';
 import { CrudNotificationProvider } from './contexts/CrudNotificationProvider';
@@ -35,6 +36,7 @@ function App() {
           <Route path='produits' element={<ProductList />} />
           <Route path='promotions' element={<PromotionList />} />
           <Route path='utilisateurs' element={<UserList />} />
+          <Route path='utilisateurs/:id/modifier' element={<UserEdit />} />
         </Route>
         <Route path='/catalogue' element={<CatalogPage />} />
         <Route path='/liste-favoris' element={<WishListPage />} />

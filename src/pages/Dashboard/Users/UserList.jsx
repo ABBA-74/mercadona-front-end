@@ -33,7 +33,7 @@ const UsersList = () => {
     [rowId]
   );
 
-  const fetchusers = async () => {
+  const fetchUsers = async () => {
     try {
       setIsLoading(true);
       const { users, totalItems } = await getUsers(page);
@@ -70,7 +70,7 @@ const UsersList = () => {
       });
       setRefreshDataGrid(false);
     }
-    fetchusers();
+    fetchUsers();
   }, [page]);
 
   return (

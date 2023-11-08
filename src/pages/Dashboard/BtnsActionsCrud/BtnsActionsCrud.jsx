@@ -27,8 +27,28 @@ const BtnsActionsCrud = ({
   };
 
   const handleEditItem = () => {
-    showNotification('info', 'Opération réussie !');
+    // showNotification('info', 'Opération réussie !');
     handleRefreshDataGrid();
+    let baseDashboardItemUrl = '';
+    switch (true) {
+      case params.row['@id'].includes('products'):
+        baseDashboardItemUrl = '/dashboard/produits';
+        break;
+      case params.row['@id'].includes('categories'):
+        baseDashboardItemUrl = '/dashboard/categories';
+        break;
+      case params.row['@id'].includes('users'):
+        baseDashboardItemUrl = '/dashboard/utilisateurs';
+        break;
+      case params.row['@id'].includes('promotions'):
+        baseDashboardItemUrl = '/dashboard/promotions';
+        break;
+      default:
+        break;
+    }
+    const dashboardEditItemUrl = `${baseDashboardItemUrl}/${params.id}/modifier`;
+
+    navigate(dashboardEditItemUrl, { replace: true });
   };
 
   const handleDeleteItem = async () => {
