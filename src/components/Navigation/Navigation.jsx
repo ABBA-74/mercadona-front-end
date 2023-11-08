@@ -111,12 +111,7 @@ const Navigation = () => {
   }, []);
 
   return (
-    <Navbar
-      collapseOnSelect
-      expand='lg'
-      fixed='top'
-      className='bg-body-tertiary'
-    >
+    <Navbar collapseOnSelect expand='lg' fixed='top'>
       <Container fluid className='mx-3'>
         <Navbar.Brand>
           <Link

@@ -39,9 +39,9 @@ export default function RadialChart(props) {
           fontSize: '1.2rem',
           fontWeight: '700',
           position: 'center',
-          fill: '#212529',
+          fill: `${color}`,
         }}
-        background
+        background={{ fill: '#e9dbdb' }}
         clockWise
         dataKey='uv'
         data={data}

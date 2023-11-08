@@ -60,12 +60,12 @@ const UserEdit = () => {
                 Editer le profil employé de {data.fullName}
               </h3>
             </div>
-            <div className='section-user-edit-main ps-md-5'>
+            <div className='section-user-edit-main mb-5 ps-0 ps-md-5'>
               <div className='row gx-5 justify-content-between'>
                 <div className='col-12 col-lg-7 section-user-edit-form border rounded mb-5 mb-lg-0 px-3 py-5 p-md-5'>
                   <form>
                     <h4 className='h5 mb-4'>Information générale</h4>
-                    <div className='row gx-5 form'>
+                    <div className='row gx-4 form'>
                       <div className='col-12 col-sm-6 col-xxl-2 mb-3'>
                         <label className='form-label' htmlFor='gender'>
                           Civilité
@@ -246,7 +246,7 @@ const UserEdit = () => {
                         <EmailIcon size={20} className='me-2' />
                         <span>{data.email}</span>
                       </div>
-                      <p>Marseille - France</p>
+                      <p className='mb-4'>Marseille - France</p>
                       <button className='btn btn-primary mx-auto px-4'>
                         Envoyer un message
                       </button>

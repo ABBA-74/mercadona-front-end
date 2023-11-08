@@ -8,6 +8,7 @@
   box-shadow: #64646f33 0px 7px 29px 0px;
   border-top-right-radius: 0.3rem;
   background-color: #edeff3;
+  background-color: #efebe3;
   overflow: hidden;
   overflow-y: auto;
   left: -18.2rem;
@@ -16,7 +17,7 @@
     transform: translateX(18.2rem);
   }
   @media screen and (min-width: 768px) {
-    background-color: #edeff3;
+    // background-color: #edeff3;
     position: relative;
     left: 0;
     &.show {
