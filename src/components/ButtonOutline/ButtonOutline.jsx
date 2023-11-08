@@ -4,7 +4,7 @@ import './ButtonOutline.scss';
 const ButtonOutline = ({ label }) => {
   return (
     <>
-      <button className='btn btn-outline'>{label}</button>
+      <button className='btn btn-outline-hp'>{label}</button>
     </>
   );
 };

@@ -1,4 +1,4 @@
-button.btn.btn-outline {
+button.btn.btn-outline-hp {
   font-family: Quicksand, sans-serif;
   color: white;
   line-height: 93%;
@@ -11,9 +11,11 @@ button.btn.btn-outline {
   border: 2px solid white;
   background-color: transparent;
   filter: drop-shadow(0 3px 3px #011c22df);
-  transition: filter 0.25s ease;
+  transition: filter 0.25s ease, border-color 0.25s ease;
   &:hover {
     filter: drop-shadow(0 3px 3px #011c2200);
+    border-color: rgba(255, 255, 255, 0);
+    border-color: #fff;
   }
   &:active {
     border-color: white;
