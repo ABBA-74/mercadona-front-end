@@ -121,7 +121,7 @@ const Sidebar = () => {
                 }`}
               >
                 <SupervisedUserCircleIcon className='sidebar-icon' />
-                <span className='sidebar-label'>Utilisateurs</span>
+                <span className='sidebar-label'>Employés</span>
               </ListGroup.Item>
             </Link>
           </ListGroup>
