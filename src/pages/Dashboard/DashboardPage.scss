@@ -69,6 +69,11 @@
         .MuiDataGrid-virtualScroller {
           height: 37.5rem;
           overflow: hidden !important;
+          .MuiDataGrid-overlayWrapper {
+            > * {
+              background-color: #e0d9cec9 !important;
+            }
+          }
         }
         .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor,
         .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
