@@ -1,22 +1,24 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
 
-import BarChartIcon from '@mui/icons-material/BarChart';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
-import ReportIcon from '@mui/icons-material/Report';
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import DiscountIcon from '@mui/icons-material/Discount';
-import CategoryIcon from '@mui/icons-material/Category';
 import ArticleIcon from '@mui/icons-material/Article';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import CategoryIcon from '@mui/icons-material/Category';
+import DiscountIcon from '@mui/icons-material/Discount';
 import HomeIcon from '@mui/icons-material/Home';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import ReportIcon from '@mui/icons-material/Report';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 import './Sidebar.scss';
 
 const Sidebar = () => {
-  const location = useLocation();
-
-  const isActive = (path) => location.pathname === path;
+  const isNavLinkActive = (pathname, matchExact = true) => {
+    return matchExact
+      ? window.location.pathname === pathname
+      : window.location.pathname.startsWith(pathname);
+  };
 
   return (
     <section className='section-sidebar dataFeaturedItems show'>
@@ -27,7 +29,7 @@ const Sidebar = () => {
             <Link to='/dashboard'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard') ? 'active' : ''
+                  isNavLinkActive('/dashboard', true) ? 'active' : ''
                 }`}
               >
                 <HomeIcon className='sidebar-icon' />
@@ -37,7 +39,9 @@ const Sidebar = () => {
             <Link to='/dashboard/analyse-commerciale'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/analyse-commerciale') ? 'active' : ''
+                  isNavLinkActive('/dashboard/analyse-commerciale', false)
+                    ? 'active'
+                    : ''
                 }`}
               >
                 <BarChartIcon className='sidebar-icon' />
@@ -47,7 +51,7 @@ const Sidebar = () => {
             <Link to='/dashboard/ventes'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/ventes') ? 'active' : ''
+                  isNavLinkActive('/dashboard/ventes', false) ? 'active' : ''
                 }`}
               >
                 <TrendingUpIcon className='sidebar-icon' />
@@ -62,7 +66,7 @@ const Sidebar = () => {
             <Link to='/dashboard/produits'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/produits') ? 'active' : ''
+                  isNavLinkActive('/dashboard/produits', false) ? 'active' : ''
                 }`}
               >
                 <ArticleIcon className='sidebar-icon' />
@@ -72,7 +76,9 @@ const Sidebar = () => {
             <Link to='/dashboard/promotions'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/promotions') ? 'active' : ''
+                  isNavLinkActive('/dashboard/promotions', false)
+                    ? 'active'
+                    : ''
                 }`}
               >
                 <DiscountIcon className='sidebar-icon' />
@@ -82,7 +88,9 @@ const Sidebar = () => {
             <Link to='/dashboard/categories'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/categories') ? 'active' : ''
+                  isNavLinkActive('/dashboard/categories', false)
+                    ? 'active'
+                    : ''
                 }`}
               >
                 <CategoryIcon className='sidebar-icon' />
@@ -97,7 +105,9 @@ const Sidebar = () => {
             <Link to='/dashboard/notifications'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/notifications') ? 'active' : ''
+                  isNavLinkActive('/dashboard/notifications', false)
+                    ? 'active'
+                    : ''
                 }`}
               >
                 <ReportIcon className='sidebar-icon' />
@@ -107,7 +117,9 @@ const Sidebar = () => {
             <Link to='/dashboard/formations'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/formations') ? 'active' : ''
+                  isNavLinkActive('/dashboard/formations', false)
+                    ? 'active'
+                    : ''
                 }`}
               >
                 <LocalLibraryIcon className='sidebar-icon' />
@@ -117,7 +129,9 @@ const Sidebar = () => {
             <Link to='/dashboard/utilisateurs'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isActive('/dashboard/utilisateurs') ? 'active' : ''
+                  isNavLinkActive('/dashboard/utilisateurs', false)
+                    ? 'active'
+                    : ''
                 }`}
               >
                 <SupervisedUserCircleIcon className='sidebar-icon' />
