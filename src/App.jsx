@@ -16,6 +16,7 @@ import UserEdit from './pages/Dashboard/Users/UserEdit';
 import UserList from './pages/Dashboard/Users/UserList';
 import WishListPage from './pages/WishList/WishListPage';
 import { CrudNotificationProvider } from './contexts/CrudNotificationProvider';
+import PromotionEdit from './pages/Dashboard/Promotions/PromotionEdit';
 
 function DashboardRoutes() {
   const authComponent = useAuthRedirect(DashboardPage, [
@@ -34,11 +35,12 @@ function App() {
         <Route path='/dashboard/*' element={<DashboardRoutes />}>
           <Route index element={<HomeDashboard />} />
           <Route path='categories' element={<CategoryList />} />
+          <Route path='categories/:id/modifier' element={<CategoryEdit />} />
           <Route path='produits' element={<ProductList />} />
           <Route path='promotions' element={<PromotionList />} />
+          <Route path='promotions/:id/modifier' element={<PromotionEdit />} />
           <Route path='utilisateurs' element={<UserList />} />
           <Route path='utilisateurs/:id/modifier' element={<UserEdit />} />
-          <Route path='categories/:id/modifier' element={<CategoryEdit />} />
         </Route>
         <Route path='/catalogue' element={<CatalogPage />} />
         <Route path='/liste-favoris' element={<WishListPage />} />

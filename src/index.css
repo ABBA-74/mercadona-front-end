@@ -22,6 +22,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+*:not(input textarea) {
+  -webkit-user-select: none;
+  user-select: none;
+}
 
 body {
   overflow-x: hidden;
