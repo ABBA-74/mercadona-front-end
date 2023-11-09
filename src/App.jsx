@@ -1,19 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
 import useAuthRedirect from './hooks/useAuthRedirect';
 
-import Navigation from './components/Navigation/Navigation';
-import HomePage from './pages/Home/HomePage';
 import CatalogPage from './pages/Catalog/CatalogPage';
-import WishListPage from './pages/WishList/WishListPage';
-import LoginPage from './pages/Login/LoginPage';
-import DashboardPage from './pages/Dashboard/DashboardPage';
-import HomeDashboard from './pages/Dashboard/Home/HomeDashboard';
+import CategoryEdit from './pages/Dashboard/Categories/CategoryEdit';
 import CategoryList from './pages/Dashboard/Categories/CategoryList';
+import DashboardPage from './pages/Dashboard/DashboardPage';
+import Footer from './components/Footer/Footer';
+import HomeDashboard from './pages/Dashboard/Home/HomeDashboard';
+import HomePage from './pages/Home/HomePage';
+import LoginPage from './pages/Login/LoginPage';
+import Navigation from './components/Navigation/Navigation';
 import ProductList from './pages/Dashboard/Products/ProductList';
 import PromotionList from './pages/Dashboard/Promotions/PromotionList';
 import UserEdit from './pages/Dashboard/Users/UserEdit';
 import UserList from './pages/Dashboard/Users/UserList';
-import Footer from './components/Footer/Footer';
+import WishListPage from './pages/WishList/WishListPage';
 import { CrudNotificationProvider } from './contexts/CrudNotificationProvider';
 
 function DashboardRoutes() {
@@ -37,6 +38,7 @@ function App() {
           <Route path='promotions' element={<PromotionList />} />
           <Route path='utilisateurs' element={<UserList />} />
           <Route path='utilisateurs/:id/modifier' element={<UserEdit />} />
+          <Route path='categories/:id/modifier' element={<CategoryEdit />} />
         </Route>
         <Route path='/catalogue' element={<CatalogPage />} />
         <Route path='/liste-favoris' element={<WishListPage />} />
