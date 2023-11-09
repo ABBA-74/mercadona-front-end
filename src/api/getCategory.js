@@ -11,7 +11,7 @@ export const getCategory = async (categoryId) => {
     const response = await axios.get(`${CATEGORIES_ENDPOINT}/${categoryId}`);
     return response.data;
   } catch (err) {
-    console.error('Error fetching user:', err);
+    console.error('Error fetching category:', err);
     throw err;
   }
 };
