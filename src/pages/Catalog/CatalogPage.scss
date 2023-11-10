@@ -2,11 +2,13 @@ main.main-catalog {
   position: relative;
   background-color: #efebe3;
   width: 100%;
-  .container {
+  .container-xl {
     position: relative;
     width: 100%;
     background-color: white;
     padding-block: 5rem;
+    padding-inline: clamp(1rem, 5vw, 3rem);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     h1 {
       color: #095262;
       margin-inline: auto;
