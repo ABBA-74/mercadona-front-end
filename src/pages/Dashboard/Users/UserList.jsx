@@ -19,6 +19,7 @@ const UsersList = () => {
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
   const [rowCount, setRowCount] = useState(8);
   const [rowCountState, setRowCountState] = useState(null);
   const [rowId, setRowId] = useState(null);
@@ -49,6 +50,9 @@ const UsersList = () => {
       }
     } finally {
       setIsLoading(false);
+      if (isFirstLoading === true) {
+        setIsFirstLoading(false);
+      }
     }
   };
 
@@ -76,7 +80,7 @@ const UsersList = () => {
 
   return (
     <section className='section-user-list'>
-      {isLoading && (
+      {isFirstLoading && (
         <section className='section-loader'>
           <Loader />
         </section>

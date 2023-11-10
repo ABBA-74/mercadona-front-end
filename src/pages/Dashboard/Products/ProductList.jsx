@@ -18,6 +18,7 @@ const ProductList = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [rowCount, setRowCount] = useState(8);
   const [rowCountState, setRowCountState] = useState(null);
@@ -49,6 +50,9 @@ const ProductList = () => {
       }
     } finally {
       setIsLoading(false);
+      if (isFirstLoading === true) {
+        setIsFirstLoading(false);
+      }
     }
   };
 
@@ -77,7 +81,7 @@ const ProductList = () => {
 
   return (
     <section className='section-product-list'>
-      {isLoading && (
+      {isFirstLoading && (
         <section className='section-loader'>
           <Loader />
         </section>
