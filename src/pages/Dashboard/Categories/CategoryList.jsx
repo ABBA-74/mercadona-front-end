@@ -5,6 +5,7 @@ import { DataGrid, frFR } from '@mui/x-data-grid';
 import { Box, ThemeProvider } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
+import Loader from '../../../components/Loader/Loader';
 import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getCategories } from '../../../api/getCategories';
@@ -75,6 +76,11 @@ const CategoryList = () => {
 
   return (
     <section className='section-category-list'>
+      {isLoading && (
+        <section className='section-loader'>
+          <Loader />
+        </section>
+      )}
       {error && (
         <section className='section-error-fetch-msg'>
           <ErrorMessage

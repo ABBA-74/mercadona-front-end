@@ -13,6 +13,7 @@ import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import { getUser } from '../../../api/getUser';
 import './UserEdit.scss';
+import Loader from '../../../components/Loader/Loader';
 
 const UserEdit = () => {
   const navigate = useNavigate();
@@ -44,6 +45,11 @@ const UserEdit = () => {
 
   return (
     <section className='section-user-edit px-5 '>
+      {isLoading && (
+        <section className='section-loader'>
+          <Loader />
+        </section>
+      )}
       {error && (
         <section className='section-error-fetch-msg'>
           <ErrorMessage
@@ -63,11 +69,11 @@ const UserEdit = () => {
                 <form>
                   <h4 className='h5 mb-4'>Information générale</h4>
                   <div className='row gx-4 form'>
-                    <div className='col-6 col-sm-6 col-xxl-2 mb-3 align-self-start'>
+                    <div className='col-4 col-sm-6 col-xxl-2 mb-3 align-self-start'>
                       <label className='form-label' htmlFor='gender'>
                         Civilité
                       </label>
-                      <select className='form-select' id='gender'>
+                      <select className='form-select' id='gender required'>
                         <option defaultValue></option>
                         <option value='1'>Mr</option>
                         <option value='2'>Mme</option>
@@ -81,6 +87,8 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='firstname'
+                        placeholder="Prénom de l'employé"
+                        required
                       />
                     </div>
                     <div className='col-12 col-sm-6 mb-3'>
@@ -91,13 +99,32 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='lastname'
+                        placeholder="Nom de l'employé"
+                        required
                       />
                     </div>
                     <div className='col-12 col-sm-6 mb-3'>
                       <label htmlFor='email' className='form-label'>
                         Email
                       </label>
-                      <input type='email' className='form-control' id='email' />
+                      <input
+                        type='email'
+                        className='form-control'
+                        id='email'
+                        placeholder="Email de l'employé"
+                        required
+                      />
+                    </div>
+                    <div className='col-12 col-sm-6 mb-3'>
+                      <label htmlFor='phone' className='form-label'>
+                        Téléphone
+                      </label>
+                      <input
+                        type='text'
+                        className='form-control'
+                        id='phone'
+                        placeholder="Numéro de téléphone de l'employé"
+                      />
                     </div>
                     <div className='col-12 col-sm-6 mb-3'>
                       <label htmlFor='jobTitle' className='form-label'>
@@ -107,21 +134,11 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='jobTitle'
+                        placeholder='ex. Technico-commercial'
+                        required
                       />
                     </div>
                     <div className='col-12 col-sm-6 mb-3'>
-                      <label htmlFor='phone' className='form-label'>
-                        Téléphone
-                      </label>
-                      <input type='text' className='form-control' id='phone' />
-                    </div>
-                    <div className='col-12 col-sm-6 mb-3'>
-                      <label htmlFor='role' className='form-label'>
-                        Role
-                      </label>
-                      <input type='text' className='form-control' id='role' />
-                    </div>
-                    <div className='col-12 col-sm-6 col-xxl-4 mb-3'>
                       <label htmlFor='employmentStatus' className='form-label'>
                         Statut du poste
                       </label>
@@ -129,6 +146,8 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='employmentStatus'
+                        placeholder='ex. Cadre, Ingénieur'
+                        required
                       />
                     </div>
                     <div className='col-12 col-sm-6 col-xxl-3 mb-3'>
@@ -142,6 +161,8 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='qualificationLevel'
+                        placeholder='ex. 3, 4, 5'
+                        required
                       />
                     </div>
                     <div className='col-12 col-sm-6 col-xxl-3 mb-3'>
@@ -155,6 +176,8 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='qualificationCoefficient'
+                        placeholder='ex. 195, 225, 245'
+                        required
                       />
                     </div>
                     <div className='form-check form-switch col-12 col-sm-6 col-xxl-2 d-flex flex-column mb-3 px-4'>
@@ -183,6 +206,8 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='address'
+                        placeholder='ex. 12 Rue de la Poste'
+                        required
                       />
                     </div>
                     <div className='col-12 col-sm-6 col-md-5 col-xxl-3 mb-3'>
@@ -193,13 +218,21 @@ const UserEdit = () => {
                         type='text'
                         className='form-control'
                         id='postalCode'
+                        placeholder='ex. 74000'
+                        required
                       />
                     </div>
                     <div className='col-12 col-sm-6 col-lg-5 mb-3'>
                       <label htmlFor='city' className='form-label'>
                         Ville
                       </label>
-                      <input type='text' className='form-control' id='city' />
+                      <input
+                        type='text'
+                        className='form-control'
+                        id='city'
+                        placeholder='ex. Annecy'
+                        required
+                      />
                     </div>
                   </div>
                   <button type='submit' className='btn btn-primary mt-4 px-4'>

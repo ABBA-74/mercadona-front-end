@@ -3,8 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment/moment';
 import Avatar from '@mui/material/Avatar';
 import CategoryIcon from '@mui/icons-material/Category';
-import { API_URL_IMG } from '../../../api/apiConfig';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
+import Loader from '../../../components/Loader/Loader';
+import { API_URL_IMG } from '../../../api/apiConfig';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import { getCategory } from '../../../api/getCategory';
 import './categoryEdit.scss';
@@ -40,6 +41,11 @@ const CategoryEdit = () => {
 
   return (
     <section className='section-category-edit px-5 '>
+      {isLoading && (
+        <section className='section-loader'>
+          <Loader />
+        </section>
+      )}
       {error && (
         <section className='section-error-fetch-msg'>
           <ErrorMessage
