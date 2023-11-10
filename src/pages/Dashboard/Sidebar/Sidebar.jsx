@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
 
 import ArticleIcon from '@mui/icons-material/Article';
@@ -14,10 +14,13 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import './Sidebar.scss';
 
 const Sidebar = () => {
-  const isNavLinkActive = (pathname, matchExact = true) => {
-    return matchExact
-      ? window.location.pathname === pathname
-      : window.location.pathname.startsWith(pathname);
+  const location = useLocation();
+
+  const isNavLinkActive = (pathname, exact = false) => {
+    const matchExact = location.pathname === pathname;
+    const matchPartial =
+      location.pathname.startsWith(pathname) && location.pathname !== '/';
+    return exact ? matchExact : matchPartial;
   };
 
   return (
@@ -39,7 +42,7 @@ const Sidebar = () => {
             <Link to='/dashboard/analyse-commerciale'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/analyse-commerciale', false)
+                  isNavLinkActive('/dashboard/analyse-commerciale')
                     ? 'active'
                     : ''
                 }`}
@@ -51,7 +54,7 @@ const Sidebar = () => {
             <Link to='/dashboard/ventes'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/ventes', false) ? 'active' : ''
+                  isNavLinkActive('/dashboard/ventes') ? 'active' : ''
                 }`}
               >
                 <TrendingUpIcon className='sidebar-icon' />
@@ -66,7 +69,7 @@ const Sidebar = () => {
             <Link to='/dashboard/produits'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/produits', false) ? 'active' : ''
+                  isNavLinkActive('/dashboard/produits') ? 'active' : ''
                 }`}
               >
                 <ArticleIcon className='sidebar-icon' />
@@ -76,9 +79,7 @@ const Sidebar = () => {
             <Link to='/dashboard/promotions'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/promotions', false)
-                    ? 'active'
-                    : ''
+                  isNavLinkActive('/dashboard/promotions') ? 'active' : ''
                 }`}
               >
                 <DiscountIcon className='sidebar-icon' />
@@ -88,9 +89,7 @@ const Sidebar = () => {
             <Link to='/dashboard/categories'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/categories', false)
-                    ? 'active'
-                    : ''
+                  isNavLinkActive('/dashboard/categories') ? 'active' : ''
                 }`}
               >
                 <CategoryIcon className='sidebar-icon' />
@@ -105,9 +104,7 @@ const Sidebar = () => {
             <Link to='/dashboard/notifications'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/notifications', false)
-                    ? 'active'
-                    : ''
+                  isNavLinkActive('/dashboard/notifications') ? 'active' : ''
                 }`}
               >
                 <ReportIcon className='sidebar-icon' />
@@ -117,9 +114,7 @@ const Sidebar = () => {
             <Link to='/dashboard/formations'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/formations', false)
-                    ? 'active'
-                    : ''
+                  isNavLinkActive('/dashboard/formations') ? 'active' : ''
                 }`}
               >
                 <LocalLibraryIcon className='sidebar-icon' />
@@ -129,9 +124,7 @@ const Sidebar = () => {
             <Link to='/dashboard/utilisateurs'>
               <ListGroup.Item
                 className={`sidebar-list-item ${
-                  isNavLinkActive('/dashboard/utilisateurs', false)
-                    ? 'active'
-                    : ''
+                  isNavLinkActive('/dashboard/utilisateurs') ? 'active' : ''
                 }`}
               >
                 <SupervisedUserCircleIcon className='sidebar-icon' />
