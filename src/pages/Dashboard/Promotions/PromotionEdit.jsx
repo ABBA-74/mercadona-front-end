@@ -250,32 +250,38 @@ const PromotionEdit = () => {
                   <div className='overview-content'>
                     <ul className='list-group'>
                       <li className='list-group-item'>
-                        Nom: {dataPromotion.name}
+                        <span className='list-item-label'>Nom:</span>{' '}
+                        {dataPromotion.name}
                       </li>
                       <li className='list-group-item'>
-                        Date de début:
+                        <span className='list-item-label'>Date de début:</span>
                         <br />
                         {moment(dataPromotion.startDate).format('DD/MM/YYYY')}
                       </li>
                       <li className='list-group-item'>
-                        Date de fin:
+                        <span className='list-item-label'>Date de fin:</span>
                         <br />
                         {moment(dataPromotion.endDate).format('DD/MM/YYYY')}
                       </li>
                       <li className='list-group-item'>
-                        Qtt de produits associés:{' '}
+                        <span className='list-item-label'>
+                          Qtt de produits associés:{' '}
+                        </span>{' '}
                         {dataPromotion.products.length}
                       </li>
                       <li className='list-group-item'>
-                        Créé par:
+                        <span className='list-item-label'>Créé par:</span>
                         <br />
                         {dataPromotion.user.fullName}
                       </li>
                       <li className='list-group-item'>
-                        {dataPromotion.updated
-                          ? 'Date de mise à jour'
-                          : 'Date de création'}
-                        : <br />
+                        <span className='list-item-label'>
+                          {dataPromotion.updated
+                            ? 'Date de mise à jour'
+                            : 'Date de création'}
+                          :
+                        </span>
+                        <br />
                         {dataPromotion.updated
                           ? moment(dataPromotion.updatedAt).format(
                               'DD/MM/YYYY HH:MM:SS'

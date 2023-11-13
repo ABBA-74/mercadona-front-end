@@ -27,6 +27,9 @@
         overflow: hidden;
         .list-group-item {
           background-color: #ffffff98;
+          .list-item-label {
+            font-weight: 600;
+          }
         }
       }
     }
