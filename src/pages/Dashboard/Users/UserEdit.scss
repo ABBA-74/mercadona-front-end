@@ -18,6 +18,12 @@
       .overview-wrapper-bottom {
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         overflow: hidden;
+        .list-group-item {
+          background-color: #ffffff98;
+          .list-item-label {
+            font-weight: 600;
+          }
+        }
       }
       .overview-map {
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
