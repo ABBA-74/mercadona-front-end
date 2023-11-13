@@ -1,0 +1,53 @@
+.section-product-edit {
+  .section-product-edit-main {
+    .section-product-edit-form {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      .form-control:focus,
+      .form-check-input:focus,
+      .form-select:focus {
+        border-color: #ced0d2;
+        box-shadow: 0 0 0 0.25rem rgba(192, 212, 232, 0.22);
+      }
+      .form-check-input:checked {
+        background-color: #00708a;
+        border-color: #00708a;
+      }
+      .input-group-text {
+        background-color: #f3f0e9;
+      }
+      .promotions-list {
+        overflow: auto;
+        option {
+          margin-bottom: 0.28rem;
+        }
+      }
+    }
+    .section-product-edit-overview {
+      .overview-wrapper {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        overflow: hidden;
+        .overview-img-wrapper {
+          border-radius: 0.375rem;
+          background-color: #fff;
+        }
+        .list-group-item {
+          background-color: #ffffff98;
+          .list-item-label {
+            font-weight: 600;
+          }
+        }
+        .group-item-description {
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          max-height: 110px;
+        }
+        .group-item-promo-historic {
+          max-height: 138px;
+          overflow-y: auto;
+        }
+      }
+    }
+  }
+}
