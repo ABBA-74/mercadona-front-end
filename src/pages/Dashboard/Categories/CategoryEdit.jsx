@@ -15,14 +15,31 @@ const CategoryEdit = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [formValues, setFormValues] = useState(null);
   const [imgError, setImgError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e) => {
+    console.log('category', formValues.category);
+    const { name, value } = e.target;
+
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
 
   const fetchCategory = async () => {
     try {
       setIsLoading(true);
       const category = await getCategory(id);
       setData(category);
+      setFormValues({
+        label: category.label,
+        image: '',
+        description: category.description,
+        isActive: category.isActive,
+      });
       setError(null);
     } catch (err) {
       console.error('Erreur lors de la récupération des données', err);
@@ -73,7 +90,10 @@ const CategoryEdit = () => {
                         type='text'
                         className='form-control'
                         id='label'
+                        name='label'
                         placeholder='Label de la catégorie'
+                        value={formValues.label}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className='col-12 col-sm-6 mb-3'>
@@ -82,6 +102,7 @@ const CategoryEdit = () => {
                       </label>
                       <input
                         type='file'
+                        name='imgFile'
                         className='form-control'
                         id='categoryImageFile'
                       />
@@ -94,6 +115,10 @@ const CategoryEdit = () => {
                         className='form-control textarea-description'
                         placeholder='Description de la catégorie'
                         id='description'
+                        name='description'
+                        style={{ height: '120px' }}
+                        value={formValues.description}
+                        onChange={handleChange}
                       ></textarea>
                     </div>
                     <div className='form-check form-switch col-12 col-sm-6 col-xxl-2 d-flex flex-column mb-3 px-4'>
@@ -107,8 +132,15 @@ const CategoryEdit = () => {
                         className='form-check-input ms-0 mt-0'
                         type='checkbox'
                         role='switch'
-                        value=''
                         id='activeStatus'
+                        name='isActive'
+                        checked={formValues.isActive}
+                        onChange={(e) =>
+                          setFormValues((prev) => ({
+                            ...prev,
+                            isActive: e.target.checked,
+                          }))
+                        }
                       />
                     </div>
                   </div>
