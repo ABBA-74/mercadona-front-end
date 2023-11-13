@@ -34,6 +34,12 @@ body {
   background-color: #f2f5f8;
 }
 
+.h5,
+h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 a,
 a:active,
 a:visited {
