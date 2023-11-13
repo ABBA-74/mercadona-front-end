@@ -12,6 +12,7 @@ import LoginPage from './pages/Login/LoginPage';
 import Navigation from './components/Navigation/Navigation';
 import ProductList from './pages/Dashboard/Products/ProductList';
 import PromotionList from './pages/Dashboard/Promotions/PromotionList';
+import ProductEdit from './pages/Dashboard/Products/ProductEdit';
 import UserEdit from './pages/Dashboard/Users/UserEdit';
 import UserList from './pages/Dashboard/Users/UserList';
 import WishListPage from './pages/WishList/WishListPage';
@@ -37,6 +38,7 @@ function App() {
           <Route path='categories' element={<CategoryList />} />
           <Route path='categories/:id/modifier' element={<CategoryEdit />} />
           <Route path='produits' element={<ProductList />} />
+          <Route path='produits/:id/modifier' element={<ProductEdit />} />
           <Route path='promotions' element={<PromotionList />} />
           <Route path='promotions/:id/modifier' element={<PromotionEdit />} />
           <Route path='utilisateurs' element={<UserList />} />

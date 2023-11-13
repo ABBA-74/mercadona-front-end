@@ -22,6 +22,9 @@
       margin-block: 3rem;
       width: 80%;
     }
+    input.form-control[disabled] {
+      background-color: #d9d6cf4e;
+    }
 
     section.section-category-list,
     section.section-product-list,

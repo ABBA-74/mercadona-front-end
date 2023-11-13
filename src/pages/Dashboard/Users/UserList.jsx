@@ -5,6 +5,7 @@ import { DataGrid, frFR } from '@mui/x-data-grid';
 import { Box, ThemeProvider } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
+import Loader from '../../../components/Loader/Loader';
 import useWidthCheck from '../../../hooks/useWidthCheck';
 import theme from '../theme/dataGridTheme';
 import { getUsers } from '../../../api/getUsers';
@@ -18,6 +19,7 @@ const UsersList = () => {
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
   const [rowCount, setRowCount] = useState(8);
   const [rowCountState, setRowCountState] = useState(null);
   const [rowId, setRowId] = useState(null);
@@ -48,6 +50,9 @@ const UsersList = () => {
       }
     } finally {
       setIsLoading(false);
+      if (isFirstLoading === true) {
+        setIsFirstLoading(false);
+      }
     }
   };
 
@@ -75,6 +80,11 @@ const UsersList = () => {
 
   return (
     <section className='section-user-list'>
+      {isFirstLoading && (
+        <section className='section-loader'>
+          <Loader />
+        </section>
+      )}
       {error && (
         <section className='section-error-fetch-msg'>
           <ErrorMessage

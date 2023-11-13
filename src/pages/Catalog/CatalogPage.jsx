@@ -158,7 +158,7 @@ const CatalogPage = () => {
     <>
       <CarouselHeader />
       <main className='main-catalog'>
-        <Container>
+        <Container fluid='xl'>
           <h1 className='mb-5'>Explorez notre Catalogue</h1>
           <Row className='filters-wrapper g-3'>
             {categories && (

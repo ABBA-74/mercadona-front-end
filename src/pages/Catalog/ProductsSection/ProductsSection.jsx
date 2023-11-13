@@ -38,7 +38,13 @@ const ProductsSection = ({
         <Row className='products-wrapper my-5'>
           {products.map((product) => {
             return (
-              <Col md={6} lg={4} xl={3} key={product.id} className='mb-5'>
+              <Col
+                sm={6}
+                lg={4}
+                xl={3}
+                key={product.id}
+                className='mb-5 d-flex justify-content-center'
+              >
                 <ProductCard
                   label={product.label}
                   discountPercentage={product.currentPromotionPercentage}
