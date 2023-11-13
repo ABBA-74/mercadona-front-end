@@ -143,7 +143,7 @@ const PromotionEdit = () => {
                         type='text'
                         className='form-control'
                         id='status'
-                        readOnly
+                        disabled
                         aria-label='Information du statut actuel de la promotion'
                         style={{
                           color: moment(dataPromotion.endDate).isSameOrAfter(
