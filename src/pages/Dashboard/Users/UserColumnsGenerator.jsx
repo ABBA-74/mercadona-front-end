@@ -31,8 +31,8 @@ const UserColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
       renderCell: (params) => {
         let userRole = '';
         let roles = params.row.roles.join(' ', ',');
-        if (roles.includes('ROLE_SUPER_ADMIN')) userRole = 'Manager';
-        else if (roles.includes('ROLE_ADMIN')) userRole = 'Commercial';
+        if (roles.includes('ROLE_SUPER_ADMIN')) userRole = 'Administrateur';
+        else if (roles.includes('ROLE_ADMIN')) userRole = 'Gestionnaire';
         else if (roles.includes('ROLE_USER')) userRole = 'Client';
         else userRole = '-';
 
