@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import useAuthRedirect from './hooks/useAuthRedirect';
 
 import CatalogPage from './pages/Catalog/CatalogPage';
+import CategoryCreate from './pages/Dashboard/Categories/CategoryCreate';
 import CategoryEdit from './pages/Dashboard/Categories/CategoryEdit';
 import CategoryList from './pages/Dashboard/Categories/CategoryList';
 import DashboardPage from './pages/Dashboard/DashboardPage';
@@ -36,6 +37,7 @@ function App() {
         <Route path='/dashboard/*' element={<DashboardRoutes />}>
           <Route index element={<HomeDashboard />} />
           <Route path='categories' element={<CategoryList />} />
+          <Route path='categories/creation' element={<CategoryCreate />} />
           <Route path='categories/:id/modifier' element={<CategoryEdit />} />
           <Route path='produits' element={<ProductList />} />
           <Route path='produits/:id/modifier' element={<ProductEdit />} />
