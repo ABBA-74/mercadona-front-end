@@ -12,6 +12,21 @@
         background-color: #00708a;
         border-color: #00708a;
       }
+      .invalid-feedback-msg {
+        position: relative;
+        bottom: 1rem;
+        left: 0;
+        color: #dc3545;
+        font-size: 0.875em;
+        opacity: 0;
+        animation: slideDownInvalidMsg 0.35s 0.35s ease-out forwards;
+        @keyframes slideDownInvalidMsg {
+          to {
+            opacity: 1;
+            transform: translateY(1.05rem);
+          }
+        }
+      }
     }
     .ection-category-edit-form {
       .textarea-description {
