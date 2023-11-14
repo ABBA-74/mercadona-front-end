@@ -12,6 +12,7 @@ import { getCategories } from '../../../api/getCategories';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 import CategoryColumnsGenerator from './CategoryColumnsGenerator';
+import { scrollTo } from '../../../utils/scrollTo';
 
 const CategoryList = () => {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ const CategoryList = () => {
   }, [rowCount, setRowCountState]);
 
   useEffect(() => {
+    scrollTo(0, 0);
     if (refreshDataGrid) {
       handlePageChange({
         pageSize: 8,
