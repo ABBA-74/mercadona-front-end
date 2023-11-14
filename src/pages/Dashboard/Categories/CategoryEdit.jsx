@@ -109,12 +109,12 @@ const CategoryEdit = () => {
   const validationRules = {
     category: {
       label: { required: true, minLength: 2, maxLength: 100 },
-      description: { required: true, minLength: 10 },
+      description: { required: true, minLength: 10, maxLength: 255 },
       isActive: {},
     },
     image: {
-      label: { required: true, minLength: 2, maxLength: 200 },
-      description: { required: true, minLength: 10 },
+      label: { required: true, minLength: 2, maxLength: 100 },
+      description: { required: true, minLength: 10, maxLength: 255 },
       imgFile: {},
     },
   };
