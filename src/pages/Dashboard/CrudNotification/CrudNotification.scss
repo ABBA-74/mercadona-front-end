@@ -6,7 +6,8 @@
   box-shadow: rgba(100, 100, 111, 0) 0px 7px 29px 0px;
   border-radius: 6px;
   opacity: 0;
-  animation: crudNotifSlide 2.9s cubic-bezier(0.15, 0.77, 0.51, 1.99) forwards;
+  animation: crudNotifSlide 2.5s 0.45s cubic-bezier(0.15, 0.77, 0.51, 1.99)
+    forwards;
   @keyframes crudNotifSlide {
     5% {
       opacity: 1;
