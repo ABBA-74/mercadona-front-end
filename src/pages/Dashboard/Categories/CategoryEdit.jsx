@@ -1,45 +1,84 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import moment from 'moment/moment';
-import Avatar from '@mui/material/Avatar';
-import CategoryIcon from '@mui/icons-material/Category';
-import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
-import Loader from '../../../components/Loader/Loader';
-import { API_URL_IMG } from '../../../api/apiConfig';
+import useCrudNotification from '../../../hooks/useCrudNotification';
+
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import { getCategory } from '../../../api/getCategory';
+import { patchCategory } from '../../../api/patchCategory';
+import { postImage } from '../../../api/postImage';
+
+import CategoryOverview from './CategoryOverview';
+import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
+import Loader from '../../../components/Loader/Loader';
 import './categoryEdit.scss';
+import { scrollTo } from '../../../utils/scrollTo';
 
 const CategoryEdit = () => {
   const navigate = useNavigate();
+  const { showNotification } = useCrudNotification();
   const { id } = useParams();
+  const [categoryValues, setCategoryValues] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [formValues, setFormValues] = useState(null);
+  const [initialCategoryValues, setInitialCategoryValues] = useState(null);
+  const [initialImageValues, setInitialImageValues] = useState(null);
   const [imgError, setImgError] = useState(false);
+  const [imgFile, setImgFile] = useState(null);
+  const [imageValues, setImageValues] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({
+    category: {},
+    image: {},
+  });
 
-  const handleChange = (e) => {
-    console.log('category', formValues.category);
+  const handleChangeCategory = (e) => {
     const { name, value } = e.target;
 
-    setFormValues((prevValues) => ({
+    setCategoryValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   };
+  const handleChangeImage = (e) => {
+    const { name, value } = e.target;
+
+    setImageValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  const createCategoryAndImageValues = (category) => ({
+    categoryValues: {
+      label: category.label,
+      description: category.description,
+      isActive: category.isActive,
+    },
+    imageValues: category.image
+      ? {
+          label: category.image.label,
+          description: category.image.description,
+        }
+      : {
+          label: '',
+          description: '',
+        },
+  });
 
   const fetchCategory = async () => {
     try {
       setIsLoading(true);
       const category = await getCategory(id);
       setData(category);
-      setFormValues({
-        label: category.label,
-        image: '',
-        description: category.description,
-        isActive: category.isActive,
-      });
+      const { categoryValues, imageValues } =
+        createCategoryAndImageValues(category);
+
+      setInitialCategoryValues(categoryValues);
+      setInitialImageValues(imageValues);
+
+      setCategoryValues(categoryValues);
+      setImageValues(imageValues);
+
       setError(null);
     } catch (err) {
       console.error('Erreur lors de la récupération des données', err);
@@ -50,6 +89,162 @@ const CategoryEdit = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const uploadImage = async (file) => {
+    try {
+      const uploadedImage = await postImage(
+        file,
+        imageValues.label,
+        imageValues.description
+      );
+      return uploadedImage;
+    } catch (error) {
+      console.error('Error post image:', error);
+      throw error;
+    }
+  };
+
+  /*  Validation form  */
+  const validationRules = {
+    category: {
+      label: { required: true, minLength: 2, maxLength: 100 },
+      description: { required: true, minLength: 10 },
+      isActive: {},
+    },
+    image: {
+      label: { required: true, minLength: 2, maxLength: 200 },
+      description: { required: true, minLength: 10 },
+      imgFile: {},
+    },
+  };
+
+  const validateField = (type, name, value, rules) => {
+    const errors = {};
+    const ruleSet = rules[type][name];
+    const trimmedValue = typeof value === 'string' ? value.trim() : '';
+
+    if (ruleSet?.required && !trimmedValue) {
+      errors[name] = 'Ce champ est requis.';
+    }
+    if (
+      ruleSet?.minLength &&
+      trimmedValue &&
+      trimmedValue.length < ruleSet.minLength
+    ) {
+      errors[name] = `Doit contenir au moins ${ruleSet.minLength} caractères.`;
+    }
+    if (ruleSet?.maxLength && trimmedValue.length > ruleSet.maxLength) {
+      errors[name] = `Doit contenir moins de ${ruleSet.maxLength} caractères.`;
+    }
+
+    return errors;
+  };
+
+  const validateForm = (categoryValues, imageValues, rules) => {
+    let formErrors = {
+      category: {},
+      image: {},
+    };
+
+    // Validation of category fields
+    Object.keys(categoryValues).forEach((fieldName) => {
+      const fieldErrors = validateField(
+        'category',
+        fieldName,
+        categoryValues[fieldName],
+        rules
+      );
+      if (fieldErrors[fieldName]) {
+        formErrors.category[fieldName] = fieldErrors[fieldName];
+      }
+    });
+
+    // Validation of image fields
+    Object.keys(imageValues).forEach((fieldName) => {
+      const fieldErrors = validateField(
+        'image',
+        fieldName,
+        imageValues[fieldName],
+        rules
+      );
+      if (fieldErrors[fieldName]) {
+        formErrors.image[fieldName] = fieldErrors[fieldName];
+      }
+    });
+
+    return formErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    scrollTo(0, 0);
+
+    const formErrors = validateForm(
+      categoryValues,
+      imageValues,
+      validationRules
+    );
+    setValidationErrors({});
+    setValidationErrors(formErrors);
+
+    if (
+      Object.keys(formErrors.category).length > 0 ||
+      Object.keys(formErrors.image).length > 0
+    ) {
+      return;
+    }
+    try {
+      let newCategoryData = null;
+      if (imgFile) {
+        const imageResponse = await uploadImage(imgFile);
+        newCategoryData = {
+          ...categoryValues,
+          image: `/api/images/${imageResponse.id}`,
+        };
+      } else {
+        newCategoryData = {
+          ...categoryValues,
+          image: {
+            label: imageValues.label,
+            description: imageValues.description,
+          },
+        };
+      }
+      await patchCategory(data.id, newCategoryData);
+
+      showNotification('info', 'Mise à jour effectuée avec succès.');
+      navigate('/dashboard/categories', { replace: true });
+    } catch (error) {
+      console.error('Error updating data:', error);
+      if (!error.response) {
+        showNotification('error', 'Problème de connexion ou erreur réseau.');
+      } else if (
+        error.response.status === 400 ||
+        error.response.status === 422
+      ) {
+        showNotification(
+          'error',
+          'Certains champs ne répondent pas aux exigences du serveur.'
+        );
+      } else {
+        showNotification(
+          'error',
+          'Une erreur est survenue lors de la mise à jour.'
+        );
+      }
+    }
+  };
+
+  const checkIfModifiedForm = () => {
+    return (
+      initialCategoryValues.label !== categoryValues.label ||
+      initialCategoryValues.description !== categoryValues.description ||
+      initialCategoryValues.isActive !== categoryValues.isActive ||
+      initialImageValues.label !== imageValues.label ||
+      initialImageValues.description !== imageValues.description ||
+      imgFile
+    );
   };
 
   useEffect(() => {
@@ -71,56 +266,37 @@ const CategoryEdit = () => {
           />
         </section>
       )}
-      {!error && !isLoading && data && (
+      {!error && !isLoading && categoryValues && (
         <>
           <div className='section-category-edit-header text-center text-md-start mb-4 ps-0 ps-md-4'>
-            <h3 className='h5'>Editer la categorie : {data.label}</h3>
+            <h3 className='h5'>Editer la categorie : {categoryValues.label}</h3>
           </div>
           <div className='section-category-edit-main mb-5 ps-0 ps-md-5'>
             <div className='row g-5 justify-content-between'>
               <div className='col-12 col-xl-7 section-category-edit-form border rounded mb-5 mb-lg-0 px-3 py-5 p-md-5'>
-                <form>
+                <form onSubmit={handleSubmit} noValidate>
                   <h4 className='h5 mb-4'>Informations de la catégorie</h4>
                   <div className='row gx-4 form'>
                     <div className='col-12 col-sm-6 mb-3'>
                       <label htmlFor='label' className='form-label'>
-                        Label
+                        Nom de la catégorie
                       </label>
                       <input
                         type='text'
                         className='form-control'
                         id='label'
                         name='label'
-                        placeholder='Label de la catégorie'
-                        value={formValues.label}
-                        onChange={handleChange}
+                        placeholder='Nom de la catégorie'
+                        value={categoryValues.label}
+                        onChange={handleChangeCategory}
                       />
+                      {validationErrors.category.label && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.category.label}
+                        </div>
+                      )}
                     </div>
-                    <div className='col-12 col-sm-6 mb-3'>
-                      <label htmlFor='categoryImageFile' className='form-label'>
-                        Image
-                      </label>
-                      <input
-                        type='file'
-                        name='imgFile'
-                        className='form-control'
-                        id='categoryImageFile'
-                      />
-                    </div>
-                    <div className='col-12 mb-3'>
-                      <label htmlFor='description' className='form-label'>
-                        Description
-                      </label>
-                      <textarea
-                        className='form-control textarea-description'
-                        placeholder='Description de la catégorie'
-                        id='description'
-                        name='description'
-                        style={{ height: '120px' }}
-                        value={formValues.description}
-                        onChange={handleChange}
-                      ></textarea>
-                    </div>
+
                     <div className='form-check form-switch col-12 col-sm-6 col-xxl-2 d-flex flex-column mb-3 px-4'>
                       <label
                         className='form-check-label mb-3'
@@ -134,59 +310,107 @@ const CategoryEdit = () => {
                         role='switch'
                         id='activeStatus'
                         name='isActive'
-                        checked={formValues.isActive}
+                        checked={categoryValues.isActive}
                         onChange={(e) =>
-                          setFormValues((prev) => ({
+                          setCategoryValues((prev) => ({
                             ...prev,
                             isActive: e.target.checked,
                           }))
                         }
                       />
                     </div>
+
+                    <div className='col-12 mb-3'>
+                      <label htmlFor='description' className='form-label'>
+                        Description de la catégorie
+                      </label>
+                      <textarea
+                        className='form-control textarea-description'
+                        placeholder='Description de la catégorie'
+                        id='description'
+                        name='description'
+                        style={{ height: '120px' }}
+                        value={categoryValues.description}
+                        onChange={handleChangeCategory}
+                      ></textarea>
+                      {validationErrors.category.description && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.category.description}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <button type='submit' className='btn btn-primary mt-4 px-4'>
+
+                  <h4 className='h5 my-4'>Informations de l&apos;image</h4>
+                  <div className='row gx-4 form'>
+                    <div className='col-12 col-sm-6 mb-3'>
+                      <label htmlFor='label' className='form-label'>
+                        Nom de l&apos;image
+                      </label>
+                      <input
+                        type='text'
+                        className='form-control'
+                        id='label'
+                        name='label'
+                        placeholder='Label de la catégorie'
+                        value={imageValues.label}
+                        onChange={handleChangeImage}
+                      />
+                      {validationErrors.image.label && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.image.label}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className='col-12 col-sm-6 mb-3'>
+                      <label htmlFor='categoryImageFile' className='form-label'>
+                        Image
+                      </label>
+                      <input
+                        type='file'
+                        name='imgFile'
+                        className='form-control'
+                        id='categoryImageFile'
+                        onChange={(e) => setImgFile(e.target.files[0])}
+                      />
+                    </div>
+
+                    <div className='col-12 mb-3'>
+                      <label htmlFor='description' className='form-label'>
+                        Description de l&apos;image
+                      </label>
+                      <textarea
+                        className='form-control textarea-description'
+                        placeholder='Description de la catégorie'
+                        id='description'
+                        name='description'
+                        style={{ height: '120px' }}
+                        value={imageValues.description}
+                        onChange={handleChangeImage}
+                      ></textarea>
+                      {validationErrors.image.description && (
+                        <p className='invalid-feedback-msg'>
+                          {validationErrors.image.description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    type='submit'
+                    disabled={!checkIfModifiedForm()}
+                    className='btn btn-primary mt-4 px-4'
+                  >
                     Sauvegarder
                   </button>
                 </form>
               </div>
-              <div className='col-12 col-xl-5 col-xxl-4 section-category-edit-overview gx-0 gx-xl-4'>
-                <div className='overview-wrapper rounded border mb-5 mb-lg-0 px-3 py-5 p-md-5'>
-                  <h4 className='h5 mb-4'>Détails de la catégorie</h4>
-                  <div className='category-item-wrapper border rounded '>
-                    <div className='category-item-img-wrapper me-3 me-xl-0 mb-xl-2 p-5'>
-                      <Avatar variant='rounded' className='img-category'>
-                        {!imgError && data.image?.imgFile ? (
-                          <img
-                            src={`${API_URL_IMG}/${data.image.imgFile}`}
-                            alt='Image de la catégorie'
-                            onError={() => setImgError(true)}
-                            className='img-category-default'
-                          />
-                        ) : (
-                          <CategoryIcon />
-                        )}
-                      </Avatar>
-                    </div>
-                    <div className='category-item-content p-3'>
-                      <h5 className='h5 mb-3'>{data.label}</h5>
-                      <p className='mb-2'>Statut: actif</p>
-                      <p className='mb-2'>
-                        {data.updated ? 'Mise à jour par' : 'Créé par'}:{' '}
-                        {data.user?.fullName}
-                      </p>
-                      <p className='mb-0'>
-                        Date de création:
-                        <br />
-                        {data.updated
-                          ? moment(data.updatedAt).format('DD/MM/YYYY HH:MM:SS')
-                          : moment(data.createdAt).format(
-                              'DD/MM/YYYY HH:MM:SS'
-                            )}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+              <CategoryOverview
+                data={data}
+                imgError={imgError}
+                setImgError={setImgError}
+              />
             </div>
           </div>
         </>
