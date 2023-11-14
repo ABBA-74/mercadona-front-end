@@ -2,6 +2,8 @@ import moment from 'moment/moment';
 import { API_URL_IMG } from '../../../api/apiConfig';
 import Avatar from '@mui/material/Avatar';
 import CategoryIcon from '@mui/icons-material/Category';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import BtnsActionsCrud from '../BtnsActionsCrud/BtnsActionsCrud';
 
 const CategoryColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
@@ -31,6 +33,31 @@ const CategoryColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
     },
     { field: 'label', headerName: 'Label', editable: false, flex: 2 },
     {
+      field: 'isActive',
+      headerName: 'Actif',
+      description: 'Produit visible dans le catalogue',
+      flex: 0.5,
+      type: 'boolean',
+      editable: false,
+      headerAlign: 'left',
+      align: 'left',
+      renderCell: (params) => {
+        return (
+          <>
+            {params.row.isActive ? (
+              <CheckRoundedIcon
+                style={{ color: '#00708A', fontSize: '20px' }}
+              />
+            ) : (
+              <CloseRoundedIcon
+                style={{ color: '#C30808', fontSize: '20px' }}
+              />
+            )}
+          </>
+        );
+      },
+    },
+    {
       field: 'user.fullName',
       headerName: 'Création / Mise à jour',
       description: 'Responsable de la création ou de la mise à jour',
@@ -52,7 +79,7 @@ const CategoryColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
         return (
           <>
             {params.row.createdAt
-              ? `${moment(params.row.createdAt).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.createdAt).format('DD/MM/YYYY HH:mm:ss')}`
               : `-`}
           </>
         );
@@ -67,7 +94,7 @@ const CategoryColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
         return (
           <>
             {params.row.updatedAt
-              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY HH:mm:ss')}`
               : `-`}
           </>
         );
