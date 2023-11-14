@@ -104,21 +104,25 @@ const ProductEdit = () => {
   const handleHistoricPromoData = (histoPromos, dataProduct) => {
     let dataPromo = [];
     histoPromos.forEach((promo) => {
-      dataPromo.push({
-        date: promo.startDate,
-        dateX: Date.now() - moment(promo.startDate).unix(),
-        price:
-          dataProduct.originalPrice -
-          (promo.discountPercentage * dataProduct.originalPrice) / 100,
-      });
+      const discountedPrice =
+        dataProduct.originalPrice -
+        (promo.discountPercentage * dataProduct.originalPrice) / 100;
 
-      dataPromo.push({
-        date: promo.endDate,
-        dateX: Date.now() - moment(promo.endDate).unix(),
-        price:
-          dataProduct.originalPrice -
-          (promo.discountPercentage * dataProduct.originalPrice) / 100,
-      });
+      if (moment(promo.startDate).isSameOrBefore(moment())) {
+        dataPromo.push({
+          date: promo.startDate,
+          dateX: Date.now() - moment(promo.startDate).unix(),
+          price: discountedPrice,
+        });
+      }
+
+      if (moment(promo.endDate).isSameOrBefore(moment())) {
+        dataPromo.push({
+          date: promo.endDate,
+          dateX: Date.now() - moment(promo.endDate).unix(),
+          price: discountedPrice,
+        });
+      }
     });
 
     dataPromo.unshift({
