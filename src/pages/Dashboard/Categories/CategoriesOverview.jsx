@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { getCategories } from '../../../api/getCategories';
 import { API_URL_IMG } from '../../../api/apiConfig';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const CategoriesOverview = () => {
+  const { logout } = useAuthLogout();
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,8 +17,13 @@ const CategoriesOverview = () => {
       const { categories } = await getCategories();
       setData(categories);
     } catch (err) {
-      console.log(err);
+      console.error('Erreur lors de la récupération des données', err);
       setError(err);
+      if (err.response && err.response?.data.code === 401) {
+        setIsLoading(false);
+        logout();
+        return;
+      }
     }
     setIsLoading(false);
   };
