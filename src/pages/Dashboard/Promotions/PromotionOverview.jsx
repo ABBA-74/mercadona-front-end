@@ -41,8 +41,8 @@ const PromotionOverview = ({ dataPromotion }) => {
               </span>
               <br />
               {dataPromotion.updated
-                ? moment(dataPromotion.updatedAt).format('DD/MM/YYYY HH:MM:SS')
-                : moment(dataPromotion.createdAt).format('DD/MM/YYYY HH:MM:SS')}
+                ? moment(dataPromotion.updatedAt).format('DD/MM/YYYY HH:mm:ss')
+                : moment(dataPromotion.createdAt).format('DD/MM/YYYY HH:mm:ss')}
             </li>
           </ul>
         </div>
