@@ -11,14 +11,15 @@ import HomeDashboard from './pages/Dashboard/Home/HomeDashboard';
 import HomePage from './pages/Home/HomePage';
 import LoginPage from './pages/Login/LoginPage';
 import Navigation from './components/Navigation/Navigation';
-import ProductList from './pages/Dashboard/Products/ProductList';
-import PromotionList from './pages/Dashboard/Promotions/PromotionList';
 import ProductEdit from './pages/Dashboard/Products/ProductEdit';
+import ProductList from './pages/Dashboard/Products/ProductList';
+import PromotionCreate from './pages/Dashboard/Promotions/PromotionCreate';
+import PromotionEdit from './pages/Dashboard/Promotions/PromotionEdit';
+import PromotionList from './pages/Dashboard/Promotions/PromotionList';
 import UserEdit from './pages/Dashboard/Users/UserEdit';
 import UserList from './pages/Dashboard/Users/UserList';
 import WishListPage from './pages/WishList/WishListPage';
 import { CrudNotificationProvider } from './contexts/CrudNotificationProvider';
-import PromotionEdit from './pages/Dashboard/Promotions/PromotionEdit';
 
 function DashboardRoutes() {
   const authComponent = useAuthRedirect(DashboardPage, [
@@ -42,6 +43,7 @@ function App() {
           <Route path='produits' element={<ProductList />} />
           <Route path='produits/:id/modifier' element={<ProductEdit />} />
           <Route path='promotions' element={<PromotionList />} />
+          <Route path='promotions/creation' element={<PromotionCreate />} />
           <Route path='promotions/:id/modifier' element={<PromotionEdit />} />
           <Route path='utilisateurs' element={<UserList />} />
           <Route path='utilisateurs/:id/modifier' element={<UserEdit />} />
