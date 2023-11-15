@@ -1,0 +1,80 @@
+.section-category-create {
+  .section-category-create-main {
+    .section-category-create-form {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      .form-control:focus,
+      .form-select:focus,
+      .form-check-input:focus {
+        border-color: #ced0d2;
+        box-shadow: 0 0 0 0.25rem rgba(192, 212, 232, 0.22);
+      }
+      .form-check-input:checked {
+        background-color: #00708a;
+        border-color: #00708a;
+      }
+      .invalid-feedback-msg {
+        position: relative;
+        bottom: 1rem;
+        left: 0;
+        color: #dc3545;
+        font-size: 0.875em;
+        opacity: 0;
+        animation: slideDownInvalidMsg 0.35s 0.35s ease-out forwards;
+        @keyframes slideDownInvalidMsg {
+          to {
+            opacity: 1;
+            transform: translateY(1.05rem);
+          }
+        }
+      }
+    }
+    .section-category-create-overview {
+      .overview-wrapper {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .overview-content {
+          width: 100%;
+
+          .list-group {
+            max-height: 450px;
+            overflow: auto;
+            .list-group-item {
+              background-color: #f9f7f4;
+            }
+            .item-loading,
+            .item-category {
+              display: flex;
+              align-items: center;
+              .img-wrapper {
+                padding-inline: 0.75rem;
+                background-color: #fff;
+                .img-category {
+                  height: 65px;
+                  width: 65px;
+                  object-fit: cover;
+                  border-radius: 6px;
+                }
+              }
+              .item-label {
+                line-height: 1.25;
+              }
+            }
+            .item-error,
+            .item-loading {
+              justify-content: center;
+              height: 636px;
+            }
+          }
+        }
+        @media screen and (min-width: 1200px) {
+          align-items: flex-start;
+          min-height: 476px;
+        }
+      }
+    }
+  }
+}
