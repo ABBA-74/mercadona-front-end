@@ -1,6 +1,7 @@
 import { Container, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useAuthLogout } from '../../hooks/useAuthLogout.jsx';
 
 import CarouselHeader from '../../components/Carousel/CarouselHeader';
 import { getCategoriesAndProducts } from '../../api/getCategoriesAndProducts';
@@ -14,6 +15,7 @@ import Filters from './Filters/Filters';
 import ProductsSection from './ProductsSection/ProductsSection';
 
 const CatalogPage = () => {
+  const { logout } = useAuthLogout();
   const [categories, setCategories] = useState(null);
   const [products, setProducts] = useState(null);
   const [error, setError] = useState(null);
@@ -48,6 +50,9 @@ const CatalogPage = () => {
         setTotalPages(calculateTotalPages(totalItems));
       } catch (err) {
         console.error(err);
+        if (err.response && err.response.status === 401) {
+          logout();
+        }
       }
     }
   };
@@ -112,6 +117,9 @@ const CatalogPage = () => {
       } catch (err) {
         console.error(err);
         setError(err);
+        if (err.response && err.response.status === 401) {
+          logout();
+        }
       } finally {
         setIsLoading(false);
       }
@@ -132,6 +140,9 @@ const CatalogPage = () => {
       } catch (err) {
         console.error(err);
         setError(err);
+        if (err.response && err.response.status === 401) {
+          logout();
+        }
       } finally {
         setIsLoading(false);
       }
@@ -145,6 +156,9 @@ const CatalogPage = () => {
       } catch (err) {
         console.error(err);
         setError(err);
+        if (err.response && err.response.status === 401) {
+          logout();
+        }
       }
     };
     if (!label) {

@@ -12,9 +12,11 @@ import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
 import Loader from '../../../components/Loader/Loader';
 import './CategoryEdit.scss';
 import { scrollTo } from '../../../utils/scrollTo';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const CategoryEdit = () => {
   const navigate = useNavigate();
+  const { logout } = useAuthLogout();
   const { showNotification } = useCrudNotification();
   const { id } = useParams();
   const [categoryValues, setCategoryValues] = useState(null);
@@ -83,8 +85,8 @@ const CategoryEdit = () => {
     } catch (err) {
       console.error('Erreur lors de la récupération des données', err);
       setError(err);
-      if (err.response && err.response.data.code === 401) {
-        navigate('/login', { replace: true });
+      if (err.response && err.response.status === 401) {
+        logout();
       }
     } finally {
       setIsLoading(false);

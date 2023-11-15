@@ -19,13 +19,12 @@ const CategoriesOverview = () => {
     } catch (err) {
       console.error('Erreur lors de la récupération des données', err);
       setError(err);
-      if (err.response && err.response?.data.code === 401) {
-        setIsLoading(false);
+      if (err.response && err.response.status === 401) {
         logout();
-        return;
       }
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
   useEffect(() => {
     fetchCategories();

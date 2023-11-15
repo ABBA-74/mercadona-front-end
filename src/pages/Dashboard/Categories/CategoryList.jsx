@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { DataGrid, frFR } from '@mui/x-data-grid';
 import { Box, ThemeProvider } from '@mui/material';
@@ -13,9 +13,10 @@ import { fetchErrorMessage } from '../../../data/errorMessages';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 import CategoryColumnsGenerator from './CategoryColumnsGenerator';
 import { scrollTo } from '../../../utils/scrollTo';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const CategoryList = () => {
-  const navigate = useNavigate();
+  const { logout } = useAuthLogout();
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
@@ -46,8 +47,8 @@ const CategoryList = () => {
     } catch (err) {
       console.error('Erreur lors de la récupération des données', error);
       setError(err);
-      if (err.response && err.response.data.code === 401) {
-        navigate('/login', { replace: true });
+      if (err.response && err.response.status === 401) {
+        logout();
       }
     } finally {
       setIsLoading(false);

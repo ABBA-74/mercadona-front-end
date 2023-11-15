@@ -13,10 +13,12 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import HistoryIcon from '@mui/icons-material/History';
 import UpdateIcon from '@mui/icons-material/Update';
 import './PromotionEdit.scss';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const PromotionEdit = () => {
-  const { showNotification } = useCrudNotification();
   const navigate = useNavigate();
+  const { logout } = useAuthLogout();
+  const { showNotification } = useCrudNotification();
   const { id } = useParams();
   const [dataPromotion, setDataPromotion] = useState(null);
   const [dataProducts, setDataProducts] = useState(null);
@@ -69,13 +71,12 @@ const PromotionEdit = () => {
     } catch (err) {
       console.error('Erreur lors de la récupération des données', err);
       setError(err);
-      if (err.response && err.response?.data.code === 401) {
-        setIsLoading(false);
-        navigate('/login', { replace: true });
-        return;
+      if (err.response && err.response.status === 401) {
+        logout();
       }
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleChange = (e) => {

@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
 import Loader from '../../../components/Loader/Loader';
@@ -11,9 +11,10 @@ import { API_URL_IMG } from '../../../api/apiConfig';
 import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
 import PriceHistoricChart from './PriceHistoricChart/PriceHistoricChart';
 import './ProductEdit.scss';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const ProductEdit = () => {
-  const navigate = useNavigate();
+  const { logout } = useAuthLogout();
   const { id } = useParams();
   const [dataProduct, setDataProduct] = useState(null);
   const [dataCategories, setDataCategories] = useState(null);
@@ -22,7 +23,6 @@ const ProductEdit = () => {
   const [currentPromotionApplied, setCurrentPromotionsApplied] = useState(null);
   const [formValues, setFormValues] = useState(null);
   const [error, setError] = useState(null);
-  const [imgError, setImgError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchProduct = async () => {
@@ -57,13 +57,12 @@ const ProductEdit = () => {
     } catch (err) {
       console.error('Erreur lors de la récupération des données', err);
       setError(err);
-      if (err.response && err.response?.data.code === 401) {
-        setIsLoading(false);
-        navigate('/login', { replace: true });
-        return;
+      if (err.response && err.response.status === 401) {
+        logout();
       }
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const getCurrentPromotionApplied = (promotions) => {

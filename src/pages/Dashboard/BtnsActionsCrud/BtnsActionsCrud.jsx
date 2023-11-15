@@ -8,6 +8,7 @@ import useCrudNotification from '../../../hooks/useCrudNotification';
 import { deleteItem } from '../../../api/deleteItem';
 import { scrollTo } from '../../../utils/scrollTo';
 import './BtnsActionsCrud.scss';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const BtnsActionsCrud = ({
   params,
@@ -19,6 +20,7 @@ const BtnsActionsCrud = ({
   const { showNotification } = useCrudNotification();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuthLogout();
 
   const handleRefreshDataGrid = () => {
     setPage(1);
@@ -65,8 +67,8 @@ const BtnsActionsCrud = ({
         'error',
         "La suppression de l'élément a échoué. Veuillez réessayer."
       );
-      if (err.response && err.response.data.code === 401) {
-        navigate('/login', { replace: true });
+      if (err.response && err.response.status === 401) {
+        logout();
       }
     } finally {
       setIsLoading(false);
