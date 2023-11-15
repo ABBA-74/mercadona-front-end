@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { DataGrid, frFR } from '@mui/x-data-grid';
 import { Box, ThemeProvider } from '@mui/material';
@@ -12,9 +12,10 @@ import { getPromotions } from '../../../api/getPromotions';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import ScreenAdjustmentNotification from '../ScreenAdjustmentNotification/ScreenAdjustmentNotification';
 import PromotionColumnsGenerator from './PromotionColumnsGenerator';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const PromotionsList = () => {
-  const navigate = useNavigate();
+  const { logout } = useAuthLogout();
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
@@ -45,8 +46,8 @@ const PromotionsList = () => {
     } catch (err) {
       console.error('Erreur lors de la récupération des données', error);
       setError(err);
-      if (err.response && err.response.data.code === 401) {
-        navigate('/login', { replace: true });
+      if (err.response && err.response.status === 401) {
+        logout();
       }
     } finally {
       setIsLoading(false);
@@ -97,7 +98,7 @@ const PromotionsList = () => {
         <>
           <div className='section-promotion-list-header mb-4'>
             <h3 className='h5'>Liste des promotions</h3>
-            <Button>
+            <Button as={Link} to='/dashboard/promotions/creation'>
               <AddCircleIcon className='icon-btn-create-item me-2' />
               Créer une promotion
             </Button>
