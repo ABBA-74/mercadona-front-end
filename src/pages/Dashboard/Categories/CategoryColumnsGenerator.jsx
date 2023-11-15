@@ -73,13 +73,13 @@ const CategoryColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
     {
       field: 'createdAt',
       headerName: 'Date de création',
-      flex: 1.5,
+      flex: 1,
       editable: false,
       renderCell: (params) => {
         return (
           <>
             {params.row.createdAt
-              ? `${moment(params.row.createdAt).format('DD/MM/YYYY HH:mm:ss')}`
+              ? `${moment(params.row.createdAt).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
@@ -88,13 +88,13 @@ const CategoryColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
     {
       field: 'updatedAt',
       headerName: 'Date de mise à jour',
-      flex: 1.5,
+      flex: 1,
       editable: false,
       renderCell: (params) => {
         return (
           <>
             {params.row.updatedAt
-              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY HH:mm:ss')}`
+              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
