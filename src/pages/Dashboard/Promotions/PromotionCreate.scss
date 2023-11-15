@@ -1,0 +1,85 @@
+.section-promotion-create {
+  .section-promotion-create-main {
+    .section-promotion-create-form {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      .form-control:focus,
+      .form-check-input:focus,
+      .form-select:focus {
+        border-color: #ced0d2;
+        box-shadow: 0 0 0 0.25rem rgba(192, 212, 232, 0.22);
+      }
+      .form-check-input:checked {
+        background-color: #00708a;
+        border-color: #00708a;
+      }
+      .input-group-text {
+        background-color: #f3f0e9;
+      }
+      .products-list {
+        min-height: 12rem;
+        width: 100%;
+        padding-inline: 1rem;
+      }
+      .invalid-feedback-msg {
+        position: relative;
+        bottom: 1rem;
+        left: 0;
+        color: #dc3545;
+        font-size: 0.875em;
+        line-height: 1.15;
+        opacity: 0;
+        animation: slideDownInvalidMsg 0.35s 0.35s ease-out forwards;
+        @keyframes slideDownInvalidMsg {
+          to {
+            opacity: 1;
+            transform: translateY(1.05rem);
+          }
+        }
+      }
+      .wrapper-loading-products {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        height: 192px;
+      }
+    }
+    .section-promotion-create-overview {
+      .overview-wrapper {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        overflow: hidden;
+        .list-group-item {
+          background-color: #ffffff98;
+          .list-item-label {
+            font-weight: 600;
+          }
+        }
+        .list-group {
+          max-height: 450px;
+          overflow: auto;
+          .list-group-item {
+            background-color: #f9f7f4;
+          }
+          .item-loading,
+          .item-promotion {
+            .item-label {
+              line-height: 1.25;
+            }
+            > *:not(:last-child) {
+              margin-bottom: 0.5rem;
+            }
+          }
+          .item-error,
+          .item-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 636px;
+          }
+        }
+      }
+    }
+  }
+}
