@@ -21,6 +21,7 @@ const PromotionEdit = () => {
   const [dataPromotion, setDataPromotion] = useState(null);
   const [dataProducts, setDataProducts] = useState(null);
   const [error, setError] = useState(null);
+  const [initialPromotionValues, setInitialPromotionValues] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPromoStatus, setCurrentPromoStatus] = useState({
     color: '',
@@ -49,6 +50,7 @@ const PromotionEdit = () => {
       ]);
       setDataPromotion(promotion);
       setDataProducts(products);
+      setInitialPromotionValues(promotion);
       setFormValues({
         name: promotion.name,
         discountPercentage: promotion.discountPercentage.toString(),
@@ -247,6 +249,30 @@ const PromotionEdit = () => {
     }
   };
 
+  const formatDate = (date) => {
+    return moment(date).format('YYYY-MM-DD');
+  };
+  const checkIfModifiedForm = () => {
+    const formatInitialPromoStartDate = formatDate(
+      initialPromotionValues.startDate
+    );
+    const formatInitialPromoEndDate = formatDate(
+      initialPromotionValues.endDate
+    );
+
+    return (
+      initialPromotionValues.name !== formValues.name ||
+      initialPromotionValues.description !== formValues.description ||
+      initialPromotionValues.conditions !== formValues.conditions ||
+      initialPromotionValues.discountPercentage !==
+        +formValues.discountPercentage ||
+      formatInitialPromoStartDate !== formValues.startDate ||
+      formatInitialPromoEndDate !== formValues.endDate ||
+      initialPromotionValues.products.toString() !==
+        formValues.products.toString()
+    );
+  };
+
   useEffect(() => {
     fetchPromotionAndProducts();
   }, [id]);
@@ -442,7 +468,11 @@ const PromotionEdit = () => {
                       </select>
                     </div>
                   </div>
-                  <button type='submit' className='btn btn-primary mt-4 px-4'>
+                  <button
+                    type='submit'
+                    disabled={!checkIfModifiedForm()}
+                    className='btn btn-primary mt-4 px-4'
+                  >
                     Sauvegarder
                   </button>
                 </form>
