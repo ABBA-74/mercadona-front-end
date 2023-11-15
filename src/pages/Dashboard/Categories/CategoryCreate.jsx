@@ -134,10 +134,6 @@ const CategoryCreate = () => {
     e.preventDefault();
     scrollTo(0, 0);
 
-    if (!isFormValid()) {
-      return;
-    }
-
     const formErrors = validateForm(
       categoryValues,
       imageValues,
@@ -148,7 +144,8 @@ const CategoryCreate = () => {
 
     if (
       Object.keys(formErrors.category).length > 0 ||
-      Object.keys(formErrors.image).length > 0
+      Object.keys(formErrors.image).length > 0 ||
+      !isFormComplet()
     ) {
       return;
     }
@@ -196,7 +193,7 @@ const CategoryCreate = () => {
     }
   };
 
-  const isFormValid = () => {
+  const isFormComplet = () => {
     return (
       categoryValues.label &&
       categoryValues.description &&
@@ -341,11 +338,7 @@ const CategoryCreate = () => {
                   )}
                 </div>
               </div>
-              <button
-                type='submit'
-                disabled={!isFormValid()}
-                className='btn btn-primary mt-4 px-4'
-              >
+              <button type='submit' className='btn btn-primary mt-4 px-4'>
                 Sauvegarder
               </button>
             </form>
