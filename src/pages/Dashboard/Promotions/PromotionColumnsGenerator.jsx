@@ -1,5 +1,9 @@
 import moment from 'moment/moment';
 import BtnsActionsCrud from '../BtnsActionsCrud/BtnsActionsCrud';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import HistoryIcon from '@mui/icons-material/History';
+import UpdateIcon from '@mui/icons-material/Update';
+import { Tooltip } from '@mui/material';
 
 const PromotionColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
   const columns = [
@@ -11,15 +15,28 @@ const PromotionColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
       flex: 0.6,
     },
     {
-      field: 'startDate',
-      headerName: 'Date de début',
+      field: 'name',
+      headerName: 'Nom',
       flex: 1.5,
       editable: false,
       renderCell: (params) => {
         return (
           <>
+            {params.row.name.charAt(0).toUpperCase() + params.row.name.slice(1)}
+          </>
+        );
+      },
+    },
+    {
+      field: 'startDate',
+      headerName: 'Date de début',
+      flex: 1,
+      editable: false,
+      renderCell: (params) => {
+        return (
+          <>
             {params.row.startDate
-              ? `${moment(params.row.startDate).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.startDate).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
@@ -28,18 +45,51 @@ const PromotionColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
     {
       field: 'endDate',
       headerName: 'Date de fin',
-      flex: 1.5,
+      flex: 1,
       editable: false,
       renderCell: (params) => {
         return (
           <>
             {params.row.endDate
-              ? `${moment(params.row.endDate).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.endDate).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
       },
     },
+    {
+      field: '',
+      headerName: 'Statut',
+      flex: 0.6,
+      editable: false,
+      filterable: false,
+      sortable: false,
+      renderCell: (params) => {
+        const now = moment();
+        if (now.isBetween(params.row.startDate, params.row.endDate)) {
+          return (
+            <Tooltip title='Encours'>
+              <UpdateIcon style={{ color: '#06690680' }} />
+            </Tooltip>
+          );
+        } else if (now.isAfter(params.row.endDate)) {
+          return (
+            <Tooltip title='Terminé'>
+              <HistoryIcon style={{ color: '#ff000080' }} />
+            </Tooltip>
+          );
+        } else {
+          return (
+            <Tooltip title='A venir'>
+              <EventAvailableIcon
+                style={{ color: '#09526280', fontWeight: '400' }}
+              />
+            </Tooltip>
+          );
+        }
+      },
+    },
+
     {
       field: 'discountPercentage',
       headerName: 'Remise',
@@ -72,13 +122,13 @@ const PromotionColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
     {
       field: 'createdAt',
       headerName: 'Date de création',
-      flex: 1.25,
+      flex: 1,
       editable: false,
       renderCell: (params) => {
         return (
           <>
             {params.row.createdAt
-              ? `${moment(params.row.createdAt).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.createdAt).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
@@ -87,13 +137,13 @@ const PromotionColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
     {
       field: 'updatedAt',
       headerName: 'Date de mise à jour',
-      flex: 1.25,
+      flex: 1,
       editable: false,
       renderCell: (params) => {
         return (
           <>
             {params.row.updatedAt
-              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
