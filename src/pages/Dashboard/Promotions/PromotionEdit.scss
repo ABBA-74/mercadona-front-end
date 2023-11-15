@@ -20,6 +20,22 @@
         width: 100%;
         padding-inline: 1rem;
       }
+      .invalid-feedback-msg {
+        position: relative;
+        bottom: 1rem;
+        left: 0;
+        color: #dc3545;
+        font-size: 0.875em;
+        line-height: 1.15;
+        opacity: 0;
+        animation: slideDownInvalidMsg 0.35s 0.35s ease-out forwards;
+        @keyframes slideDownInvalidMsg {
+          to {
+            opacity: 1;
+            transform: translateY(1.05rem);
+          }
+        }
+      }
     }
     .section-promotion-edit-overview {
       .overview-wrapper {
