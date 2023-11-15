@@ -27,7 +27,6 @@ const BtnsActionsCrud = ({
   };
 
   const handleEditItem = () => {
-    // showNotification('info', 'Opération réussie !');
     handleRefreshDataGrid();
     let baseDashboardItemUrl = '';
     switch (true) {
