@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { DataGrid, frFR } from '@mui/x-data-grid';
 import { Box, ThemeProvider } from '@mui/material';
@@ -99,7 +99,7 @@ const CategoryList = () => {
         <>
           <div className='section-category-list-header mb-4'>
             <h3 className='h5'>Liste des categories</h3>
-            <Button>
+            <Button as={Link} to='/dashboard/categories/creation'>
               <AddCircleIcon className='icon-btn-create-item me-2' />
               Créer une catégorie
             </Button>
