@@ -13,7 +13,7 @@ const UserColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
     {
       field: 'fullName',
       headerName: 'Nom complet',
-      flex: 1,
+      flex: 1.25,
       editable: false,
     },
     {
@@ -48,7 +48,7 @@ const UserColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
         return (
           <>
             {params.row.createdAt
-              ? `${moment(params.row.createdAt).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.createdAt).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
@@ -63,7 +63,7 @@ const UserColumnsGenerator = (rowId, setRefreshDataGrid, setPage) => {
         return (
           <>
             {params.row.updatedAt
-              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY HH:MM:SS')}`
+              ? `${moment(params.row.updatedAt).format('DD/MM/YYYY')}`
               : `-`}
           </>
         );
