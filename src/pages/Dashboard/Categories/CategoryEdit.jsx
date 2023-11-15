@@ -10,7 +10,7 @@ import { postImage } from '../../../api/postImage';
 import CategoryOverview from './CategoryOverview';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
 import Loader from '../../../components/Loader/Loader';
-import './categoryEdit.scss';
+import './CategoryEdit.scss';
 import { scrollTo } from '../../../utils/scrollTo';
 
 const CategoryEdit = () => {
