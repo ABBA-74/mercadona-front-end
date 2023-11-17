@@ -202,24 +202,22 @@ const PromotionEdit = () => {
       await patchPromotion(dataPromotion.id, newPromotionData);
       showNotification('info', 'Mise à jour effectuée avec succès.');
       navigate('/dashboard/promotions', { replace: true });
-    } catch (error) {
-      console.error('Error updating data:', error);
-      if (!error.response) {
-        showNotification('error', 'Problème de connexion ou erreur réseau.');
-      } else if (
-        error.response.status === 400 ||
-        error.response.status === 422
-      ) {
-        showNotification(
-          'error',
-          'Certains champs ne répondent pas aux exigences du serveur.'
-        );
-      } else {
-        showNotification(
-          'error',
-          'Une erreur est survenue lors de la mise à jour.'
-        );
+    } catch (err) {
+      console.error('Error updating data:', err);
+
+      let errorMessage = 'Une erreur est survenue lors de la mise à jour.'; // Message par défaut
+
+      if (!err.response) {
+        errorMessage = 'Problème de connexion ou erreur réseau.';
+      } else if (err.response.status === 401) {
+        logout();
+        return; // Après logout, nous ne voulons pas afficher d'autre message.
+      } else if (err.response.status === 400 || err.response.status === 422) {
+        errorMessage =
+          'Certains champs ne répondent pas aux exigences du serveur.';
       }
+
+      showNotification('error', errorMessage);
     }
   };
 
