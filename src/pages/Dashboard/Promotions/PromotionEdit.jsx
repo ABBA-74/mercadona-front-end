@@ -1,20 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import useCrudNotification from '../../../hooks/useCrudNotification';
 import moment from 'moment';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
+import Loader from '../../../components/Loader/Loader';
+import PromotionOverview from './PromotionOverview';
 import { fetchErrorMessage } from '../../../data/errorMessages';
 import { getProducts } from '../../../api/getProducts';
 import { getPromotion } from '../../../api/getPromotion';
+import { patchPromotion } from '../../../api/patchPromotion';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import HistoryIcon from '@mui/icons-material/History';
+import UpdateIcon from '@mui/icons-material/Update';
 import './PromotionEdit.scss';
-import Loader from '../../../components/Loader/Loader';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const PromotionEdit = () => {
   const navigate = useNavigate();
+  const { logout } = useAuthLogout();
+  const { showNotification } = useCrudNotification();
   const { id } = useParams();
   const [dataPromotion, setDataPromotion] = useState(null);
   const [dataProducts, setDataProducts] = useState(null);
   const [error, setError] = useState(null);
+  const [initialPromotionValues, setInitialPromotionValues] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPromoStatus, setCurrentPromoStatus] = useState({
+    color: '',
+    value: '',
+    icon: null,
+  });
+  const [validationErrors, setValidationErrors] = useState({
+    promotion: {},
+  });
   const [formValues, setFormValues] = useState({
     name: '',
     discountPercentage: '',
@@ -34,6 +52,7 @@ const PromotionEdit = () => {
       ]);
       setDataPromotion(promotion);
       setDataProducts(products);
+      setInitialPromotionValues(promotion);
       setFormValues({
         name: promotion.name,
         discountPercentage: promotion.discountPercentage.toString(),
@@ -43,17 +62,21 @@ const PromotionEdit = () => {
         endDate: moment(promotion.endDate).format('YYYY-MM-DD'),
         products: promotion.products?.map((product) => product['@id']),
       });
+      const { status, color, icon } = getPromotionStatus(
+        promotion.startDate,
+        promotion.endDate
+      );
+      setCurrentPromoStatus({ value: status, color: color, icon: icon });
       setError(null);
     } catch (err) {
       console.error('Erreur lors de la récupération des données', err);
       setError(err);
-      if (err.response && err.response?.data.code === 401) {
-        setIsLoading(false);
-        navigate('/login', { replace: true });
-        return;
+      if (err.response && err.response.status === 401) {
+        logout();
       }
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleChange = (e) => {
@@ -72,6 +95,181 @@ const PromotionEdit = () => {
         [name]: value,
       }));
     }
+  };
+
+  /*  Validation form  */
+  const validationRules = {
+    name: { required: true, minLength: 2, maxLength: 100 },
+    discountPercentage: { required: true, min: 5, max: 80 },
+    description: { minLength: 2, maxLength: 300 },
+    conditions: { minLength: 2, maxLength: 300 },
+    startDate: { required: true },
+    endDate: { required: true },
+  };
+
+  const validateField = (name, value, rules) => {
+    const errors = {};
+    const ruleSet = rules[name];
+    const trimmedValue = typeof value === 'string' ? value.trim() : '';
+
+    if (ruleSet?.required && !trimmedValue) {
+      errors[name] = 'Ce champ est requis.';
+    }
+    if (
+      ruleSet?.minLength &&
+      trimmedValue &&
+      trimmedValue.length < ruleSet.minLength
+    ) {
+      errors[name] = `Doit contenir au moins ${ruleSet.minLength} caractères.`;
+    }
+    if (ruleSet?.maxLength && trimmedValue.length > ruleSet.maxLength) {
+      errors[name] = `Doit contenir moins de ${ruleSet.maxLength} caractères.`;
+    }
+    if (ruleSet?.min && value < ruleSet.min) {
+      errors[name] = `La valeur doit être supérieure à ${ruleSet.min} %.`;
+    }
+    if (ruleSet?.max && value > ruleSet.max) {
+      errors[name] = `La valeur doit être inférieure à ${ruleSet.max} %.`;
+    }
+
+    return errors;
+  };
+
+  const validateDates = (startDate, endDate) => {
+    const errors = {};
+    const startDatePromotion = moment(dataPromotion.startDate).format(
+      'YYYY-MM-DD'
+    );
+    const endDatePromotion = moment(dataPromotion.endDate).format('YYYY-MM-DD');
+
+    if (startDate !== startDatePromotion) {
+      errors.startDate = 'La date de début ne doit pas être modifié.';
+    }
+
+    if (endDate !== endDatePromotion) {
+      errors.endDate = 'La date de fin ne doit pas être modifié.';
+    }
+
+    return errors;
+  };
+
+  const validateForm = (dataPromotion, rules) => {
+    let formErrors = {};
+
+    // Validation of category fields
+    Object.keys(dataPromotion).forEach((fieldName) => {
+      const fieldErrors = validateField(
+        fieldName,
+        dataPromotion[fieldName],
+        rules
+      );
+      if (fieldErrors[fieldName]) {
+        formErrors[fieldName] = fieldErrors[fieldName];
+      }
+    });
+
+    return formErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    scrollTo(0, 0);
+
+    let formErrors = validateForm(formValues, validationRules);
+    const dateErrors = validateDates(formValues.startDate, formValues.endDate);
+    formErrors = { ...formErrors, ...dateErrors };
+
+    setValidationErrors({});
+    setValidationErrors(formErrors);
+
+    if (Object.keys(formErrors).length > 0) {
+      return;
+    }
+
+    const products = formValues.products.map((item) =>
+      item.replace('/active', '')
+    );
+
+    const newPromotionData = {
+      ...formValues,
+      discountPercentage: +formValues.discountPercentage,
+      products,
+    };
+    delete newPromotionData.startDate;
+    delete newPromotionData.endDate;
+
+    try {
+      await patchPromotion(dataPromotion.id, newPromotionData);
+      showNotification('info', 'Mise à jour effectuée avec succès.');
+      navigate('/dashboard/promotions', { replace: true });
+    } catch (err) {
+      console.error('Error updating data:', err);
+
+      let errorMessage = 'Une erreur est survenue lors de la mise à jour.'; // Message par défaut
+
+      if (!err.response) {
+        errorMessage = 'Problème de connexion ou erreur réseau.';
+      } else if (err.response.status === 401) {
+        logout();
+        return; // Après logout, nous ne voulons pas afficher d'autre message.
+      } else if (err.response.status === 400 || err.response.status === 422) {
+        errorMessage =
+          'Certains champs ne répondent pas aux exigences du serveur.';
+      }
+
+      showNotification('error', errorMessage);
+    }
+  };
+
+  const getPromotionStatus = (startDate, endDate) => {
+    const now = moment();
+    if (now.isBetween(startDate, endDate)) {
+      return {
+        status: 'Encours',
+        color: 'green',
+        icon: <UpdateIcon style={{ color: '#06690680' }} />,
+      };
+    } else if (now.isAfter(endDate)) {
+      return {
+        status: 'Terminé',
+        color: 'red',
+        icon: <HistoryIcon style={{ color: '#ff000080' }} />,
+      };
+    } else {
+      return {
+        status: 'À venir',
+        color: '#095262',
+        icon: (
+          <EventAvailableIcon
+            style={{ color: '#09526280', fontWeight: '400' }}
+          />
+        ),
+      };
+    }
+  };
+
+  const formatDate = (date) => {
+    return moment(date).format('YYYY-MM-DD');
+  };
+  const checkIfModifiedForm = () => {
+    const formatInitialPromoStartDate = formatDate(
+      initialPromotionValues.startDate
+    );
+    const formatInitialPromoEndDate = formatDate(
+      initialPromotionValues.endDate
+    );
+
+    return (
+      initialPromotionValues.name !== formValues.name ||
+      initialPromotionValues.description !== formValues.description ||
+      initialPromotionValues.conditions !== formValues.conditions ||
+      initialPromotionValues.discountPercentage !==
+        +formValues.discountPercentage ||
+      formatInitialPromoStartDate !== formValues.startDate ||
+      formatInitialPromoEndDate !== formValues.endDate ||
+      initialPromotionValues.products.toString() !==
+        formValues.products.toString()
+    );
   };
 
   useEffect(() => {
@@ -102,7 +300,7 @@ const PromotionEdit = () => {
             <div className='row gx-5 justify-content-between'>
               <div className='col-12 col-xl-7 section-promotion-edit-form border rounded mb-5 mb-xl-0 px-3 py-5 p-md-5'>
                 <h4 className='h5 mb-4'>Informations de la promotion</h4>
-                <form>
+                <form onSubmit={handleSubmit} noValidate>
                   <div className='row gx-4 form'>
                     <div className='col-12 col-lg-6 mb-3'>
                       <label htmlFor='name' className='form-label'>
@@ -117,47 +315,55 @@ const PromotionEdit = () => {
                         value={formValues.name}
                         onChange={handleChange}
                       />
+                      {validationErrors.name && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.name}
+                        </div>
+                      )}
                     </div>
-                    <div className='col-6 col-lg-3 mb-3 form-group'>
+                    <div className='col-6 col-lg-3 col-xl-6 col-xxl-3 mb-3 form-group'>
                       <label htmlFor='discount' className='form-label'>
                         Réduction
                       </label>
                       <div className='input-group'>
                         <input
-                          type='text'
+                          type='number'
                           className='form-control'
                           id='discount'
                           name='discountPercentage'
+                          min={5}
+                          max={80}
                           aria-label='Réduction en pourcentage (par exemple, 10%)'
                           value={formValues.discountPercentage}
                           onChange={handleChange}
                         />
                         <span className='input-group-text'>%</span>
+                        {validationErrors.discountPercentage && (
+                          <div className='invalid-feedback-msg'>
+                            {validationErrors.discountPercentage}
+                          </div>
+                        )}
                       </div>
                     </div>
-                    <div className='col-6 col-lg-3 mb-3'>
+                    <div className='col-6 col-lg-3 col-xl-6 col-xxl-3 mb-3'>
                       <label htmlFor='status' className='form-label'>
                         Statut
                       </label>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='status'
-                        disabled
-                        aria-label='Information du statut actuel de la promotion'
-                        style={{
-                          color: moment(dataPromotion.endDate).isSameOrAfter(
-                            moment()
-                          )
-                            ? 'green'
-                            : 'red',
-                        }}
-                        value={
-                          moment(dataPromotion.endDate).isSameOrAfter(moment())
-                            ? 'Encours'
-                            : 'Terminé'
-                        }
-                      />
+                      <div className='input-group'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='status'
+                          disabled
+                          aria-label='Information du statut actuel de la promotion'
+                          style={{ color: currentPromoStatus.color }}
+                          value={currentPromoStatus.value}
+                        />
+
+                        <span className='input-group-text'>
+                          {currentPromoStatus.icon}
+                        </span>
+                      </div>
                     </div>
                     <div className='col-12 mb-3'>
                       <label htmlFor='description' className='form-label'>
@@ -168,10 +374,15 @@ const PromotionEdit = () => {
                         placeholder='Description de la promotion'
                         id='description'
                         name='description'
-                        style={{ height: '100' }}
+                        style={{ height: '120px' }}
                         value={formValues.description}
                         onChange={handleChange}
                       />
+                      {validationErrors.description && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.description}
+                        </div>
+                      )}
                     </div>
                     <div className='col-12 mb-3'>
                       <label htmlFor='conditions' className='form-label'>
@@ -182,10 +393,15 @@ const PromotionEdit = () => {
                         placeholder='Conditions spécifiques que les clients doivent remplir pour bénéficier de la promotion'
                         id='conditions'
                         name='conditions'
-                        style={{ height: '100' }}
+                        style={{ height: '120px' }}
                         value={formValues.conditions}
                         onChange={handleChange}
                       />
+                      {validationErrors.conditions && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.conditions}
+                        </div>
+                      )}
                     </div>
                     <div className='col-12 col-lg-6 col-xxl-5 mb-3'>
                       <label htmlFor='startDate' className='form-label'>
@@ -196,10 +412,16 @@ const PromotionEdit = () => {
                         className='form-control'
                         id='startDate'
                         name='startDate'
+                        disabled
                         onChange={handleChange}
                         value={formValues.startDate}
                         aria-label='Date de début de la promotion'
                       />
+                      {validationErrors.startDate && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.startDate}
+                        </div>
+                      )}
                     </div>
                     <div className='col-12 col-lg-6 col-xxl-5 offset-xxl-2 mb-3'>
                       <label htmlFor='endDate' className='form-label'>
@@ -210,10 +432,16 @@ const PromotionEdit = () => {
                         className='form-control'
                         id='endDate'
                         name='endDate'
+                        disabled
                         onChange={handleChange}
                         value={formValues.endDate}
                         aria-label='Date de fin de la promotion'
                       />
+                      {validationErrors.endDate && (
+                        <div className='invalid-feedback-msg'>
+                          {validationErrors.endDate}
+                        </div>
+                      )}
                     </div>
                     <div className='col-12 mb-3'>
                       <label htmlFor='products' className='form-label'>
@@ -239,61 +467,17 @@ const PromotionEdit = () => {
                       </select>
                     </div>
                   </div>
-                  <button type='submit' className='btn btn-primary mt-4 px-4'>
+                  <button
+                    type='submit'
+                    disabled={!checkIfModifiedForm()}
+                    className='btn btn-primary mt-4 px-4'
+                  >
                     Sauvegarder
                   </button>
                 </form>
               </div>
-              <div className='col-12 col-xl-5 col-xxl-4 section-promotion-edit-overview d-flex flex-column justify-content-start justify-content-xxl-between gx-0 gx-xl-4'>
-                <div className='overview-wrapper rounded border mb-5 mb-xl-3 mb-xxl-0 px-3 py-5 p-md-5'>
-                  <h4 className='h5 mb-4'>Détails de la promotion</h4>
-                  <div className='overview-content'>
-                    <ul className='list-group'>
-                      <li className='list-group-item'>
-                        <span className='list-item-label'>Nom:</span>{' '}
-                        {dataPromotion.name}
-                      </li>
-                      <li className='list-group-item'>
-                        <span className='list-item-label'>Date de début:</span>
-                        <br />
-                        {moment(dataPromotion.startDate).format('DD/MM/YYYY')}
-                      </li>
-                      <li className='list-group-item'>
-                        <span className='list-item-label'>Date de fin:</span>
-                        <br />
-                        {moment(dataPromotion.endDate).format('DD/MM/YYYY')}
-                      </li>
-                      <li className='list-group-item'>
-                        <span className='list-item-label'>
-                          Qtt de produits associés:{' '}
-                        </span>{' '}
-                        {dataPromotion.products.length}
-                      </li>
-                      <li className='list-group-item'>
-                        <span className='list-item-label'>Créé par:</span>
-                        <br />
-                        {dataPromotion.user.fullName}
-                      </li>
-                      <li className='list-group-item'>
-                        <span className='list-item-label'>
-                          {dataPromotion.updated
-                            ? 'Date de mise à jour'
-                            : 'Date de création'}
-                          :
-                        </span>
-                        <br />
-                        {dataPromotion.updated
-                          ? moment(dataPromotion.updatedAt).format(
-                              'DD/MM/YYYY HH:MM:SS'
-                            )
-                          : moment(dataPromotion.createdAt).format(
-                              'DD/MM/YYYY HH:MM:SS'
-                            )}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+
+              <PromotionOverview dataPromotion={dataPromotion} />
             </div>
           </div>
         </>

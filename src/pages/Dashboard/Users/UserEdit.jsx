@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 import avatarMan from './../../../assets/images/avatar-man.webp';
@@ -11,9 +11,10 @@ import { getUser } from '../../../api/getUser';
 import './UserEdit.scss';
 import Loader from '../../../components/Loader/Loader';
 import moment from 'moment';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const UserEdit = () => {
-  const navigate = useNavigate();
+  const { logout } = useAuthLogout();
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -57,8 +58,8 @@ const UserEdit = () => {
     } catch (err) {
       console.error('Erreur lors de la récupération des données', error);
       setError(err);
-      if (err.response && err.response.data.code === 401) {
-        navigate('/login', { replace: true });
+      if (err.response && err.response.status === 401) {
+        logout();
       }
     } finally {
       setIsLoading(false);

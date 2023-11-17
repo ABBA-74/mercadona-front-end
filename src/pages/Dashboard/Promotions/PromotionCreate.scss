@@ -1,6 +1,6 @@
-.section-promotion-edit {
-  .section-promotion-edit-main {
-    .section-promotion-edit-form {
+.section-promotion-create {
+  .section-promotion-create-main {
+    .section-promotion-create-form {
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
       .form-control:focus,
       .form-check-input:focus,
@@ -36,8 +36,17 @@
           }
         }
       }
+      .wrapper-loading-products {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        height: 192px;
+      }
     }
-    .section-promotion-edit-overview {
+    .section-promotion-create-overview {
       .overview-wrapper {
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         overflow: hidden;
@@ -45,6 +54,29 @@
           background-color: #ffffff98;
           .list-item-label {
             font-weight: 600;
+          }
+        }
+        .list-group {
+          max-height: 450px;
+          overflow: auto;
+          .list-group-item {
+            background-color: #f9f7f4;
+          }
+          .item-loading,
+          .item-promotion {
+            .item-label {
+              line-height: 1.25;
+            }
+            > *:not(:last-child) {
+              margin-bottom: 0.5rem;
+            }
+          }
+          .item-error,
+          .item-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 636px;
           }
         }
       }

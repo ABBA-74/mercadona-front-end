@@ -30,7 +30,7 @@ export const getProducts = async (
   }
 
   apiUrlProducts += withPagination
-    ? '?itemsPerPage=8&pagination=true'
+    ? '&itemsPerPage=8&pagination=true'
     : '&pagination=false';
 
   try {

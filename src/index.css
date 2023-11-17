@@ -72,6 +72,7 @@ a:visited {
   box-shadow: none;
 }
 
+a.btn,
 button.btn {
   display: flex;
   align-items: center;
@@ -83,40 +84,56 @@ button.btn {
   box-shadow: rgba(39, 39, 39, 0.36) 0px 3px 9px;
   -webkit-filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.327));
   filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.227));
+  color: white;
 }
+a.btn > *,
 button.btn > * {
   -webkit-filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.327));
   filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.327));
 }
+a.btn:hover,
 button.btn:hover {
   box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px;
 }
+a.btn,
+a.btn:hover,
+a.btn:focus-visible,
 button.btn,
 button.btn:hover,
 button.btn:focus-visible {
   border-color: transparent;
 }
+a.btn.btn-primary,
 button.btn.btn-primary {
   background-color: #00708a;
   border-color: #044f5f;
 }
+a.btn.btn-primary:hover,
+a.btn.btn-danger:active,
+a.btn.btn-primary:focus-visible,
 button.btn.btn-primary:hover,
 button.btn.btn-danger:active,
 button.btn.btn-primary:focus-visible {
   background-color: #044f5f;
 }
+a.btn.btn-primary:focus-visible,
 button.btn.btn-primary:focus-visible {
   box-shadow: 0 0 0 0.25rem #00708a80;
 }
+a.btn.btn-danger,
 button.btn.btn-danger {
   background-color: #c30808;
   border-color: #a71207;
 }
+a.btn.btn-danger:hover,
+a.btn.btn-danger:active,
+a.btn.btn-danger:focus-visible,
 button.btn.btn-danger:hover,
 button.btn.btn-danger:active,
 button.btn.btn-danger:focus-visible {
   background-color: #a71207;
 }
+a.btn.btn-danger:focus-visible,
 button.btn.btn-danger:focus-visible {
   box-shadow: 0 0 0 0.25rem #c3080880;
 }
