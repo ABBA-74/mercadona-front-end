@@ -17,8 +17,10 @@ const ProductCard = ({
   imgFile,
   imgAlt,
 }) => {
-  const filledStars = Math.floor(Math.random() * 3) + 3;
-  const rndReviews = Math.floor(Math.random() * 50) + 9;
+  const filledStars = 4;
+  const rndReviews = 39;
+  // const filledStars = Math.floor(Math.random() * 3) + 3;
+  // const rndReviews = Math.floor(Math.random() * 50) + 9;
   const imageUrl = `${API_URL_IMG}/${imgFile}`;
   const discountedPriceFormatted = String(discountedPrice?.toFixed(2)).replace(
     '.',
