@@ -24,7 +24,7 @@ const ProductsSection = ({
         <Loader />
       </section>
     )}
-    {error && (
+    {error ? (
       <section className='section-error-fetch-msg'>
         <ErrorMessage
           title={fetchErrorMessage.title}
@@ -32,7 +32,15 @@ const ProductsSection = ({
         />
         ;
       </section>
+    ) : (
+      !isLoading &&
+      (!products || products.length === 0) && (
+        <section className='section-no-product-found-msg'>
+          <NoProductsFoundAlert />
+        </section>
+      )
     )}
+
     {products && products.length > 0 && (
       <section className='section-products-list'>
         <Row className='products-wrapper my-5'>
@@ -64,12 +72,6 @@ const ProductsSection = ({
             onPageChange={handlePageChange}
           />
         </Row>
-      </section>
-    )}
-
-    {(!products || products.length === 0) && !isLoading && (
-      <section className='section-no-product-found-msg'>
-        <NoProductsFoundAlert />
       </section>
     )}
   </>
