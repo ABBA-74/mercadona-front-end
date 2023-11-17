@@ -49,6 +49,7 @@ function App() {
           <Route path='utilisateurs/:id/modifier' element={<UserEdit />} />
         </Route>
         <Route path='/catalogue' element={<CatalogPage />} />
+        <Route path='/catalogue/:id' element={<CatalogPage />} />
         <Route path='/liste-favoris' element={<WishListPage />} />
         <Route path='/login' element={<LoginPage />} />
       </Routes>
