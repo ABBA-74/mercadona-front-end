@@ -173,7 +173,7 @@ const Navigation = () => {
                         xl={3}
                         className='p-0 p-lg-4'
                       >
-                        <NavDropdown.Item href='#action/3.4'>
+                        <NavDropdown.Item href={`/catalogue/${category.id}`}>
                           <div className='category-item-wrapper'>
                             <img
                               src={imageUrl}
