@@ -6,9 +6,11 @@ import { postImage } from '../../../api/postImage';
 import { scrollTo } from '../../../utils/scrollTo';
 import CategoriesOverview from './CategoriesOverview';
 import './CategoryCreate.scss';
+import { useAuthLogout } from '../../../hooks/useAuthLogout';
 
 const CategoryCreate = () => {
   const navigate = useNavigate();
+  const { logout } = useAuthLogout();
   const { showNotification } = useCrudNotification();
   const [categoryValues, setCategoryValues] = useState({
     label: '',
@@ -36,6 +38,7 @@ const CategoryCreate = () => {
       [name]: value,
     }));
   };
+
   const handleChangeImage = (e) => {
     const { name, value } = e.target;
 
@@ -69,7 +72,6 @@ const CategoryCreate = () => {
     image: {
       label: { required: true, minLength: 2, maxLength: 100 },
       description: { required: true, minLength: 10, maxLength: 255 },
-      imgFile: { required: true },
     },
   };
 
@@ -127,6 +129,32 @@ const CategoryCreate = () => {
       }
     });
 
+    formErrors = validateFile(imgFile, formErrors);
+
+    return formErrors;
+  };
+
+  const validateFile = (file, formErrors) => {
+    const validTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/svg+xml',
+    ];
+
+    if (file) {
+      if (!validTypes.includes(file.type)) {
+        formErrors.image['imgFile'] =
+          'Formats acceptés: JPG, JPEG, PNG, WEBP, SVG.';
+      }
+      if (file.size > 2048000) {
+        formErrors.image['imgFile'] =
+          'La taille du fichier ne doit pas dépasser 2 Mo.';
+      }
+    } else {
+      formErrors.image['imgFile'] = 'Un fichier image est requis.';
+    }
+
     return formErrors;
   };
 
@@ -172,24 +200,23 @@ const CategoryCreate = () => {
 
       showNotification('info', 'Mise à jour effectuée avec succès.');
       navigate('/dashboard/categories', { replace: true });
-    } catch (error) {
-      console.error('Error updating data:', error);
-      if (!error.response) {
-        showNotification('error', 'Problème de connexion ou erreur réseau.');
-      } else if (
-        error.response.status === 400 ||
-        error.response.status === 422
-      ) {
-        showNotification(
-          'error',
-          'Certains champs ne répondent pas aux exigences du serveur.'
-        );
-      } else {
-        showNotification(
-          'error',
-          'Une erreur est survenue lors de la mise à jour.'
-        );
+    } catch (err) {
+      console.error('Error updating data:', err);
+
+      let errorMessage =
+        'Une erreur est survenue lors de la création de la catégorie.';
+
+      if (!err.response) {
+        errorMessage = 'Problème de connexion ou erreur réseau.';
+      } else if (err.response.status === 401) {
+        logout();
+        return; // Après logout, nous ne voulons pas afficher d'autre message.
+      } else if (err.response.status === 400 || err.response.status === 422) {
+        errorMessage =
+          'Certains champs ne répondent pas aux exigences du serveur.';
       }
+
+      showNotification('error', errorMessage);
     }
   };
 
@@ -302,7 +329,7 @@ const CategoryCreate = () => {
 
                 <div className='col-12 col-sm-6 mb-3'>
                   <label htmlFor='categoryImageFile' className='form-label'>
-                    Image
+                    Image (Max: 2Mo)
                   </label>
                   <input
                     type='file'
